@@ -8,6 +8,7 @@
 package net.sf.gm.io.csv;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
@@ -16,6 +17,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 
+import net.sf.gm.core.base64.Base64Base;
 import net.sf.gm.core.io.DataIOException;
 import net.sf.gm.core.io.DataReader;
 import net.sf.gm.core.io.DataWriter;
@@ -271,9 +273,45 @@ public class CSVWriter extends DataWriterAbstractStream implements DataWriter {
             writeValue("" + options.getCharDelimiter());
         }
       } break;
+      case Types.LONGVARBINARY:
+      case Types.VARBINARY:
+      case Types.BINARY: {
+        final byte[] value = reader.getColumnValueBytes(idx);
+        if (reader.wasColumnValueNull())
+          writeNullValue();
+        else {
+          final StringBuilder sb = new StringBuilder();
+          if (options.isQuoting())
+            sb.append(options.getCharDelimiter());
+          sb.append(Base64Base.encode(value, 0, value.length, 0));
+          if (options.isQuoting())
+            sb.append(options.getCharDelimiter());
+          writeValue(sb.toString());
+        }
+      } break;
+      case Types.BLOB: {
+        final InputStream value = reader.getColumnValueBinaryStream(idx);
+        if (reader.wasColumnValueNull())
+          writeNullValue();
+        else {
+          if (options.isQuoting())
+            writeValue("" + options.getCharDelimiter());
+
+          final byte[] b = new byte[Base64Base.DECODED_CHUNK_SIZE];
+          int currentLineSize = 0;
+          int readLen;
+          while ((readLen = value.read(b)) != -1) {
+            writeValue(Base64Base.encode(b, 0, readLen, currentLineSize));
+            currentLineSize =
+                (currentLineSize + readLen) % Base64Base.DECODED_CHUNK_SIZE;
+          }
+
+          if (options.isQuoting())
+            writeValue("" + options.getCharDelimiter());
+        }
+      } break;
       default:
-        throw new UnsupportedOperationException("CSVWriter: type'" + sType +
-                                                "' is not supported");
+        throw new UnsupportedOperationException("CSVWriter: type'" + sType + "' is not supported");
         // todo: implement the following sql types: DATALINK,ARRAY,
         // DISTINCT, NULL, REF, STRUCT, JAVA_OBJECT, OTHER
       }

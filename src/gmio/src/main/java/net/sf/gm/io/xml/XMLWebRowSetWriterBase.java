@@ -282,8 +282,7 @@ public class XMLWebRowSetWriterBase
         }
       } break;
       default:
-        throw new UnsupportedOperationException("WebRowSetWriter: type'" +
-                                                sType + "' is not supported");
+        throw new UnsupportedOperationException("WebRowSetWriter: type'" + sType + "' is not supported");
         // todo: implement the following sql types: DATALINK,ARRAY,
         // DISTINCT, NULL, REF, STRUCT, JAVA_OBJECT, OTHER
       }

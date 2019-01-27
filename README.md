@@ -73,6 +73,8 @@ dbping -u url -U username -P password drivername
 
 ### Supported Formats and corresponding program options
 
+> BINARY, VARBINARY, LONGBINARY and BLOB columns are supprted by using base64 encoding
+
 - csv (comma-separated values), with following options
 
   - column delimiter:                                      --coldel column-delimiter
@@ -81,15 +83,9 @@ dbping -u url -U username -P password drivername
   - do not escape the quote character using double quotes: --no-doublequotes
   - disable column header:                                 --no-columnheader
 
-> BINARY, VARBINARY, LONGBINARY and BLOB are NOT supported
-
 - XML using the "WebRowSet XML Schema (by Jonathan Bruce (Sun Microsystems Inc.))"
 
-> BINARY, VARBINARY, LONGBINARY and BLOB are supported (base64 encoding)
-
 - Fast Infoset Document (Binary XML) using the "WebRowSet XML Schema (by Jonathan Bruce (Sun Microsystems Inc.))"
-
-> BINARY, VARBINARY, LONGBINARY and BLOB supported (base64 encoding)
 
 ### How to export
 

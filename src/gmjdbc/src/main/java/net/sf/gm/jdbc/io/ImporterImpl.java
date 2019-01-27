@@ -210,6 +210,7 @@ public class ImporterImpl implements Importer {
           }
         } catch (final RuntimeException r) {
           progress.errorln("import failed: " + r.getClass().getName(), r);
+          r.printStackTrace();
         } catch (final Exception e) {
           progress.errorln("import failed", e);
         }

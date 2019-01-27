@@ -32,6 +32,12 @@ public class TableDef {
   /** The table. */
   String table;
 
+  /** The table type. */
+  String tableType;
+
+  /** The comment. */
+  String comment;
+
   /** The full table name. */
   String fullTableName;
 
@@ -56,25 +62,34 @@ public class TableDef {
   /**
    * The Constructor.
    *
-   * @param tabName       the tab name
+   * @param location      the location
+   * @param fileExtension the file extension
    * @param tabCatalog    the tab catalog
    * @param tabSchema     the tab schema
-   * @param fileExtension the file extension
-   * @param location      the location
+   * @param tabName       the tab name
+   * @param tabType       the table type
+   * @param comment       the comment
    */
   public TableDef(final File location, final String fileExtension,
                   final String tabCatalog, final String tabSchema,
-                  final String tabName) {
+                  final String tabName, final String tableType, final String comment) {
 
-    this(tabCatalog, tabSchema, tabName);
+    this(tabCatalog, tabSchema, tabName, tableType, comment);
     this.fileExtension = fileExtension;
-    if (location == null)
-      fileName = this.table.toLowerCase().concat(fileExtension);
-    else if (location.isDirectory())
-      fileName = location.getPath() + File.separator +
+    if (fileExtension == null) {
+      if (location == null) 
+        fileName = null;
+      else
+        fileName = location.getPath();
+    } else {
+      if (location == null)
+        fileName = this.table.toLowerCase().concat(fileExtension);
+      else if (location.isDirectory())
+        fileName = location.getPath() + File.separator +
                  this.table.toLowerCase().concat(fileExtension);
-    else
+      else
       fileName = location.getPath();
+    }
   }
 
   /**
@@ -121,13 +136,6 @@ public class TableDef {
       table = names[2];
     }
     this.fullTableName = fullTableName;
-
-    this.fileExtension = null;
-    this.fileName = null;
-    this.whereClause = null;
-    this.parentTables = null;
-    this.columnNames = null;
-    this.columnTypes = null;
   }
 
   /**
@@ -136,25 +144,23 @@ public class TableDef {
    * @param tabName    the tab name
    * @param tabCatalog the tab catalog
    * @param tabSchema  the tab schema
+   * @param tabType    the table type
+   * @param comment    the comment
    */
   public TableDef(final String tabCatalog, final String tabSchema,
-                  final String tabName) {
+                  final String tabName, final String tableType, final String comment) {
 
+                    
     this.fileExtension = null;
 
     this.catalog = tabCatalog == null ? null : StringUtil.rtrim(tabCatalog);
     this.schema = tabSchema == null ? null : StringUtil.rtrim(tabSchema);
     this.table = tabName == null ? null : StringUtil.rtrim(tabName);
+    this.tableType = tableType == null ? null : StringUtil.rtrim(tableType);
+    this.comment = comment == null ? null : StringUtil.rtrim(comment);
 
     this.fullTableName =
         TableDef.createFullTableName(tabCatalog, tabSchema, tabName);
-
-    this.fileExtension = null;
-    this.fileName = null;
-    this.whereClause = null;
-    this.parentTables = null;
-    this.columnNames = null;
-    this.columnTypes = null;
   }
 
   /**
@@ -191,6 +197,20 @@ public class TableDef {
    * @return the table
    */
   public String getTable() { return table; }
+
+  /**
+   * Gets the table type.
+   *
+   * @return the table type
+   */
+  public String getTableType() { return tableType; }
+
+  /**
+   * Gets the comment.
+   *
+   * @return the comment
+   */
+  public String getComment() { return comment; }  
 
   /**
    * Gets the schema.

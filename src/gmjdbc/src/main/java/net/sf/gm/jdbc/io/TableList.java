@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,13 +64,13 @@ public class TableList extends ArrayList<TableDef> {
 
       final DatabaseMetaData dmd = con.getMetaData();
 
-      // oracle: on oracle synonym to stored procedures are allowed !!!
-      // String[] types = new String[] { "TABLE", "SYSTEM TABLE", "ALIAS",
-      // "SYNONYM" };
-      final String[] types = new String[] {"TABLE", "SYSTEM TABLE"};
+      final String[] types = new String[] {"TABLE", "SYSTEM TABLE", "ALIAS", "SYNONYM"};
 
       final ResultSet rs =
           dmd.getTables(catalogPattern, schemaPattern, tablePattern, types);
+      final ResultSetMetaData rsmd = rs.getMetaData();
+      final int colCount = rsmd.getColumnCount();
+      
       boolean res;
       do {
         try {
@@ -80,10 +81,21 @@ public class TableList extends ArrayList<TableDef> {
         } catch (RuntimeException e) {
           return list;
         }
-        if (res) {
-          final TableDef table =
-              new TableDef(location, fileExtension, rs.getString(1),
-                           rs.getString(2), rs.getString(3));
+        if (!res || rs.getString(3)== null) {
+          continue;
+        }
+        final TableDef table =
+            new TableDef(location, fileExtension, rs.getString(1),
+                          rs.getString(2), rs.getString(3), rs.getString(4), colCount >= 5 ? rs.getString(5) : null);
+        if (table.getTableType() != null && table.getTableType().contains("TABLE")) {
+          list.add(table);
+          continue;
+        }
+        // for "ALIAS" and "SYNONYM" test if this is a table:
+        ResultSet rsCols = dmd.getColumns(table.catalog, table.schema, table.table, null);
+        boolean resCol = rsCols.next();
+        SqlUtil.closeResultSet(rsCols);
+        if (resCol) {
           list.add(table);
         }
       } while (res);

@@ -8,6 +8,7 @@
 package net.sf.gm.io.csv;
 
 import java.io.IOException;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -20,12 +21,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.gm.core.base64.Base64Base;
 import net.sf.gm.core.io.DataIOException;
 import net.sf.gm.core.io.DataReader;
 import net.sf.gm.core.io.DataReaderAbstractStream;
 import net.sf.gm.core.io.MetaData;
 import net.sf.gm.core.io.MetaDataImpl;
-import net.sf.gm.core.io.DataIOException.UnsupportedDataType;
 import net.sf.gm.core.io.DataTypes.rowType;
 import net.sf.gm.core.ui.Progress;
 import net.sf.gm.core.utils.DateTimeUtil;
@@ -198,7 +199,9 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
 
     if (isColumnValueNull(idx, false))
       return null;
-    throw new UnsupportedDataType("Bytes", "CSVReader");
+
+    final char[] cin = currColumnValues[idx - 1].GetValue().toCharArray();
+    return Base64Base.decode(cin, 0, cin.length);      
   }
 
   /**
@@ -214,7 +217,9 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
 
     if (isColumnValueNull(idx, false))
       return null;
-    throw new UnsupportedDataType("Binary Stream", "CSVReader");
+
+    final char[] cin = currColumnValues[idx - 1].GetValue().toCharArray();
+    return new ByteArrayInputStream(Base64Base.decode(cin, 0, cin.length));
   }
 
   /**

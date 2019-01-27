@@ -28,6 +28,8 @@ import net.sf.gm.core.ui.OutputTarget;
 import net.sf.gm.core.utils.StringUtil;
 import net.sf.gm.jdbc.common.SqlUtil;
 import net.sf.gm.jdbc.datasource.DataSourceManager;
+import net.sf.gm.jdbc.io.TableList;
+import net.sf.gm.jdbc.io.TableDef;
 
 //
 /**
@@ -153,44 +155,20 @@ public class dbtables extends JDbMigrApplicationBase {
    */
   @Override
   protected int runInstance() throws Exception {
-
-    final DatabaseMetaData dmd = con.getMetaData();
-    final String[] types = new String[] {"TABLE", "SYSTEM TABLE"};
-
-    final ResultSet rs =
-        dmd.getTables(catalogPattern, schemaPattern, tablePattern, types);
     final PrintStream os =
         outputFile == null
             ? System.out
             : new PrintStream(new FileOutputStream(outputFile.getPath()));
+    final TableList list = TableList.createList(con, catalogPattern, schemaPattern, tablePattern, null, null);
 
-    final ResultSetMetaData rsmd = rs.getMetaData();
-    final int colCount = rsmd.getColumnCount();
-    while (rs.next()) {
-      final String tabCatalog = rs.getString(1);
-      final String tabSchema = rs.getString(2);
-      final String tabName = rs.getString(3);
-      String tabType = rs.getString(4);
-      String tabComment = colCount >= 5 ? rs.getString(5) : null;
-      if (tabComment == null)
-        tabComment = "";
-      final StringBuffer tabFullName = new StringBuffer();
-      if (tabCatalog != null) {
-        tabFullName.append(StringUtil.rtrim(tabCatalog));
-        tabFullName.append(".");
+    for (final TableDef table : list) {
+      if (verbose) {
+        os.printf("%-40s%-10s%s\n", table.getFullTableName(), table.getTableType() == null ? "" : table.getTableType(), 
+        table.getComment() == null ? "" : table.getComment());
+      } else {
+        os.printf("%-40s\n", table.getFullTableName());      
       }
-      if (tabSchema != null) {
-        tabFullName.append(StringUtil.rtrim(tabSchema));
-        tabFullName.append(".");
-      }
-      tabFullName.append(StringUtil.rtrim(tabName));
-      if (!verbose) {
-        tabType = "";
-        tabComment = "";
-      }
-      os.printf("%-40s%-10s%s\n", tabFullName.toString(), tabType, tabComment);
     }
-    SqlUtil.closeResultSet(rs);
     os.close();
     return 0;
   }

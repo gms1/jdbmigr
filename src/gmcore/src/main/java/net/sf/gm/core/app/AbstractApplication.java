@@ -233,12 +233,15 @@ public abstract class AbstractApplication {
       System.exit(1);
     } catch (final RuntimeException e) {
       AbstractApplication.out.errorln("RuntimeException", e);
+      e.printStackTrace();
       System.exit(1);
     } catch (final Exception e) {
       AbstractApplication.out.errorln("Exception", e);
+      e.printStackTrace();
       System.exit(1);
     } catch (final Throwable e) {
       AbstractApplication.out.errorln("Throwable", e);
+      e.printStackTrace();
       System.exit(1);
     }
 

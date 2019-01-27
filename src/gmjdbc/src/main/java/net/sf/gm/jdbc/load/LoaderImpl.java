@@ -916,18 +916,17 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
         if (reader.wasColumnValueNull())
           setColumnNull(idxLoad, iType);
         else
-          currentRowStmt.setBinaryStream(idxLoad, value, -1);
+          currentRowStmt.setBinaryStream(idxLoad, value);
       } break;
       case Types.CLOB: {
         final Reader value = reader.getColumnValueCharacterStream(idx);
         if (reader.wasColumnValueNull())
           setColumnNull(idxLoad, iType);
         else
-          currentRowStmt.setCharacterStream(idxLoad, value, -1);
+          currentRowStmt.setCharacterStream(idxLoad, value);
       } break;
       default:
-        throw new UnsupportedOperationException("WebRowSetWriter: type'" +
-                                                sType + "' is not supported");
+        throw new UnsupportedOperationException("Loader: type '" + sType + "' is not supported");
         // todo: implement the following sql types: DATALINK,ARRAY,
         // DISTINCT, NULL, REF, STRUCT, JAVA_OBJECT, OTHER
       }

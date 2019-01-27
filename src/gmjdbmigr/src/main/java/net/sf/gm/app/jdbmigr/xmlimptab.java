@@ -230,8 +230,6 @@ public class xmlimptab extends JDbMigrApplicationBase {
     final DataSource ds = DataSourceManager.lookup(args[0], url);
     con = ds.getConnection(userName, userPassword);
     con.setAutoCommit(false);
-    con.setHoldability(ResultSet.CLOSE_CURSORS_AT_COMMIT);
-
     return 0;
   }
 
