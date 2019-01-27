@@ -1,0 +1,25 @@
+#!/bin/bash
+SCRIPT_DIRNAME=$(dirname "$0")
+SCRIPT_BASENAME=$(basename "$0")
+
+PROJECT_DIR=$(cd "${SCRIPT_DIRNAME}"; cd ..; pwd)
+. "${SCRIPT_DIRNAME}/env.sh"
+
+
+rm -rf "${INSTALL_DIR}"
+
+"${SCRIPT_DIRNAME}/package" || exit 1
+
+mkdir -p "${INSTALL_DIR}" || \
+  die "failed to create '${INSTALL_DIR}'"
+
+pushd "${INSTALL_DIR}"  &>/dev/null || \
+  die "failed to change to '${INSTALL_DIR}' directory"
+
+  tar -xzf "${RELEASE_DIR}/"*-bin.tar.gz --strip 1
+  tar -xzf "${RELEASE_DIR}/"*-src.tar.gz --strip 1
+  cp -a "${EXTERNAL_DIR}/." .
+
+popd &>/dev/null
+
+

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "http://sf.net/gm/dtd/config.dtd">
+<config>
+  <comment>jdbc datasource configuration file</comment>
+  <node name="ROOT">
+    <childnodes>
+      <node name="jdbc">
+        <childnodes>
+          <node name="driver">
+            <childnodes>
+
+              <node name="mss">
+                <properties>
+                  <entry key="classtype">Driver</entry>
+                  <entry key="classname">com.microsoft.sqlserver.jdbc.SQLServerDriver</entry>
+                  <entry key="classpath">${GMJDBCLIBDIR}sqlserver/7.0.0/mssql-jdbc-7.0.0.jre8.jar</entry>
+                  <entry key="description">
+                    Microsoft SQLServer JDBC Driver
+                    default port is 1877
+                  </entry>
+                  <entry key="urltemplate">jdbc:microsoft:sqlserver://{host}:{port};databaseName={database}</entry>
+                </properties>
+              </node>
+
+              <node name="ora">
+                <properties>
+                  <entry key="classtype">Driver</entry>
+                  <entry key="classname">oracle.jdbc.OracleDriver</entry>
+                  <entry key="classpath">${GMJDBCLIBDIR}oracle/12.1.0.1/ojdbc7.jar</entry>
+                  <entry key="description">
+                    Oracle JDBC Driver
+                    default port is 1521
+                  </entry>
+                  <entry key="urltemplate">jdbc:oracle:thin:@{host}:{port}:{database}</entry>
+                </properties>
+              </node>
+
+              <node name="db2">
+                <properties>
+                  <entry key="classtype">Driver</entry>
+                  <entry key="classname">com.ibm.db2.jcc.DB2Driver</entry>
+                  <entry key="classpath">${GMJDBCLIBDIR}db2/jcc-2.10/db2jcc.jar;${GMJDBCLIBDIR}db2/jcc-2.10/db2jcc_license_cu.jar;${GMJDBCLIBDIR}db2/jcc-2.10/db2jcc_license_cisuz.jar</entry>
+                  <entry key="description">
+                    IBM DB2 Univeral JDBC Driver
+                    default port is 50000 or 446
+                  </entry>
+                  <entry key="urltemplate">jdbc:db2://{host}:{port}/{database}</entry>
+                </properties>
+              </node>
+
+              <node name="mysql">
+                <properties>
+                  <entry key="classpath">/usr/share/java/mysql.jar</entry>
+                  <entry key="description">default port is 3306</entry>
+                  <entry key="urltemplate">jdbc:mysql://{host}:{port}/{database};</entry>
+                  <entry key="classname">org.gjt.mm.mysql.Driver</entry>
+                  <entry key="classtype">Driver</entry>
+                </properties>
+              </node>
+
+              <node name="postgresql">
+                <properties>
+                  <entry key="classpath">/usr/share/java/postgresql.jar</entry>
+                  <entry key="description">default port 5432</entry>
+                  <entry key="urltemplate">jdbc:postgresql://{host}:{port}/{database}</entry>
+                  <entry key="classname">org.postgresql.Driver</entry>
+                  <entry key="classtype">Driver</entry>
+                </properties>
+              </node>
+
+            </childnodes>
+          </node>
+          <node name="datasource">
+            <childnodes>
+
+              <node name="ora.thin.localhost.test">
+                <properties>
+                  <entry key="class">ora</entry>
+                  <entry key="url">jdbc:oracle:thin:@localhost:1521:test</entry>
+                </properties>
+              </node>
+
+
+              <node name="db2.localhost.test">
+                <properties>
+                  <entry key="class">db2</entry>
+                  <entry key="url">jdbc:db2://localhost:50000/test</entry>
+                </properties>
+              </node>
+
+            </childnodes>
+          </node>
+        </childnodes>
+      </node>
+    </childnodes>
+  </node>
+</config>
+

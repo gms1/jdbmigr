@@ -1,0 +1,11 @@
+/release/**
+!/release/.keep
+/install
+/external
+/.vscode
+target
+.settings
+.project
+.classpath
+
+

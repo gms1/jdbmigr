@@ -1,0 +1,26 @@
+#!/bin/bash
+SCRIPT_DIRNAME=$(dirname "$0")
+SCRIPT_BASENAME=$(basename "$0")
+
+PROJECT_DIR=$(cd "${SCRIPT_DIRNAME}"; cd ..; pwd)
+. "${SCRIPT_DIRNAME}/env.sh"
+
+rm -rf "${RELEASE_DIR}/"*.tar.gz "${RELEASE_DIR}/"*.zip 
+
+pushd "${PROJECT_DIR}/src"  &>/dev/null || \
+  die "failed to change to 'src' directory"
+
+  mvn clean package || \
+    die "failed to build project"
+
+  cp -a jdbmigr/target/*.tar.gz "${RELEASE_DIR}/" || \
+    die "failed to copy *.tar.gz"
+
+  cp -a jdbmigr/target/*.zip "${RELEASE_DIR}/" || \
+    die "failed to copy *.zip"
+
+popd &>/dev/null
+
+
+
+
