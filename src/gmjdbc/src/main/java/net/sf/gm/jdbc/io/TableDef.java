@@ -83,10 +83,10 @@ public class TableDef {
         fileName = location.getPath();
     } else {
       if (location == null)
-        fileName = this.table.toLowerCase().concat(fileExtension);
+        fileName = this.table.concat(fileExtension);
       else if (location.isDirectory())
         fileName = location.getPath() + File.separator +
-                 this.table.toLowerCase().concat(fileExtension);
+                 this.table.concat(fileExtension);
       else
       fileName = location.getPath();
     }
@@ -105,10 +105,10 @@ public class TableDef {
     this(fullTableName);
     this.fileExtension = fileExtension;
     if (location == null)
-      fileName = this.table.toLowerCase().concat(fileExtension);
+      fileName = this.table.concat(fileExtension);
     else if (location.isDirectory())
       fileName = location.getPath() + File.separator +
-                 this.table.toLowerCase().concat(fileExtension);
+                 this.table.concat(fileExtension);
     else
       fileName = location.getPath();
   }
