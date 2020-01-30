@@ -192,7 +192,6 @@ public class ConfigurationReader extends Reader {
 
     /**
      * Close.
-     *
      */
     @Override
     public void close() {

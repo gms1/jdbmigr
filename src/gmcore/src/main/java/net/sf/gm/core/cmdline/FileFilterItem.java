@@ -183,7 +183,6 @@ public class FileFilterItem {
 
     /**
      * Finalize.
-     *
      */
     @SuppressWarnings("deprecation") @Override
     protected void finalize() {

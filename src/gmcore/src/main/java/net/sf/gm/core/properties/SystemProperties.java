@@ -146,9 +146,9 @@ final public class SystemProperties {
         else {
             dir = System.getenv("ALLUSERSPROFILE");
             if (dir != null)
-                    dir = LocationUtil.getChildPath(new File(dir),
-                        "Application Data");
-                    dir = dir + SystemProperties.getFileSeperator();
+                dir = LocationUtil.getChildPath(new File(dir),
+                    "Application Data");
+            dir = dir + SystemProperties.getFileSeperator();
         }
         return dir;
     }
@@ -182,7 +182,7 @@ final public class SystemProperties {
     public static String getLibraryDir(final Class<?> libraryClass) {
 
         final File file = LocationUtil.getClassInstallDir(libraryClass);
-        if ( file == null ) {
+        if (file == null) {
             return null;
         }
         return file.getAbsolutePath() + SystemProperties.getFileSeperator();

@@ -57,7 +57,7 @@ public class StringUtil {
                     break;
                 default:
                     if (ch < 0x20 || ch > 0x7e)
-                        sb.append(String.format("\\x%02x", (int)ch));
+                        sb.append(String.format("\\x%02x", (int) ch));
                     else
                         sb.append(ch);
                     break;

@@ -111,7 +111,6 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
 
     /**
      * Start document.
-     *
      */
     @Override
     public void startDocument() {
@@ -119,7 +118,6 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
 
     /**
      * End document.
-     *
      */
     @Override
     public void endDocument() {

@@ -125,8 +125,7 @@ public class FileFilterUtil {
             // get all subdirectories
             final File[] dirs = dir.listFiles(new SubDirectoryFilter());
             if (dirs != null) {
-                for (File element : dirs)
-                {
+                for (File element : dirs) {
                     //noinspection ConstantConditions
                     FileFilterUtil.searchdir(resultList, element, fileFilterPattern,
                         recursive);
