@@ -25,12 +25,12 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
     /**
      * The data.
      */
-    ConfigurationData data;
+    final ConfigurationData data;
 
     /**
      * The data stack.
      */
-    private Stack<ConfigurationData> dataStack;
+    private final Stack<ConfigurationData> dataStack;
 
     /**
      * The current text.
@@ -45,7 +45,7 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
     /**
      * The comment.
      */
-    StringBuilder comment;
+    final StringBuilder comment;
 
 
     /**
@@ -112,19 +112,17 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
     /**
      * Start document.
      *
-     * @throws SAXException the SAX exception
      */
     @Override
-    public void startDocument() throws SAXException {
+    public void startDocument() {
     }
 
     /**
      * End document.
      *
-     * @throws SAXException the SAX exception
      */
     @Override
-    public void endDocument() throws SAXException {
+    public void endDocument() {
     }
 
     /**
@@ -134,12 +132,10 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
      * @param qName        the q name
      * @param namespaceURI the namespace URI
      * @param localName    the local name
-     * @throws SAXException the SAX exception
      */
     @Override
     public void startElement(final String namespaceURI, final String localName,
-        final String qName, final Attributes atts)
-        throws SAXException {
+        final String qName, final Attributes atts) {
 
         if (qName.equals("comment")) {
             currentTextType = NodeType.COMMENT;
@@ -182,7 +178,6 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
                 }
             currentTextType = NodeType.ENTRY;
             currentText = new StringBuilder();
-            return;
         }
     }
 
@@ -192,11 +187,10 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
      * @param qName        the q name
      * @param namespaceURI the namespace URI
      * @param localName    the local name
-     * @throws SAXException the SAX exception
      */
     @Override
     public void endElement(final String namespaceURI, final String localName,
-        final String qName) throws SAXException {
+        final String qName) {
 
         if (currentTextType == NodeType.ENTRY) {
             dataStack.peek().props.setProperty(currentKey, currentText.toString());
@@ -218,11 +212,9 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
      * @param ch     the ch
      * @param start  the start
      * @param length the length
-     * @throws SAXException the SAX exception
      */
     @Override
-    public void characters(final char[] ch, final int start, final int length)
-        throws SAXException {
+    public void characters(final char[] ch, final int start, final int length) {
 
         if (currentText != null)
             currentText.append(ch, start, length);
@@ -232,10 +224,9 @@ public class ConfigurationXMLContentHandler extends DefaultHandler {
      * Warning.
      *
      * @param exception the exception
-     * @throws SAXException the SAX exception
      */
     @Override
-    public void warning(final SAXParseException exception) throws SAXException {
+    public void warning(final SAXParseException exception) {
 
         // App.errorln("sax warning:" , exception.getMessage());
     }

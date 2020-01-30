@@ -118,7 +118,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnName(idx, rsmd.getColumnName(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -131,7 +131,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnLabel(idx, rsmd.getColumnLabel(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -147,7 +147,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
             if (name == null || name.length() == 0)
                 name = getTableName();
             setColumnTableName(idx, name);
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -163,7 +163,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
             if (name == null || name.length() == 0)
                 name = getSchemaName();
             setColumnSchemaName(idx, name);
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -179,7 +179,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
             if (name == null || name.length() == 0)
                 name = getCatalogName();
             setColumnCatalogName(idx, name);
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -192,7 +192,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnTypeName(idx, rsmd.getColumnTypeName(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -209,7 +209,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
                 jdbctype = GMJDBCProperties.getJdbcTypes().NativeTypetoInt(
                     rsmd.getColumnTypeName(idx));
             setColumnType(idx, jdbctype);
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -222,7 +222,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnNullable(idx, rsmd.isNullable(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -235,7 +235,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnDisplaySize(idx, rsmd.getColumnDisplaySize(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -248,7 +248,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnAutoIncrement(idx, rsmd.isAutoIncrement(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -261,7 +261,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnCaseSensitive(idx, rsmd.isCaseSensitive(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -274,7 +274,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnCurrency(idx, rsmd.isCurrency(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -287,7 +287,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnSigned(idx, rsmd.isSigned(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -300,7 +300,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnSearchable(idx, rsmd.isSearchable(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -313,7 +313,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnPrecision(idx, rsmd.getPrecision(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -326,7 +326,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setColumnScale(idx, rsmd.getScale(idx));
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -337,7 +337,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setConcurrency(rs.getConcurrency());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -348,7 +348,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setFetchDirection(rs.getFetchDirection());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -359,7 +359,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setFetchSize(rs.getFetchSize());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -370,7 +370,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setIsolationLevel(con.getTransactionIsolation());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -381,7 +381,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setMaxFieldSize(stmt.getMaxFieldSize());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -392,7 +392,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setMaxRows(stmt.getMaxRows());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -403,7 +403,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setQueryTimeout(stmt.getQueryTimeout());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -414,7 +414,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setReadOnly(con.isReadOnly());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
@@ -425,7 +425,7 @@ public class UnloadMetaData extends MetaDataImpl implements MetaData {
 
         try {
             setRowSetType(stmt.getResultSetType());
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 

@@ -57,21 +57,15 @@ public class ImporterImpl implements Importer {
         final String schemaName, final String catalogName)
         throws DataIOException {
 
-        try {
-            loader.startLoading(tableName, schemaName, catalogName);
-            final DataReader reader = factory.getInstance(inputStream, progress);
-            final long all = reader.readAllData(loader);
-            final long written = loader.getRowWrittenCount();
-            final long failed = loader.getRowFailedCount();
-            final long ignored = loader.getRowIgnoredCount();
-            final long unknown = all - written - failed - ignored;
-            loader.endLoading();
-            if (failed > 0 || unknown > 0 || all != loader.getAllRowCount())
-                return false;
-            return true;
-        } catch (final SQLException e) {
-            throw new DataIOException(e);
-        }
+        loader.startLoading(tableName, schemaName, catalogName);
+        final DataReader reader = factory.getInstance(inputStream, progress);
+        final long all = reader.readAllData(loader);
+        final long written = loader.getRowWrittenCount();
+        final long failed = loader.getRowFailedCount();
+        final long ignored = loader.getRowIgnoredCount();
+        final long unknown = all - written - failed - ignored;
+        loader.endLoading();
+        return failed <= 0 && unknown <= 0 && all == loader.getAllRowCount();
     }
 
     /**

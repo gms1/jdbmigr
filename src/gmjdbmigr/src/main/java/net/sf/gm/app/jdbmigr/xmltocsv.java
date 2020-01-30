@@ -38,7 +38,7 @@ public class xmltocsv extends JDbMigrApplicationBase {
     /**
      * The format options.
      */
-    private CSVFormatOptions formatOptions;
+    private final CSVFormatOptions formatOptions;
 
     /**
      * The file list.
@@ -134,10 +134,9 @@ public class xmltocsv extends JDbMigrApplicationBase {
      * Run instance.
      *
      * @return the int
-     * @throws Exception the exception
      */
     @Override
-    protected int runInstance() throws Exception {
+    protected int runInstance() {
 
         int failedCount = 0;
         Progress progress = new AppProgress();

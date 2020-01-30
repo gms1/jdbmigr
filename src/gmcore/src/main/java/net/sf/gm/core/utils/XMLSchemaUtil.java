@@ -34,7 +34,7 @@ public class XMLSchemaUtil {
     /**
      * The schema w3 factory.
      */
-    static SchemaFactory schemaW3Factory =
+    static final SchemaFactory schemaW3Factory =
         SchemaFactory.newInstance(XMLSchemaUtil.W3C_XML_SCHEMA_NS_URI);
 
     /**

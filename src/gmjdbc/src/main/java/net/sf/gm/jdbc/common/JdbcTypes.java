@@ -20,17 +20,17 @@ public class JdbcTypes {
     /**
      * The int to string.
      */
-    private Hashtable<Integer, String> intToString;
+    private final Hashtable<Integer, String> intToString;
 
     /**
      * The string to int.
      */
-    private Hashtable<String, Integer> stringToInt;
+    private final Hashtable<String, Integer> stringToInt;
 
     /**
      * The native string to int.
      */
-    private Hashtable<String, Integer> nativeStringToInt;
+    private final Hashtable<String, Integer> nativeStringToInt;
 
     /**
      * The Constructor.
@@ -161,6 +161,6 @@ public class JdbcTypes {
      */
     public int NativeTypetoInt(String type) {
 
-        return nativeStringToInt.containsKey(type) ? nativeStringToInt.get(type) : java.sql.Types.NULL;
+        return nativeStringToInt.getOrDefault(type, java.sql.Types.NULL);
     }
 }

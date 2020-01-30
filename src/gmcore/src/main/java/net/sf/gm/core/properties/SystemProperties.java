@@ -24,7 +24,7 @@ final public class SystemProperties {
      * The Constant isWindows.
      */
     private final static boolean isWindows =
-        System.getProperty("os.name").startsWith("Windows") ? true : false;
+        System.getProperty("os.name").startsWith("Windows");
 
     /**
      * The Constant persistentPathSeperator.
@@ -146,8 +146,8 @@ final public class SystemProperties {
         else {
             dir = System.getenv("ALLUSERSPROFILE");
             if (dir != null)
-                if ((dir = LocationUtil.getChildPath(new File(dir),
-                    "Application Data")) != null)
+                    dir = LocationUtil.getChildPath(new File(dir),
+                        "Application Data");
                     dir = dir + SystemProperties.getFileSeperator();
         }
         return dir;
@@ -168,7 +168,7 @@ final public class SystemProperties {
                 return dir = dir + SystemProperties.getFileSeperator();
         } else if ((dir = System.getenv("APPDATA")) != null)
             return dir = dir + SystemProperties.getFileSeperator();
-        return dir;
+        return null;
     }
 
     /**
@@ -182,6 +182,9 @@ final public class SystemProperties {
     public static String getLibraryDir(final Class<?> libraryClass) {
 
         final File file = LocationUtil.getClassInstallDir(libraryClass);
+        if ( file == null ) {
+            return null;
+        }
         return file.getAbsolutePath() + SystemProperties.getFileSeperator();
     }
 }

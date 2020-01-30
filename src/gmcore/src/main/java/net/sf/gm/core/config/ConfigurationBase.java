@@ -13,7 +13,6 @@ import net.sf.gm.core.utils.ReaderInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
@@ -133,9 +132,8 @@ public abstract class ConfigurationBase implements Configuration {
             return null;
         final Properties resProps = new Properties();
         final Set<Object> keys = resProps.keySet();
-        final Iterator<Object> i = keys.iterator();
-        while (i.hasNext()) {
-            final String key = (String) i.next();
+        for (Object o : keys) {
+            final String key = (String) o;
             resProps.put(key, props.getProperty(key));
         }
         return resProps;
@@ -289,7 +287,7 @@ public abstract class ConfigurationBase implements Configuration {
             return defValue;
         try {
             return Integer.parseInt(v);
-        } catch (final Exception e) {
+        } catch (final Exception ignored) {
         }
         return defValue;
     }
@@ -323,7 +321,7 @@ public abstract class ConfigurationBase implements Configuration {
             return defValue;
         try {
             return Double.parseDouble(v);
-        } catch (final Exception e) {
+        } catch (final Exception ignored) {
         }
         return defValue;
     }
@@ -353,6 +351,7 @@ public abstract class ConfigurationBase implements Configuration {
         final Properties props = data.findNodeProperties(node);
         if (props == null)
             return null;
+        //noinspection SuspiciousToArrayCall
         return props.keySet().toArray(new String[0]);
     }
 

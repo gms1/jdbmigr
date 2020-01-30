@@ -28,7 +28,7 @@ public class StAXUtil {
     /**
      * The parser factory.
      */
-    static XMLInputFactory parserFactory = XMLInputFactory.newInstance();
+    static final XMLInputFactory parserFactory = XMLInputFactory.newInstance();
 
     /**
      * Creates the XML stream reader.
@@ -54,7 +54,7 @@ public class StAXUtil {
         try {
             if (xmlreader != null)
                 xmlreader.close();
-        } catch (XMLStreamException e) {
+        } catch (XMLStreamException ignored) {
         }
     }
 
@@ -180,11 +180,10 @@ public class StAXUtil {
             int event = xmlreader.next();
             switch (event) {
                 case XMLStreamConstants.END_DOCUMENT:
+                case XMLStreamConstants.END_ELEMENT:
                     return null;
                 case XMLStreamConstants.START_ELEMENT:
                     return xmlreader.getLocalName();
-                case XMLStreamConstants.END_ELEMENT:
-                    return null;
             }
         }
         return null;
@@ -342,7 +341,7 @@ public class StAXUtil {
     /**
      * The serializer factory.
      */
-    static XMLOutputFactory serializerFactory = XMLOutputFactory.newInstance();
+    static final XMLOutputFactory serializerFactory = XMLOutputFactory.newInstance();
 
     /**
      * Creates the XML stream writer.
@@ -369,7 +368,7 @@ public class StAXUtil {
         try {
             if (xmlwriter != null)
                 xmlwriter.close();
-        } catch (XMLStreamException e) {
+        } catch (XMLStreamException ignored) {
         }
     }
 }

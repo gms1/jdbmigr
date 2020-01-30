@@ -40,7 +40,7 @@ public abstract class AbstractApplication {
     public AbstractApplication() {
 
         final String debugVar = System.getenv("DEBUG");
-        final boolean debug = (debugVar == null || debugVar.equals("0")) ? false : true;
+        final boolean debug = debugVar != null && !debugVar.equals("0");
         AbstractApplication.out.setMessageLevel(debug ? OutputTarget.LEVEL_DEBUG : OutputTarget.LEVEL_MESSAGE);
 
         showElapsed = false;
@@ -91,9 +91,8 @@ public abstract class AbstractApplication {
      *
      * @param args the args
      * @return the string[]
-     * @throws Exception the exception
      */
-    protected String[] ParseCmdLine(final String[] args) throws Exception {
+    protected String[] ParseCmdLine(final String[] args) {
 
         return args;
     }
@@ -217,7 +216,7 @@ public abstract class AbstractApplication {
                 AppProperties.init(companyName, productName, appName, versionResource, versionPrefix, myClass);
 
         } catch (final ExitException e) {
-            AbstractApplication.errorln("Application failed to initialize: RuntimeException", e);
+            AbstractApplication.errorln("Application failed to initialize: ExitException", e);
             System.exit(1);
         } catch (final RuntimeException e) {
             AbstractApplication.errorln("Application failed to initialize: RuntimeException", e);

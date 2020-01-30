@@ -17,7 +17,6 @@ import net.sf.gm.jdbc.load.Unloader;
 
 import java.io.*;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * The Class ExporterImpl.
@@ -69,6 +68,7 @@ public class ExporterImpl implements Exporter {
             if (outputDirectory == null)
                 outputDirectory = new File(".");
             if (!outputDirectory.exists())
+                //noinspection ResultOfMethodCallIgnored
                 outputDirectory.mkdir();
             tmpFile = File.createTempFile(".exp", ".tmp", outputDirectory);
             outputStream = new BufferedOutputStream(new FileOutputStream(tmpFile));
@@ -145,17 +145,13 @@ public class ExporterImpl implements Exporter {
         final String schemaName, final String catalogName)
         throws DataIOException {
 
-        try {
-            unloader.setProgress(progress);
-            unloader.startUnLoading(tableName, schemaName, catalogName,
-                statementText);
-            final DataWriter writer = factory.getInstance(outputStream, progress);
-            writer.writeAllData(unloader);
-            unloader.endUnLoading();
-            return true;
-        } catch (final SQLException e) {
-            throw new DataIOException(e);
-        }
+        unloader.setProgress(progress);
+        unloader.startUnLoading(tableName, schemaName, catalogName,
+            statementText);
+        final DataWriter writer = factory.getInstance(outputStream, progress);
+        writer.writeAllData(unloader);
+        unloader.endUnLoading();
+        return true;
     }
 
     /**

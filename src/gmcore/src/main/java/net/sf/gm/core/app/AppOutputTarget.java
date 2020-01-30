@@ -22,12 +22,12 @@ public interface AppOutputTarget extends OutputTarget {
      *
      * @return the log target
      */
-    public OutputTarget getLogTarget();
+    OutputTarget getLogTarget();
 
     /**
      * Sets the log target.
      *
      * @param log the log
      */
-    public void setLogTarget(OutputTarget log);
+    void setLogTarget(OutputTarget log);
 }

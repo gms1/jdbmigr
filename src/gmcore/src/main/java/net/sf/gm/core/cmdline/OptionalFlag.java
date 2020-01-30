@@ -67,8 +67,7 @@ public class OptionalFlag extends OptionBase {
      */
     public boolean getValue() {
 
-        return getArgument() != null ? ((Boolean) getArgument()).booleanValue()
-            : false;
+        return getArgument() != null && (Boolean) getArgument();
     }
 
     /**

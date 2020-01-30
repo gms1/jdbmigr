@@ -196,6 +196,7 @@ public class PropertiesUtil {
             return false;
         final File dir = file.getParentFile();
         if (!dir.exists())
+            //noinspection ResultOfMethodCallIgnored
             dir.mkdirs();
         if (!dir.exists())
             return false;
@@ -364,7 +365,7 @@ public class PropertiesUtil {
             return defaultValue;
         try {
             return Integer.parseInt(v);
-        } catch (final Exception e) {
+        } catch (final Exception ignored) {
         }
         return defaultValue;
     }
@@ -399,7 +400,7 @@ public class PropertiesUtil {
             return defaultValue;
         try {
             return Double.parseDouble(v);
-        } catch (final Exception e) {
+        } catch (final Exception ignored) {
         }
         return defaultValue;
     }

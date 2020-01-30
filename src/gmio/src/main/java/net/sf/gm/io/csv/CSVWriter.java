@@ -25,14 +25,13 @@ import java.sql.Types;
 public class CSVWriter extends DataWriterAbstractStream implements DataWriter {
 
     /**
-     * The writer.
-     */
-    private OutputStreamWriter writer;
-
-    /**
      * The options.
      */
     private final CSVFormatOptions options;
+    /**
+     * The writer.
+     */
+    private OutputStreamWriter writer;
 
     /**
      * The Constructor.
@@ -117,7 +116,6 @@ public class CSVWriter extends DataWriterAbstractStream implements DataWriter {
             getProgress().warningln("row " + this.getAllRowCount() +
                 " ignored: row type '" + rowType.CURRENT.name() +
                 "' is not supported");
-            return;
         }
     }
 
@@ -327,10 +325,8 @@ public class CSVWriter extends DataWriterAbstractStream implements DataWriter {
 
     /**
      * Sets the column value null.
-     *
-     * @throws DataIOException the data IO exception
      */
-    protected void writeNullValue() throws DataIOException {
+    protected void writeNullValue() {
     }
 
     /**

@@ -11,7 +11,6 @@ import net.sf.gm.core.utils.LocationUtil;
 import net.sf.gm.core.utils.PropertiesUtil;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
@@ -26,32 +25,32 @@ public class ModuleProperties {
     /**
      * The prop name_ MODUL e_ release.
      */
-    public String propName_MODULE_Release = "[MODULENAME]RELEASE";
+    public final String propName_MODULE_Release = "[MODULENAME]RELEASE";
 
     /**
      * The prop name_ MODUL e_ url.
      */
-    public String propName_MODULE_Url = "[MODULENAME]URL";
+    public final String propName_MODULE_Url = "[MODULENAME]URL";
 
     /**
      * The prop name_ MODUL e_ dir.
      */
-    public String propName_MODULE_Dir = "[MODULENAME]DIR";
+    public final String propName_MODULE_Dir = "[MODULENAME]DIR";
 
     /**
      * The prop name_ MODUL e_ prefix.
      */
-    public String propName_MODULE_Prefix = "[MODULENAME]PREFIX";
+    public final String propName_MODULE_Prefix = "[MODULENAME]PREFIX";
 
     /**
      * The prop name_ MODUL e_ exe prefix.
      */
-    public String propName_MODULE_ExePrefix = "[MODULENAME]EXEPREFIX";
+    public final String propName_MODULE_ExePrefix = "[MODULENAME]EXEPREFIX";
 
     /**
      * The default_ MODUL e_ exe prefix.
      */
-    public String default_MODULE_ExePrefix = "${[MODULENAME]PREFIX}";
+    public final String default_MODULE_ExePrefix = "${[MODULENAME]PREFIX}";
 
     // // user executables:
     // public String default_MODULE_BinDir = "${[MODULENAME]EXEPREFIX}/bin/";
@@ -63,67 +62,67 @@ public class ModuleProperties {
     /**
      * The prop name_ MODUL e_ lib exec dir.
      */
-    public String propName_MODULE_LibExecDir = "[MODULENAME]LIBEXECDIR";
+    public final String propName_MODULE_LibExecDir = "[MODULENAME]LIBEXECDIR";
 
     /**
      * The default_ MODUL e_ lib exec dir.
      */
-    public String default_MODULE_LibExecDir = "${[MODULENAME]EXEPREFIX}/libexec/";
+    public final String default_MODULE_LibExecDir = "${[MODULENAME]EXEPREFIX}/libexec/";
 
     // (object code) libraries:
     /**
      * The prop name_ MODUL e_ lib dir.
      */
-    public String propName_MODULE_LibDir = "[MODULENAME]LIBDIR";
+    public final String propName_MODULE_LibDir = "[MODULENAME]LIBDIR";
 
     /**
      * The default_ MODUL e_ lib dir.
      */
-    public String default_MODULE_LibDir = "${[MODULENAME]EXEPREFIX}/lib/";
+    public final String default_MODULE_LibDir = "${[MODULENAME]EXEPREFIX}/lib/";
 
     // read-only single-machine data
     /**
      * The prop name_ MODUL e_ etc dir.
      */
-    public String propName_MODULE_EtcDir = "[MODULENAME]ETCDIR";
+    public final String propName_MODULE_EtcDir = "[MODULENAME]ETCDIR";
 
     /**
      * The default_ MODUL e_ etc dir.
      */
-    public String default_MODULE_EtcDir = "${[MODULENAME]PREFIX}/etc/";
+    public final String default_MODULE_EtcDir = "${[MODULENAME]PREFIX}/etc/";
 
     // read-only architecture-independend data
     /**
      * The prop name_ MODUL e_ share dir.
      */
-    public String propName_MODULE_ShareDir = "[MODULENAME]SHAREDIR";
+    public final String propName_MODULE_ShareDir = "[MODULENAME]SHAREDIR";
 
     /**
      * The default_ MODUL e_ share dir.
      */
-    public String default_MODULE_ShareDir = "${[MODULENAME]PREFIX}/share/";
+    public final String default_MODULE_ShareDir = "${[MODULENAME]PREFIX}/share/";
 
     // modifiable single-machine data
     /**
      * The prop name_ MODUL e_ var dir.
      */
-    public String propName_MODULE_VarDir = "[MODULENAME]VARDIR";
+    public final String propName_MODULE_VarDir = "[MODULENAME]VARDIR";
 
     /**
      * The default_ MODUL e_ var dir.
      */
-    public String default_MODULE_VarDir = "${[MODULENAME]PREFIX}/var/";
+    public final String default_MODULE_VarDir = "${[MODULENAME]PREFIX}/var/";
 
     // modifiable architecture-independend data
     /**
      * The prop name_ MODUL e_ com dir.
      */
-    public String propName_MODULE_ComDir = "[MODULENAME]COMDIR";
+    public final String propName_MODULE_ComDir = "[MODULENAME]COMDIR";
 
     /**
      * The default_ MODUL e_ com dir.
      */
-    public String default_MODULE_ComDir = "${[MODULENAME]PREFIX}/com/";
+    public final String default_MODULE_ComDir = "${[MODULENAME]PREFIX}/com/";
 
     // // info documentation
     // public String default_MODULE_InfoDir = "${[MODULENAME]PREFIX}/info/";
@@ -134,12 +133,12 @@ public class ModuleProperties {
     /**
      * The module class.
      */
-    private Class<?> moduleClass;
+    private final Class<?> moduleClass;
 
     /**
      * The module name.
      */
-    private String moduleName;
+    private final String moduleName;
 
     /**
      * The Constructor.
@@ -158,6 +157,7 @@ public class ModuleProperties {
 
         AppProperties.setDefaultAppPropertyValue(getModuleDependendValue(propName_MODULE_Release), "");
 
+        //noinspection ConstantConditions
         AppProperties.setDefaultAppPropertyValue(getModuleDependendValue(propName_MODULE_Prefix),
             getModuleDependendValue(getDefaultMODULEPrefix()));
         AppProperties.setDefaultAppPropertyValue(getModuleDependendValue(propName_MODULE_ExePrefix),
@@ -183,9 +183,8 @@ public class ModuleProperties {
             final Properties props = new Properties();
             PropertiesUtil.createPropertiesFromResource(props, versionResource, false);
             final Set<Object> keys = props.keySet();
-            final Iterator<Object> i = keys.iterator();
-            while (i.hasNext()) {
-                final String key = (String) i.next();
+            for (Object o : keys) {
+                final String key = (String) o;
                 final String value = props.getProperty(key);
                 if (value != null)
                     AppProperties.addAppProperty(key, value);
@@ -201,7 +200,7 @@ public class ModuleProperties {
      */
     public String getModuleDependendValue(final String property) {
 
-        return property.replaceAll("\\[MODULENAME\\]", moduleName);
+        return property.replaceAll("\\[MODULENAME]", moduleName);
     }
 
     /**
@@ -211,6 +210,7 @@ public class ModuleProperties {
      */
     private String getMODULEUrl() {
 
+        //noinspection ConstantConditions
         return LocationUtil.getClassPathUrl(moduleClass).toExternalForm();
     }
 

@@ -74,7 +74,7 @@ public class DMLWriter extends DataWriterAbstractStream implements DataWriter {
     /**
      * The eol.
      */
-    private static String eol = System.getProperty("line.separator");
+    private static final String eol = System.getProperty("line.separator");
 
     /**
      * The column is primary key.
@@ -94,22 +94,22 @@ public class DMLWriter extends DataWriterAbstractStream implements DataWriter {
     /**
      * The do delete.
      */
-    private boolean doDelete;
+    private final boolean doDelete;
 
     /**
      * The doImport.
      */
-    private boolean doImport;
+    private final boolean doImport;
 
     /**
      * The doSync.
      */
-    private boolean doSync;
+    private final boolean doSync;
 
     /**
      * The commitCount.
      */
-    private int commitCount;
+    private final int commitCount;
 
     /**
      * The Constructor.
@@ -155,8 +155,10 @@ public class DMLWriter extends DataWriterAbstractStream implements DataWriter {
             String name = metaData.getColumnName(idx);
             columnIsPrimaryKey[idx - 1] = false;
             for (String key : keys) {
-                if (name.equals(key))
+                if (name.equals(key)) {
                     columnIsPrimaryKey[idx - 1] = true;
+                    break;
+                }
             }
         }
 
@@ -543,9 +545,8 @@ public class DMLWriter extends DataWriterAbstractStream implements DataWriter {
      * set the column value to null.
      *
      * @param idx the idx
-     * @throws DataIOException the data IO exception
      */
-    public void setValueNull(final int idx) throws DataIOException {
+    public void setValueNull(final int idx) {
 
         setValue(idx, "null");
     }
@@ -555,9 +556,8 @@ public class DMLWriter extends DataWriterAbstractStream implements DataWriter {
      *
      * @param value the value
      * @param idx   the idx
-     * @throws DataIOException the data IO exception
      */
-    protected void setValue(final int idx, final String value) throws DataIOException {
+    protected void setValue(final int idx, final String value) {
 
         columnValues[idx - 1].setLength(0);
         addValue(idx, value);
@@ -568,9 +568,8 @@ public class DMLWriter extends DataWriterAbstractStream implements DataWriter {
      *
      * @param value the value
      * @param idx   the idx
-     * @throws DataIOException the data IO exception
      */
-    protected void addValue(final int idx, final String value) throws DataIOException {
+    protected void addValue(final int idx, final String value) {
 
         columnValues[idx - 1].append(value);
     }
@@ -582,9 +581,8 @@ public class DMLWriter extends DataWriterAbstractStream implements DataWriter {
      * @param chars  the chars
      * @param idx    the idx
      * @param offset the offset
-     * @throws DataIOException the data IO exception
      */
-    protected void addValue(final int idx, char[] chars, int offset, int len) throws DataIOException {
+    protected void addValue(final int idx, char[] chars, @SuppressWarnings("SameParameterValue") int offset, int len) {
 
         columnValues[idx - 1].append(chars, offset, len);
     }

@@ -23,12 +23,12 @@ public class Base64Encoder extends Base64Base {
     /**
      * The is.
      */
-    private InputStream is;
+    private final InputStream is;
 
     /**
      * The pw.
      */
-    private OutputStreamWriter pw;
+    private final OutputStreamWriter pw;
 
     /**
      * The current line size.

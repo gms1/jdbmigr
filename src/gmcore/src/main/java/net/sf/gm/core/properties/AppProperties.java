@@ -34,27 +34,27 @@ final public class AppProperties {
     /**
      * The log.
      */
-    static Logger log = Logger.getLogger(AppProperties.class.getName());
+    static final Logger log = Logger.getLogger(AppProperties.class.getName());
 
     /**
      * The app properties.
      */
-    private static Properties appProperties;
+    private static final Properties appProperties = new Properties();
 
     /**
      * The app properties cache.
      */
-    private static Properties appPropertiesCache;
+    private static final Properties appPropertiesCache = new Properties();
 
     /**
      * The app properties used.
      */
-    private static Set<String> appPropertiesUsed;
+    private static final Set<String> appPropertiesUsed = new HashSet<String>();
 
     /**
      * The app properties default.
      */
-    private static Properties appPropertiesDefault;
+    private static final Properties appPropertiesDefault = new Properties();
 
     /**
      * The log file handle map.
@@ -66,7 +66,7 @@ final public class AppProperties {
      * The Constant appPropPattern.
      */
     private static final Pattern appPropPattern =
-        Pattern.compile("\\$\\{([\\w\\d]*)\\}");
+        Pattern.compile("\\$\\{([\\w\\d]*)}");
 
     // application settings
 
@@ -156,11 +156,6 @@ final public class AppProperties {
     static ModuleProperties modulProps = null;
 
     static {
-        AppProperties.appProperties = new Properties();
-        AppProperties.appPropertiesCache = new Properties();
-        AppProperties.appPropertiesUsed = new HashSet<String>();
-        AppProperties.appPropertiesDefault = new Properties();
-
         GMCOREProperties.startup();
     }
 
@@ -448,8 +443,7 @@ final public class AppProperties {
      */
     public static boolean hasAppProperty(final String propName) {
 
-        return AppProperties.appProperties.getProperty(propName) != null ? true
-            : false;
+        return AppProperties.appProperties.getProperty(propName) != null;
     }
 
     /**
@@ -460,7 +454,7 @@ final public class AppProperties {
      */
     public static boolean haveAppPropertyUsed(final String propName) {
 
-        return AppProperties.appPropertiesUsed.contains(propName) ? true : false;
+        return AppProperties.appPropertiesUsed.contains(propName);
     }
 
     /**
@@ -618,6 +612,7 @@ final public class AppProperties {
                     throw new ConfigurationException(
                         "in addAppProperty(\"" + propName + "\",\"" + propValue +
                             "\"): property already initialized: \"" + value + "\"");
+                //noinspection ConstantConditions
                 AppProperties.log.fine((used && force)
                     ? "forced "
                     : ""
@@ -661,7 +656,7 @@ final public class AppProperties {
                 // we want to replace with string literal
                 // matcher.appendReplacement(res);
                 if (matcher.start() > start)
-                    buf.append(res.substring(start, matcher.start()));
+                    buf.append(res, start, matcher.start());
                 buf.append(AppProperties.getAppProperty(matcher.group(1)));
                 start = matcher.end();
                 found = true;

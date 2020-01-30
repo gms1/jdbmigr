@@ -50,14 +50,14 @@ public class StringUtil {
                     sb.append("\\\"");
                     break;
                 case '\'':
-                    sb.append("\\\'");
+                    sb.append("\\'");
                     break;
                 case '\\':
                     sb.append("\\\\");
                     break;
                 default:
                     if (ch < 0x20 || ch > 0x7e)
-                        sb.append(String.format("\\x%02x", ch));
+                        sb.append(String.format("\\x%02x", (int)ch));
                     else
                         sb.append(ch);
                     break;
@@ -106,9 +106,8 @@ public class StringUtil {
                     {
                         final StringBuilder digits = new StringBuilder();
                         i = StringUtil.consumeHexDigits(digits, in, i, 3) - 1;
-                        if (true)
-                            throw new UnsupportedOperationException("unescape cstring: \\x" +
-                                digits.toString());
+                        throw new UnsupportedOperationException("unescape cstring: \\x" +
+                            digits.toString());
                     }
                     // break;
                     case 'u': // hexadecimal 4 digits
@@ -124,9 +123,8 @@ public class StringUtil {
                             sb.append(digits.toString());
                             continue;
                         }
-                        if (true)
-                            throw new UnsupportedOperationException("unescape cstring: \\u" +
-                                digits.toString());
+                        throw new UnsupportedOperationException("unescape cstring: \\u" +
+                            digits.toString());
                     }
                     // break;
                     case 'U': // hexadecimal 8 digits
@@ -142,9 +140,8 @@ public class StringUtil {
                             sb.append(digits.toString());
                             continue;
                         }
-                        if (true)
-                            throw new UnsupportedOperationException("unescape cstring: \\U" +
-                                digits.toString());
+                        throw new UnsupportedOperationException("unescape cstring: \\U" +
+                            digits.toString());
                     }
                     // break;
                     case '0': // octal 1-3 digits
@@ -155,9 +152,8 @@ public class StringUtil {
                     {
                         final StringBuilder digits = new StringBuilder();
                         i = StringUtil.consumeOctalDigits(digits, in, i, 8) - 1;
-                        if (true)
-                            throw new UnsupportedOperationException("unescape cstring: \\0" +
-                                digits.toString());
+                        throw new UnsupportedOperationException("unescape cstring: \\0" +
+                            digits.toString());
                     }
                     // break;
                     default:
@@ -181,10 +177,10 @@ public class StringUtil {
      * @param c the c
      * @return true, if is hex digit
      */
-    public static boolean isHexDigit(final char c) {
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted") public static boolean isHexDigit(final char c) {
 
         return (c >= '0' && c <= '9') ||
-            (c >= 'a' || c <= 'f') && (c >= 'A' || c <= 'F');
+            (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
     }
 
     /**
@@ -193,7 +189,7 @@ public class StringUtil {
      * @param c the c
      * @return true, if is octal digit
      */
-    public static boolean isOctalDigit(final char c) {
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted") public static boolean isOctalDigit(final char c) {
 
         return (c >= '0' && c <= '7');
     }

@@ -22,19 +22,17 @@ import java.util.logging.Logger;
 public class DataSourceWrapperFromDataSourceClass implements DataSourceWrapper {
 
     /**
-     * The cl instance.
-     */
-    private DataSource clInstance;
-
-    /**
      * The cl info.
      */
-    protected DriverClassInfo clInfo;
-
+    protected final DriverClassInfo clInfo;
     /**
      * The ds info.
      */
-    protected DataSourceInfo dsInfo;
+    protected final DataSourceInfo dsInfo;
+    /**
+     * The cl instance.
+     */
+    private DataSource clInstance;
 
     /**
      * The Constructor.
@@ -98,17 +96,6 @@ public class DataSourceWrapperFromDataSourceClass implements DataSourceWrapper {
     }
 
     /**
-     * Sets the login timeout.
-     *
-     * @param seconds the seconds
-     * @throws SQLException the SQL exception
-     */
-    public void setLoginTimeout(final int seconds) throws SQLException {
-
-        clInstance.setLoginTimeout(seconds);
-    }
-
-    /**
      * Gets the login timeout.
      *
      * @return the login timeout
@@ -117,6 +104,17 @@ public class DataSourceWrapperFromDataSourceClass implements DataSourceWrapper {
     public int getLoginTimeout() throws SQLException {
 
         return clInstance.getLoginTimeout();
+    }
+
+    /**
+     * Sets the login timeout.
+     *
+     * @param seconds the seconds
+     * @throws SQLException the SQL exception
+     */
+    public void setLoginTimeout(final int seconds) throws SQLException {
+
+        clInstance.setLoginTimeout(seconds);
     }
 
     /**
@@ -145,14 +143,23 @@ public class DataSourceWrapperFromDataSourceClass implements DataSourceWrapper {
     }
 
     /**
+     * Sets the properties.
+     *
+     * @param newProps the new props
+     */
+    public void setProperties(Properties newProps) {
+
+        // todo: implement
+    }
+
+    /**
      * Gets the property info.
      *
      * @param info the info
      * @param url  the url
      * @return the property info
-     * @throws SQLException the SQL exception
      */
-    public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
+    public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) {
 
         // todo: implement
         return null;
@@ -173,16 +180,6 @@ public class DataSourceWrapperFromDataSourceClass implements DataSourceWrapper {
      * Sets the url.
      */
     public void setUrl(final String newUrl) {
-        // todo: implement
-    }
-
-    /**
-     * Sets the properties.
-     *
-     * @param newProps the new props
-     */
-    public void setProperties(Properties newProps) {
-
         // todo: implement
     }
 

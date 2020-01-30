@@ -25,15 +25,14 @@ public interface Loader extends DataWriter {
      *
      * @return the connection
      */
-    public Connection getConnection();
+    Connection getConnection();
 
     /**
      * Sets the connection.
      *
      * @param con the con
-     * @throws SQLException the SQL exception
      */
-    void setConnection(Connection con) throws SQLException;
+    void setConnection(Connection con);
 
     /**
      * Delete.
@@ -53,17 +52,14 @@ public interface Loader extends DataWriter {
      * @param tableName   the table name
      * @param schemaName  the schema name
      * @param catalogName the catalog name
-     * @throws SQLException the SQL exception
      */
     void startLoading(String tableName, String schemaName, String catalogName)
-        throws SQLException;
+    ;
 
     /**
      * End loading.
-     *
-     * @throws SQLException the SQL exception
      */
-    void endLoading() throws SQLException;
+    void endLoading();
 
     /**
      * Close.

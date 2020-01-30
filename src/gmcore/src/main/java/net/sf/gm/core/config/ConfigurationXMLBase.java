@@ -11,7 +11,6 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import java.io.IOException;
 import java.io.StringReader;
 
 //
@@ -54,7 +53,7 @@ public class ConfigurationXMLBase {
     /**
      * The Class ConfigurationEntityResolver.
      */
-    protected class ConfigurationEntityResolver implements EntityResolver {
+    protected static class ConfigurationEntityResolver implements EntityResolver {
 
         /**
          * Resolve entity.
@@ -62,12 +61,11 @@ public class ConfigurationXMLBase {
          * @param publicId the public id
          * @param systemId the system id
          * @return the input source
-         * @throws IOException  the IO exception
          * @throws SAXException the SAX exception
          */
         public InputSource resolveEntity(final String publicId,
             final String systemId)
-            throws SAXException, IOException {
+            throws SAXException {
 
             if (systemId.equals(ConfigurationXMLBase.CONFIGURATION_DTD_URI)) {
                 final InputSource is = new InputSource(

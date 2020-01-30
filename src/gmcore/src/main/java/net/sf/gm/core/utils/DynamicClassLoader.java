@@ -39,7 +39,7 @@ public class DynamicClassLoader {
     /**
      * The log.
      */
-    static Logger log = Logger.getLogger(DynamicClassLoader.class.getName());
+    static final Logger log = Logger.getLogger(DynamicClassLoader.class.getName());
 
     /**
      * The parent map.
@@ -69,7 +69,7 @@ public class DynamicClassLoader {
      * @param addPath the add path
      * @return true, if add single path
      */
-    public boolean addSinglePath(final String addPath) {
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted") public boolean addSinglePath(final String addPath) {
 
         URL newUrl = null;
         final File f = new File(addPath);
@@ -88,13 +88,14 @@ public class DynamicClassLoader {
         if (urls != null) {
             boolean add = true;
             for (URL element : urls)
-                if (element.equals(newUrl))
+                if (element.equals(newUrl)) {
                     add = false;
+                    break;
+                }
             if (add) {
-                final URL[] newUrls = new URL[urls == null ? 1 : urls.length + 1];
-                if (urls != null)
-                    for (i = 0; i < urls.length; i++)
-                        newUrls[i] = urls[i];
+                final URL[] newUrls = new URL[urls.length + 1];
+                for (i = 0; i < urls.length; i++)
+                    newUrls[i] = urls[i];
                 newUrls[i] = newUrl;
                 urls = newUrls;
             }
@@ -114,7 +115,7 @@ public class DynamicClassLoader {
      */
     public boolean addArchivesFromDir(final File dir) {
 
-        if (dir.isDirectory() == false) {
+        if (!dir.isDirectory()) {
             DynamicClassLoader.log
                 .fine("failed to add archives in \"" + dir.toString() + "\" to classpath (directory not found)");
             return false;
@@ -163,11 +164,7 @@ public class DynamicClassLoader {
 
         if (DynamicClassLoader.parentMap == null)
             DynamicClassLoader.parentMap = new HashMap<ClassLoader, Map<String, ClassLoader>>();
-        Map<String, ClassLoader> childMap = DynamicClassLoader.parentMap.get(parentClassLoader);
-        if (childMap == null) {
-            childMap = new HashMap<String, ClassLoader>();
-            DynamicClassLoader.parentMap.put(parentClassLoader, childMap);
-        }
+        Map<String, ClassLoader> childMap = DynamicClassLoader.parentMap.computeIfAbsent(parentClassLoader, k -> new HashMap<String, ClassLoader>());
         final String urlsString = urlsToString(urls);
         ClassLoader childClassLoader = childMap.get(urlsString);
         if (childClassLoader == null) {
@@ -187,7 +184,7 @@ public class DynamicClassLoader {
      * @param urls the urls
      * @return the string
      */
-    private final String urlsToString(final URL[] urls) {
+    private String urlsToString(final URL[] urls) {
 
         if (urls == null)
             return "";
@@ -213,9 +210,7 @@ public class DynamicClassLoader {
             if (!file.isFile())
                 return false;
             final String uc = file.getName().toUpperCase();
-            if (uc.endsWith(".JAR") || uc.endsWith(".ZIP"))
-                return true;
-            return false;
+            return uc.endsWith(".JAR") || uc.endsWith(".ZIP");
         }
     }
 }

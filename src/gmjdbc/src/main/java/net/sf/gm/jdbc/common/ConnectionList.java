@@ -26,7 +26,7 @@ public class ConnectionList extends ModelServer<ConnectionList> {
     /**
      * The list.
      */
-    private SortedMap<String, ConnectionInfo> list = null;
+    private final SortedMap<String, ConnectionInfo> list = new TreeMap<String, ConnectionInfo>();
 
     /**
      * The Constructor.
@@ -34,7 +34,6 @@ public class ConnectionList extends ModelServer<ConnectionList> {
     public ConnectionList() {
 
         super();
-        list = new TreeMap<String, ConnectionInfo>();
     }
 
     /**
@@ -52,7 +51,7 @@ public class ConnectionList extends ModelServer<ConnectionList> {
         synchronized (list) {
             newName.append("/");
             newName.append(userName);
-            final String[] names = list.keySet().toArray(new String[list.size()]);
+            final String[] names = list.keySet().toArray(new String[0]);
             int connId = 1;
             for (final String name : names) {
                 final ConnectionInfo info = list.get(name);
@@ -138,7 +137,7 @@ public class ConnectionList extends ModelServer<ConnectionList> {
     /**
      * The Class ConnectionInfo.
      */
-    public class ConnectionInfo {
+    public static class ConnectionInfo {
 
         /**
          * The display name.

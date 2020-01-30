@@ -25,7 +25,7 @@ public class SAXUtil {
     /**
      * The parser factory.
      */
-    static SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+    static final SAXParserFactory parserFactory = SAXParserFactory.newInstance();
 
     /**
      * Creates the SAX parser.

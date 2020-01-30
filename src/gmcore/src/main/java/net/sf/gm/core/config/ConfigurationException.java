@@ -29,7 +29,7 @@ public class ConfigurationException extends IOException {
      *
      * @param message the message
      */
-    ConfigurationException(final String message) {
+    ConfigurationException(@SuppressWarnings("SameParameterValue") final String message) {
         super(message);
     }
 

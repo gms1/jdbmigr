@@ -32,7 +32,7 @@ public class ReaderInputStream extends InputStream {
     /**
      * The buffer.
      */
-    private byte buffer[];
+    private byte[] buffer;
 
     /**
      * The startpos.
@@ -75,7 +75,7 @@ public class ReaderInputStream extends InputStream {
     @Override
     public int read() throws IOException {
 
-        final byte res[] = new byte[1];
+        final byte[] res = new byte[1];
         int n;
         if ((n = this.read(res, 0, 1)) <= 0)
             return n;
@@ -92,14 +92,14 @@ public class ReaderInputStream extends InputStream {
      * @throws IOException the IO exception
      */
     @Override
-    public synchronized int read(final byte outbuffer[], final int offset,
+    public synchronized int read(final byte[] outbuffer, final int offset,
         final int length) throws IOException {
 
         int len = length;
         if (reader == null)
             throw new IOException("ReaderInputStream is closed");
         while (buffer == null) {
-            final char cbuf[] = new char[len];
+            final char[] cbuf = new char[len];
             final int n = reader.read(cbuf);
             if (n < 0)
                 return -1;

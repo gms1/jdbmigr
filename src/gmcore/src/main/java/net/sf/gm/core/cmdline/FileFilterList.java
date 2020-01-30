@@ -115,7 +115,7 @@ public class FileFilterList extends ArrayList<FileFilterItem> {
                 int pos = oldFileName.lastIndexOf('.');
                 StringBuilder sb = new StringBuilder();
                 if (pos > 1)
-                    sb.append(oldFileName.substring(0, pos));
+                    sb.append(oldFileName, 0, pos);
                 else
                     sb.append(oldFileName);
                 sb.append(newExtension);

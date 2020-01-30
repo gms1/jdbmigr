@@ -68,7 +68,7 @@ public class LoggerUtil {
                     log.config(
                         "logging configuration: failed to set configuration from " +
                             configFile);
-                } catch (final Exception e2) {
+                } catch (final Exception ignored) {
                 }
             }
         }

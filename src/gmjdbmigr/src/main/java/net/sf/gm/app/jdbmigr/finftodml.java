@@ -129,10 +129,9 @@ public class finftodml extends JDbMigrApplicationBase {
      * Run instance.
      *
      * @return the int
-     * @throws Exception the exception
      */
     @Override
-    protected int runInstance() throws Exception {
+    protected int runInstance() {
 
         int failedCount = 0;
         Progress progress = new AppProgress();

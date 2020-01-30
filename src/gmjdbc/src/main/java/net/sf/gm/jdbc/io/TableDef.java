@@ -28,33 +28,29 @@ public class TableDef {
     /**
      * The catalog.
      */
-    String catalog;
+    final String catalog;
 
     /**
      * The schema.
      */
-    String schema;
+    final String schema;
 
     /**
      * The table.
      */
-    String table;
-
+    final String table;
+    /**
+     * The full table name.
+     */
+    final String fullTableName;
     /**
      * The table type.
      */
     String tableType;
-
     /**
      * The comment.
      */
     String comment;
-
-    /**
-     * The full table name.
-     */
-    String fullTableName;
-
     /**
      * The file name.
      */
@@ -186,6 +182,89 @@ public class TableDef {
 
         this.fullTableName =
             TableDef.createFullTableName(tabCatalog, tabSchema, tabName);
+    }
+
+    /**
+     * Gets the foreign key tables.
+     *
+     * @param table   the table
+     * @param con     the con
+     * @param catalog the catalog
+     * @param schema  the schema
+     * @return the foreign key tables
+     */
+    public static ArrayList<String[]> getForeignKeyTables(final Connection con,
+        final String catalog,
+        final String schema,
+        final String table) {
+
+        final ArrayList<String[]> foreignTableSet = new ArrayList<String[]>();
+        try {
+            final DatabaseMetaData dmd = con.getMetaData();
+            final ResultSet rs = dmd.getExportedKeys(catalog, schema, table);
+            while (rs.next()) {
+                final String[] fktable = new String[3];
+                fktable[0] = StringUtil.rtrim(rs.getString(5));
+                fktable[1] = StringUtil.rtrim(rs.getString(6));
+                fktable[2] = StringUtil.rtrim(rs.getString(7));
+                foreignTableSet.add(fktable);
+            }
+            SqlUtil.closeResultSet(rs);
+        } catch (final SQLException ignore) {
+        }
+        return foreignTableSet;
+    }
+
+    /**
+     * Gets the primary key.
+     *
+     * @param table   the table
+     * @param con     the con
+     * @param catalog the catalog
+     * @param schema  the schema
+     * @return the primary key columns
+     */
+    public static String[] getPrimaryKey(final Connection con,
+        final String catalog,
+        final String schema,
+        final String table) {
+
+        ArrayList<String> keys = new ArrayList<String>();
+        try {
+            DatabaseMetaData dsmd = con.getMetaData();
+            ResultSet rs = dsmd.getPrimaryKeys(catalog, schema, table);
+            while (rs.next()) {
+                keys.add(rs.getString(4));
+            }
+            SqlUtil.closeResultSet(rs);
+        } catch (final SQLException ignore) {
+        }
+        return keys.toArray(new String[0]);
+    }
+
+    /**
+     * Gets the full table name.
+     *
+     * @param table   the table
+     * @param catalog the catalog
+     * @param schema  the schema
+     * @return the full table name
+     */
+    public static String createFullTableName(final String catalog,
+        final String schema,
+        final String table) {
+
+        final StringBuilder tabFullName = new StringBuilder();
+        if (catalog != null) {
+            tabFullName.append(catalog);
+            tabFullName.append(".");
+        }
+        if (schema != null) {
+            tabFullName.append(schema);
+            tabFullName.append(".");
+        }
+        tabFullName.append(table);
+        return tabFullName.toString();
     }
 
     /**
@@ -338,7 +417,7 @@ public class TableDef {
                 names.add(rs.getString(4));
                 types.add(rs.getInt(5));
             }
-            columnNames = names.toArray(new String[names.size()]);
+            columnNames = names.toArray(new String[0]);
             columnTypes = new int[types.size()];
             for (int i = 0; i < columnTypes.length; i++)
                 columnTypes[i] = types.get(i);
@@ -371,88 +450,5 @@ public class TableDef {
         if (this.columnTypes == null)
             initColumns(con);
         return columnTypes;
-    }
-
-    /**
-     * Gets the foreign key tables.
-     *
-     * @param table   the table
-     * @param con     the con
-     * @param catalog the catalog
-     * @param schema  the schema
-     * @return the foreign key tables
-     */
-    public static ArrayList<String[]> getForeignKeyTables(final Connection con,
-        final String catalog,
-        final String schema,
-        final String table) {
-
-        final ArrayList<String[]> foreignTableSet = new ArrayList<String[]>();
-        try {
-            final DatabaseMetaData dmd = con.getMetaData();
-            final ResultSet rs = dmd.getExportedKeys(catalog, schema, table);
-            while (rs.next()) {
-                final String[] fktable = new String[3];
-                fktable[0] = StringUtil.rtrim(rs.getString(5));
-                fktable[1] = StringUtil.rtrim(rs.getString(6));
-                fktable[2] = StringUtil.rtrim(rs.getString(7));
-                foreignTableSet.add(fktable);
-            }
-            SqlUtil.closeResultSet(rs);
-        } catch (final SQLException ignore) {
-        }
-        return foreignTableSet;
-    }
-
-    /**
-     * Gets the primary key.
-     *
-     * @param table   the table
-     * @param con     the con
-     * @param catalog the catalog
-     * @param schema  the schema
-     * @return the primary key columns
-     */
-    public static String[] getPrimaryKey(final Connection con,
-        final String catalog,
-        final String schema,
-        final String table) {
-
-        ArrayList<String> keys = new ArrayList<String>();
-        try {
-            DatabaseMetaData dsmd = con.getMetaData();
-            ResultSet rs = dsmd.getPrimaryKeys(catalog, schema, table);
-            while (rs.next()) {
-                keys.add(rs.getString(4));
-            }
-            SqlUtil.closeResultSet(rs);
-        } catch (final SQLException ignore) {
-        }
-        return keys.toArray(new String[keys.size()]);
-    }
-
-    /**
-     * Gets the full table name.
-     *
-     * @param table   the table
-     * @param catalog the catalog
-     * @param schema  the schema
-     * @return the full table name
-     */
-    public static String createFullTableName(final String catalog,
-        final String schema,
-        final String table) {
-
-        final StringBuffer tabFullName = new StringBuffer();
-        if (catalog != null) {
-            tabFullName.append(catalog);
-            tabFullName.append(".");
-        }
-        if (schema != null) {
-            tabFullName.append(schema);
-            tabFullName.append(".");
-        }
-        tabFullName.append(table);
-        return tabFullName.toString();
     }
 }

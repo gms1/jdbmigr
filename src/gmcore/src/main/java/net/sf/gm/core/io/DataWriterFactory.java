@@ -24,6 +24,6 @@ public interface DataWriterFactory {
      * @return the instance
      * @throws DataIOException the data IO exception
      */
-    public DataWriter getInstance(OutputStream outputStream, Progress progress)
+    DataWriter getInstance(OutputStream outputStream, Progress progress)
         throws DataIOException;
 }

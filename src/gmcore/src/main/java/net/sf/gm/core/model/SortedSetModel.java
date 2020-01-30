@@ -23,7 +23,7 @@ public class SortedSetModel<T> extends ModelServer<SortedSetModel<T>> {
     /**
      * The set.
      */
-    private SortedSet<T> set;
+    private final SortedSet<T> set;
 
     /**
      * The Constructor.
@@ -31,6 +31,7 @@ public class SortedSetModel<T> extends ModelServer<SortedSetModel<T>> {
     public SortedSetModel() {
 
         super();
+        //noinspection SortedCollectionWithNonComparableKeys
         set = new TreeSet<T>();
     }
 

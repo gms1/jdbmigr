@@ -22,7 +22,7 @@ public class ConfigurationData {
     /**
      * The name.
      */
-    public String name;
+    public final String name;
 
     /**
      * The child nodes.

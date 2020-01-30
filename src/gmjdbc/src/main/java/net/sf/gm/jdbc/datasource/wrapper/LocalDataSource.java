@@ -99,17 +99,6 @@ public class LocalDataSource implements DataSourceWrapper {
     }
 
     /**
-     * Sets the login timeout.
-     *
-     * @param seconds the seconds
-     * @throws SQLException the SQL exception
-     */
-    public void setLoginTimeout(final int seconds) throws SQLException {
-
-        ds.setLoginTimeout(seconds);
-    }
-
-    /**
      * Gets the login timeout.
      *
      * @return the login timeout
@@ -121,12 +110,32 @@ public class LocalDataSource implements DataSourceWrapper {
     }
 
     /**
+     * Sets the login timeout.
+     *
+     * @param seconds the seconds
+     * @throws SQLException the SQL exception
+     */
+    public void setLoginTimeout(final int seconds) throws SQLException {
+
+        ds.setLoginTimeout(seconds);
+    }
+
+    /**
      * Gets the properties.
      *
      * @return the properties
      */
     public Properties getProperties() {
         return ds.getProperties();
+    }
+
+    /**
+     * Sets the properties.
+     *
+     * @param newProps the new props
+     */
+    public void setProperties(Properties newProps) {
+        ds.setProperties(newProps);
     }
 
     /**
@@ -156,15 +165,6 @@ public class LocalDataSource implements DataSourceWrapper {
      */
     public void setUrl(final String newUrl) {
         ds.setUrl(newUrl);
-    }
-
-    /**
-     * Sets the properties.
-     *
-     * @param newProps the new props
-     */
-    public void setProperties(Properties newProps) {
-        ds.setProperties(newProps);
     }
 
     @Override

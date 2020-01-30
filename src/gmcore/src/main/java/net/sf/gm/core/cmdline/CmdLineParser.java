@@ -252,28 +252,27 @@ public class CmdLineParser {
         currLocale = locale;
         shortOptions = new HashMap<String, OptionBase>();
         longOptions = new HashMap<String, OptionBase>();
-        for (int i = 0; i < allOptions.size(); i++) {
-            OptionBase opt = allOptions.get(i);
+        for (OptionBase opt : allOptions) {
             opt.reset();
             String[] names;
             names = opt.getShortNames();
             if (names != null) {
-                for (int j = 0; j < names.length; j++) {
-                    if (shortOptions.containsKey(names[j]))
-                        throw new CmdLineException.DuplicateOptionNameException(names[j]);
-                    if (longOptions.containsKey(names[j]))
-                        throw new CmdLineException.DuplicateOptionNameException(names[j]);
-                    shortOptions.put(names[j], opt);
+                for (String name : names) {
+                    if (shortOptions.containsKey(name))
+                        throw new CmdLineException.DuplicateOptionNameException(name);
+                    if (longOptions.containsKey(name))
+                        throw new CmdLineException.DuplicateOptionNameException(name);
+                    shortOptions.put(name, opt);
                 }
             }
             names = opt.getLongNames();
             if (names != null) {
-                for (int j = 0; j < names.length; j++) {
-                    if (longOptions.containsKey(names[j]))
-                        throw new CmdLineException.DuplicateOptionNameException(names[j]);
-                    if (shortOptions.containsKey(names[j]))
-                        throw new CmdLineException.DuplicateOptionNameException(names[j]);
-                    longOptions.put(names[j], opt);
+                for (String name : names) {
+                    if (longOptions.containsKey(name))
+                        throw new CmdLineException.DuplicateOptionNameException(name);
+                    if (shortOptions.containsKey(name))
+                        throw new CmdLineException.DuplicateOptionNameException(name);
+                    longOptions.put(name, opt);
                 }
             }
         }
@@ -292,8 +291,8 @@ public class CmdLineParser {
         final int minargs, final int maxargs)
         throws CmdLineException {
 
-        final String[] remainingArgs = arglist.toArray(new String[arglist.size()]);
-        if (minargs >= 0 && remainingArgs.length < minargs)
+        final String[] remainingArgs = arglist.toArray(new String[0]);
+        if (remainingArgs.length < minargs)
             throw new CmdLineException.NotEnoughArgumentsException();
         if (maxargs >= 0 && remainingArgs.length > maxargs)
             throw new CmdLineException.TooManyArguments();
@@ -356,8 +355,7 @@ public class CmdLineParser {
         AbstractApplication.messageln("");
         printDelimiterUsageLine("OPTIONS:");
         AbstractApplication.messageln("");
-        for (int i = 0; i < allOptions.size(); i++) {
-            final OptionBase opt = allOptions.get(i);
+        for (final OptionBase opt : allOptions) {
             printOptionUsage(opt, locale);
         }
         if (argDescription != null) {
@@ -425,12 +423,11 @@ public class CmdLineParser {
         final String valueStr,
         final String description) {
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(name);
-        sb.append(" ");
-        sb.append(valueStr);
+        String sb = name
+            + " "
+            + valueStr;
         AbstractApplication.messageln(String.format(
-            CmdLineParser.PROP_USAGE_LINE_FORMAT, "-", sb.toString(), description));
+            CmdLineParser.PROP_USAGE_LINE_FORMAT, "-", sb, description));
     }
 
     /**
@@ -444,12 +441,11 @@ public class CmdLineParser {
         final String valueStr,
         final String description) {
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(name);
-        sb.append(valueStr.length() > 0 ? "=" : " ");
-        sb.append(valueStr);
+        String sb = name
+            + (valueStr.length() > 0 ? "=" : " ")
+            + valueStr;
         AbstractApplication.messageln(
-            String.format(CmdLineParser.PROP_USAGE_LINE_FORMAT, "--", sb.toString(),
+            String.format(CmdLineParser.PROP_USAGE_LINE_FORMAT, "--", sb,
                 description));
     }
 

@@ -42,18 +42,15 @@ public interface Unloader extends DataReader {
      * @param schemaName    the schema name
      * @param catalogName   the catalog name
      * @param statementText the statement text
-     * @throws SQLException the SQL exception
      */
     void startUnLoading(String tableName, final String schemaName,
         final String catalogName, String statementText)
-        throws SQLException;
+    ;
 
     /**
      * End loading.
-     *
-     * @throws SQLException the SQL exception
      */
-    void endUnLoading() throws SQLException;
+    void endUnLoading();
 
     /**
      * Close.

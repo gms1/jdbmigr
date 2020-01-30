@@ -65,24 +65,6 @@ public class DataSourceInfo {
     }
 
     /**
-     * Gets the name.
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Gets the url.
-     *
-     * @return the url
-     */
-    public String getUrl() {
-        return url;
-    }
-
-    /**
      * Sets the class name.
      *
      * @param className the class name
@@ -93,12 +75,30 @@ public class DataSourceInfo {
     }
 
     /**
+     * Gets the name.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Sets the name.
      *
      * @param name the name
      */
     public void setName(final String name) {
         this.name = name;
+    }
+
+    /**
+     * Gets the url.
+     *
+     * @return the url
+     */
+    public String getUrl() {
+        return url;
     }
 
     /**
@@ -115,7 +115,7 @@ public class DataSourceInfo {
      *
      * @return the object
      */
-    @Override
+    @SuppressWarnings("MethodDoesntCallSuperMethod") @Override
     public Object clone() {
 
         return new DataSourceInfo(name, className, url);

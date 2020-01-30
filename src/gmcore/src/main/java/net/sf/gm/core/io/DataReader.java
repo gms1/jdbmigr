@@ -49,9 +49,8 @@ public interface DataReader {
      * Gets the current row type.
      *
      * @return row type
-     * @throws DataIOException the data IO exception
      */
-    rowType getCurrentRowType() throws DataIOException;
+    rowType getCurrentRowType();
 
     /**
      * Was column value null.
@@ -184,9 +183,8 @@ public interface DataReader {
      * @param idx the idx
      * @return true if the current row type is UPDATE and the specified column
      * should be updated
-     * @throws DataIOException the data IO exception
      */
-    boolean isUpdateColumn(int idx) throws DataIOException;
+    boolean isUpdateColumn(int idx);
 
     /**
      * Gets the row read count.

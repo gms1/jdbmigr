@@ -31,100 +31,81 @@ import java.util.Map;
  */
 public class LoaderImpl extends DataWriterAbstract implements Loader {
 
+    String syncErrorCause;
     /**
      * The con.
      */
     private Connection con;
-
     /**
      * The all row count.
      */
     private long allRowCount;
-
     /**
      * The ignored row count.
      */
     private long ignoredRowCount;
-
     /**
      * The failed row count.
      */
     private long failedRowCount;
-
     /**
      * The written row count.
      */
     private long writtenRowCount;
-
     /**
      * The full table name.
      */
     private String fullTableName;
-
     /**
      * The max batch size.
      */
     private int maxBatchSize;
-
     /**
      * The max commit size.
      */
     private int maxCommitSize;
-
     /**
      * The map columns by names.
      */
     private boolean mapColumnsByNames;
-
     /**
      * The skip columns not found.
      */
     private boolean skipColumnsNotFound;
-
     /**
      * The do import.
      */
     private boolean doImport;
-
     /**
      * The doSync.
      */
     private boolean doSync;
-
     /**
      * The meta data.
      */
     private MetaData metaData;
-
     /**
      * The db column names.
      */
     private String[] dbColumnNames;
-
     /**
      * The db column types.
      */
     private int[] dbColumnTypes;
-
     /**
      * The db primary key column count.
      */
     private int dbPrimaryKeyColumnCount;
-
     /**
      * The db column is primary key.
      */
     private boolean[] dbColumnIsPrimaryKey;
-
     /**
      * The current commit size.
      */
     private int currentCommitSize;
 
-    String syncErrorCause;
-
     // current operation
-
     /**
      * The current row type.
      */
@@ -322,10 +303,9 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
         if (deleteAllStmt == null)
             deleteAllStmt = con.createStatement();
         setFullTableName(tableName, schemaName, catalogName);
-        StringBuilder sb = new StringBuilder();
-        sb.append("delete from ");
-        sb.append(fullTableName);
-        deleteAllStmt.executeUpdate(sb.toString());
+        String sb = "delete from "
+            + fullTableName;
+        deleteAllStmt.executeUpdate(sb);
         final long res = deleteAllStmt.getUpdateCount();
         con.commit();
         return res;
@@ -727,17 +707,6 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
     }
 
     /**
-     * Sets the connection.
-     *
-     * @param con the con
-     * @throws SQLException the SQL exception
-     */
-    public void setConnection(Connection con) throws SQLException {
-
-        this.con = con;
-    }
-
-    /**
      * Sets the map columns by names.
      *
      * @param mapByName the map by name
@@ -813,7 +782,7 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
                     break;
                 case INSERT:
                     if (doSync) {
-                        currentRowStmt = doSync ? insertRowStmt : null;
+                        currentRowStmt = insertRowStmt;
                         currentColumnMap = insertColumnMap;
                     }
                     currentOperation = "insert";
@@ -1117,10 +1086,15 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
                     final SQLException e = currentException < exceptions.size()
                         ? exceptions.get(currentException)
                         : null;
-                    getProgress().errorln(
-                        " row " + currentRow + ": failed to " + currentOperation + ": " +
-                            SQLState.getMessage(e.getSQLState(), e.getErrorCode(),
-                                e.getMessage()));
+                    if (e != null) {
+                        getProgress().errorln(
+                            " row " + currentRow + ": failed to " + currentOperation + ": " +
+                                SQLState.getMessage(e.getSQLState(), e.getErrorCode(),
+                                    e.getMessage()));
+                    } else {
+                        getProgress().errorln(
+                            " row " + currentRow + ": failed to " + currentOperation);
+                    }
                 } else if (updateCounts[i] > 1) {
                     throw new DataIOException(
                         "row " + currentRow +
@@ -1157,9 +1131,19 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
     }
 
     /**
+     * Sets the connection.
+     *
+     * @param con the con
+     */
+    public void setConnection(Connection con) {
+
+        this.con = con;
+    }
+
+    /**
      * Finalize.
      */
-    @Override
+    @SuppressWarnings("deprecation") @Override
     protected void finalize() {
 
         close();

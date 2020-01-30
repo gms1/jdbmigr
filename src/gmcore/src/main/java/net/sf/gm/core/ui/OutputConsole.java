@@ -21,7 +21,7 @@ public class OutputConsole extends OutputWriter {
     /**
      * The err.
      */
-    PrintWriter err;
+    final PrintWriter err;
 
     /**
      * The Constructor.

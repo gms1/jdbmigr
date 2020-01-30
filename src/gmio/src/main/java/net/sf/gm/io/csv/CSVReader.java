@@ -136,9 +136,8 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
      * Gets the current row type.
      *
      * @return the current row type
-     * @throws DataIOException the data IO exception
      */
-    public rowType getCurrentRowType() throws DataIOException {
+    public rowType getCurrentRowType() {
 
         return rowType.CURRENT;
     }
@@ -154,9 +153,10 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
         if (nextRow != null) {
             currColumnValues = nextRow;
             nextRow = null;
-        } else
+        } else {
             currColumnValues = parser.parse();
-        boolean res = currColumnValues != null ? true : false;
+        }
+        boolean res = currColumnValues != null;
         if (res) {
             this.incRowReadCount();
             if (currColumnValues.length != columnCount)
@@ -189,9 +189,8 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
      *
      * @param idx the idx
      * @return the column value bytes
-     * @throws DataIOException the data IO exception
      */
-    public byte[] getColumnValueBytes(int idx) throws DataIOException {
+    public byte[] getColumnValueBytes(int idx) {
 
         if (isColumnValueNull(idx, false))
             return null;
@@ -205,9 +204,8 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
      *
      * @param idx the idx
      * @return the column value binary stream
-     * @throws DataIOException the data IO exception
      */
-    public InputStream getColumnValueBinaryStream(int idx) throws DataIOException {
+    public InputStream getColumnValueBinaryStream(int idx) {
 
         if (isColumnValueNull(idx, false))
             return null;
@@ -221,11 +219,10 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
      *
      * @param idx the idx
      * @return the column value character stream
-     * @throws DataIOException the data IO exception
      */
-    public Reader getColumnValueCharacterStream(int idx) throws DataIOException {
+    public Reader getColumnValueCharacterStream(int idx) {
 
-        if (isColumnValueNull(idx, options.isQuoting() ? true : false))
+        if (isColumnValueNull(idx, options.isQuoting()))
             return null;
         return new StringReader(currColumnValues[idx - 1].GetValue());
     }
@@ -265,8 +262,7 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
         if (isColumnValueNull(idx, true))
             return 0.0;
         try {
-            Double value = Double.parseDouble(currColumnValues[idx - 1].GetValue());
-            return value.doubleValue();
+            return Double.parseDouble(currColumnValues[idx - 1].GetValue());
         } catch (NumberFormatException e) {
             throw new DataIOException(e);
         }
@@ -284,8 +280,7 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
         if (isColumnValueNull(idx, true))
             return 0;
         try {
-            Integer value = Integer.parseInt(currColumnValues[idx - 1].GetValue());
-            return value.intValue();
+            return Integer.parseInt(currColumnValues[idx - 1].GetValue());
         } catch (NumberFormatException e) {
             throw new DataIOException(e);
         }
@@ -303,8 +298,7 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
         if (isColumnValueNull(idx, true))
             return 0L;
         try {
-            Long value = Long.parseLong(currColumnValues[idx - 1].GetValue());
-            return value.longValue();
+            return Long.parseLong(currColumnValues[idx - 1].GetValue());
         } catch (NumberFormatException e) {
             throw new DataIOException(e);
         }
@@ -322,8 +316,7 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
         if (isColumnValueNull(idx, true))
             return 0;
         try {
-            Short value = Short.parseShort(currColumnValues[idx - 1].GetValue());
-            return value.shortValue();
+            return Short.parseShort(currColumnValues[idx - 1].GetValue());
         } catch (NumberFormatException e) {
             throw new DataIOException(e);
         }
@@ -334,11 +327,10 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
      *
      * @param idx the idx
      * @return the column value string
-     * @throws DataIOException the data IO exception
      */
-    public String getColumnValueString(int idx) throws DataIOException {
+    public String getColumnValueString(int idx) {
 
-        if (isColumnValueNull(idx, options.isQuoting() ? true : false))
+        if (isColumnValueNull(idx, options.isQuoting()))
             return null;
         return currColumnValues[idx - 1].GetValue();
     }
@@ -356,9 +348,8 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
             return null;
         String strValue = currColumnValues[idx - 1].GetValue();
         try {
-            Long longValue = Long.parseLong(strValue);
-            return new Date(longValue.longValue());
-        } catch (NumberFormatException e) {
+            return new Date(Long.parseLong(strValue));
+        } catch (NumberFormatException ignored) {
         }
         try {
             return DateTimeUtil.isoDateToJavaDate(strValue);
@@ -380,9 +371,8 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
             return null;
         String strValue = currColumnValues[idx - 1].GetValue();
         try {
-            Long longValue = Long.parseLong(strValue);
-            return new Time(longValue.longValue());
-        } catch (NumberFormatException e) {
+            return new Time(Long.parseLong(strValue));
+        } catch (NumberFormatException ignored) {
         }
         try {
             return DateTimeUtil.isoTimeToJavaTime(strValue);
@@ -404,9 +394,8 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
             return null;
         String strValue = currColumnValues[idx - 1].GetValue();
         try {
-            Long longValue = Long.parseLong(strValue);
-            return new Timestamp(longValue.longValue());
-        } catch (NumberFormatException e) {
+            return new Timestamp(Long.parseLong(strValue));
+        } catch (NumberFormatException ignored) {
         }
         try {
             return new Timestamp(DateTimeUtil.isoDateToCalendar(strValue).getTimeInMillis());
@@ -419,9 +408,8 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
      * Was column value null.
      *
      * @return true, if was column value null
-     * @throws DataIOException the data IO exception
      */
-    public boolean wasColumnValueNull() throws DataIOException {
+    public boolean wasColumnValueNull() {
         return wasNull;
     }
 
@@ -436,7 +424,7 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
 
         final int i = idx - 1;
         wasNull = true;
-        if (i <= 0 && i > currColumnValues.length)
+        if (i < 0 || i >= currColumnValues.length)
             return true;
 
         if (currColumnValues[i] == null)
@@ -450,19 +438,32 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
     }
 
     /**
+     * Checks if is update column.
+     *
+     * @param idx the idx
+     * @return true if the current row type is UPDATE and the specified column
+     * should be updated
+     */
+    public boolean isUpdateColumn(int idx) {
+
+        // row type is always CURRENT
+        return false;
+    }
+
+    /**
      * The Class CSVCell.
      */
-    protected class CSVCell {
+    protected static class CSVCell {
 
         /**
          * The value.
          */
-        private String value;
+        private final String value;
 
         /**
          * The inputlen.
          */
-        private int inputlen;
+        private final int inputlen;
 
         /**
          * The Constructor.
@@ -498,38 +499,28 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
     /**
      * The Class CSVParser.
      */
-    protected class CSVParser {
-
-        /**
-         * The reader.
-         */
-        private final InputStreamReader reader;
-
-        /**
-         * The options.
-         */
-        private final CSVFormatOptions options;
-
-        /**
-         * The current row.
-         */
-        private List<CSVCell> currentRow;
-
-        /**
-         * The current token.
-         */
-        private StringBuffer currentToken;
-
-        /**
-         * The current token input length.
-         */
-        private int currentTokenInputLength;
+    protected static class CSVParser {
 
         /**
          * The read buffer.
          */
         final char[] readBuffer;
-
+        /**
+         * The reader.
+         */
+        private final InputStreamReader reader;
+        /**
+         * The options.
+         */
+        private final CSVFormatOptions options;
+        /**
+         * The current token.
+         */
+        private StringBuffer currentToken;
+        /**
+         * The current token input length.
+         */
+        private int currentTokenInputLength;
         /**
          * The read len.
          */
@@ -592,7 +583,10 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
 
             try {
                 // allocate new row
-                currentRow = new ArrayList<CSVCell>();
+                /**
+                 * The current row.
+                 */
+                List<CSVCell> currentRow = new ArrayList<CSVCell>();
                 while (true) {
                     if (curPos == readLen) {
                         readLen = reader.read(readBuffer);
@@ -641,7 +635,7 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
 
                                 if (!options.isFilterEmptyLines() || currentRow.size() != 1
                                     || currentRow.get(0).GetInputLength() != 0) {
-                                    final CSVCell[] rowInfo = currentRow.toArray(new CSVCell[currentRow.size()]);
+                                    final CSVCell[] rowInfo = currentRow.toArray(new CSVCell[0]);
                                     currentRow = null;
                                     curPos++;
                                     return rowInfo;
@@ -682,19 +676,5 @@ public class CSVReader extends DataReaderAbstractStream implements DataReader {
                     currentToken.append(options.getCharDelimiter());
             quoteCount = 0;
         }
-    }
-
-    /**
-     * Checks if is update column.
-     *
-     * @param idx the idx
-     * @return true if the current row type is UPDATE and the specified column
-     * should be updated
-     * @throws DataIOException the data IO exception
-     */
-    public boolean isUpdateColumn(int idx) throws DataIOException {
-
-        // row type is always CURRENT
-        return false;
     }
 }

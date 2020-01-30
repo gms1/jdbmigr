@@ -20,7 +20,7 @@ public class Base64Base {
     /**
      * The buffer size.
      */
-    private int bufferSize;
+    private final int bufferSize;
 
     /**
      * The Constant DEF_BUFFER_SIZE.
@@ -111,7 +111,7 @@ public class Base64Base {
         int currentLineLength = currLineLength;
         int input;
         int bytes;
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         int apos = spos;
         final int epos = apos + len - 1;
         do {
@@ -127,6 +127,7 @@ public class Base64Base {
             int bits = bytes * 8;
             while (bits > 0) {
                 bits -= 6;
+                //noinspection ConstantConditions
                 final int index = ((bits < 0) ? input << -bits : input >> bits) & 0x3F;
                 sb.append(Base64Base.toTable[index]);
                 if (++currentLineLength == Base64Base.ENCODED_CHUNK_SIZE) { // ensure

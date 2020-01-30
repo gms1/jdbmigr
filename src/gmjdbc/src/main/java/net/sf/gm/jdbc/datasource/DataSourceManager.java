@@ -182,9 +182,7 @@ final public class DataSourceManager {
         protected boolean testClassInfo(final DriverClassInfo classInfo)
             throws JdbcException {
 
-            if (classInfo.getNewClassInstance() != null)
-                return true;
-            return false;
+            return classInfo.getNewClassInstance() != null;
         }
 
         /**

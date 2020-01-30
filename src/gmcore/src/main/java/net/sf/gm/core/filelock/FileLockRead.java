@@ -27,9 +27,8 @@ public class FileLockRead extends FileLockBase {
      * The Constructor.
      *
      * @param file the file
-     * @throws IOException the IO exception
      */
-    public FileLockRead(final File file) throws IOException {
+    public FileLockRead(final File file) {
 
         super(file);
         fileStream = null;
@@ -39,9 +38,8 @@ public class FileLockRead extends FileLockBase {
      * The Constructor.
      *
      * @param filePath the file path
-     * @throws IOException the IO exception
      */
-    public FileLockRead(final String filePath) throws IOException {
+    public FileLockRead(final String filePath) {
 
         super(filePath);
         fileStream = null;
@@ -126,6 +124,6 @@ public class FileLockRead extends FileLockBase {
     @Override
     protected boolean hasStream() {
 
-        return fileStream == null ? false : true;
+        return fileStream != null;
     }
 }

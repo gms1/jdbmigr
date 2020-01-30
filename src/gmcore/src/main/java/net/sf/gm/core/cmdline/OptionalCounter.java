@@ -55,7 +55,7 @@ public class OptionalCounter extends OptionBase {
 
         if (arg != null)
             throw new CmdLineException.IllegalOptionArgumentException(this, arg);
-        final int n = getArgument() != null ? ((Integer) getArgument()).intValue() : 0;
+        final int n = getArgument() != null ? (Integer) getArgument() : 0;
         this.setArgument(n + 1);
     }
 
@@ -66,7 +66,7 @@ public class OptionalCounter extends OptionBase {
      */
     public int getValue() {
 
-        return getArgument() != null ? ((Integer) getArgument()).intValue() : 0;
+        return getArgument() != null ? (Integer) getArgument() : 0;
     }
 
     /**

@@ -105,48 +105,21 @@ public class DriverClassInfo {
     }
 
     /**
+     * Sets the name.
+     *
+     * @param name the name
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
      * Gets the class name.
      *
      * @return the class name
      */
     public String getClassName() {
         return className;
-    }
-
-    /**
-     * Gets the class path.
-     *
-     * @return the class path
-     */
-    public String getClassPath() {
-        return classPath;
-    }
-
-    /**
-     * Gets the class type.
-     *
-     * @return the class type
-     */
-    public String getClassType() {
-        return classType;
-    }
-
-    /**
-     * Gets the description.
-     *
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Gets the url template.
-     *
-     * @return the url template
-     */
-    public String getUrlTemplate() {
-        return urlTemplate;
     }
 
     /**
@@ -160,6 +133,15 @@ public class DriverClassInfo {
     }
 
     /**
+     * Gets the class path.
+     *
+     * @return the class path
+     */
+    public String getClassPath() {
+        return classPath;
+    }
+
+    /**
      * Sets the class path.
      *
      * @param classPath the class path
@@ -167,6 +149,15 @@ public class DriverClassInfo {
     public void setClassPath(final String classPath) {
 
         this.classPath = classPath;
+    }
+
+    /**
+     * Gets the class type.
+     *
+     * @return the class type
+     */
+    public String getClassType() {
+        return classType;
     }
 
     /**
@@ -180,6 +171,15 @@ public class DriverClassInfo {
     }
 
     /**
+     * Gets the description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
      * Sets the description.
      *
      * @param description the description
@@ -190,12 +190,12 @@ public class DriverClassInfo {
     }
 
     /**
-     * Sets the name.
+     * Gets the url template.
      *
-     * @param name the name
+     * @return the url template
      */
-    public void setName(final String name) {
-        this.name = name;
+    public String getUrlTemplate() {
+        return urlTemplate;
     }
 
     /**
@@ -262,17 +262,17 @@ public class DriverClassInfo {
                 throw new JdbcException("interface for class \"" + className +
                     "\" not specified");
             else if (classType.equals("Driver")) {
-                if (!Driver.class.isInstance(obj))
+                if (!(obj instanceof Driver))
                     throw new JdbcException(
                         "the class \"" + className +
                             "\" is not an implementation of the Driver interface");
             } else if (classType.equals("DataSource")) {
-                if (!DataSource.class.isInstance(obj))
+                if (!(obj instanceof DataSource))
                     throw new JdbcException(
                         "the class \"" + className +
                             "\" is not an implementation of the DataSource interface");
             } else if (classType.equals("ConnectionPoolDataSource")) {
-                if (!ConnectionPoolDataSource.class.isInstance(obj))
+                if (!(obj instanceof ConnectionPoolDataSource))
                     throw new JdbcException(
                         "the class \"" + className +
                             "\" is not an implementation of the ConnectionPoolDataSource interface");
@@ -292,7 +292,7 @@ public class DriverClassInfo {
      *
      * @return the object
      */
-    @Override
+    @SuppressWarnings("MethodDoesntCallSuperMethod") @Override
     public Object clone() {
 
         return new DriverClassInfo(name, className, classPath, classType,

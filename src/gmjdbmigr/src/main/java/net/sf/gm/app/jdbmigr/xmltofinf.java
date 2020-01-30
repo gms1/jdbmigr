@@ -97,10 +97,9 @@ public class xmltofinf extends JDbMigrApplicationBase {
      * Run instance.
      *
      * @return the int
-     * @throws Exception the exception
      */
     @Override
-    protected int runInstance() throws Exception {
+    protected int runInstance() {
 
         final SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         saxParserFactory.setNamespaceAware(true);

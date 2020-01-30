@@ -18,27 +18,27 @@ public interface OutputTarget {
     /**
      * The LEVE l_ DEBUG.
      */
-    static int LEVEL_DEBUG = 1;
+    int LEVEL_DEBUG = 1;
 
     /**
      * The LEVE l_ VERBOSE.
      */
-    static int LEVEL_VERBOSE = 2;
+    int LEVEL_VERBOSE = 2;
 
     /**
      * The LEVE l_ MESSAGE.
      */
-    static int LEVEL_MESSAGE = 3;
+    int LEVEL_MESSAGE = 3;
 
     /**
      * The LEVE l_ WARNING.
      */
-    static int LEVEL_WARNING = 4;
+    int LEVEL_WARNING = 4;
 
     /**
      * The LEVE l_ ERROR.
      */
-    static int LEVEL_ERROR = 5;
+    int LEVEL_ERROR = 5;
 
     /**
      * Gets the message level.

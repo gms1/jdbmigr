@@ -80,7 +80,7 @@ public class OptionalArgumentChar extends OptionBase {
      */
     public char getValue(final char defValue) {
 
-        return getArgument() != null ? ((Character) getArgument()).charValue()
+        return getArgument() != null ? (Character) getArgument()
             : defValue;
     }
 }

@@ -138,11 +138,9 @@ public class UnloaderImpl extends DataReaderAbstract implements Unloader {
      * @param schemaName    the schema name
      * @param catalogName   the catalog name
      * @param statementText the statement text
-     * @throws SQLException the SQL exception
      */
     public void startUnLoading(String tableName, final String schemaName,
-        final String catalogName, String statementText)
-        throws SQLException {
+        final String catalogName, String statementText) {
 
         if (rs != null)
             SqlUtil.closeResultSet(rs);
@@ -156,10 +154,8 @@ public class UnloaderImpl extends DataReaderAbstract implements Unloader {
 
     /**
      * End un loading.
-     *
-     * @throws SQLException the SQL exception
      */
-    public void endUnLoading() throws SQLException {
+    public void endUnLoading() {
 
         if (rs != null)
             SqlUtil.closeResultSet(rs);
@@ -188,10 +184,8 @@ public class UnloaderImpl extends DataReaderAbstract implements Unloader {
 
     /**
      * Close data reading.
-     *
-     * @throws DataIOException the data IO exception
      */
-    public void closeDataReading() throws DataIOException {
+    public void closeDataReading() {
 
         if (rs != null)
             SqlUtil.closeResultSet(rs);
@@ -443,9 +437,8 @@ public class UnloaderImpl extends DataReaderAbstract implements Unloader {
      * Gets the current row type.
      *
      * @return the current row type
-     * @throws DataIOException the data IO exception
      */
-    public rowType getCurrentRowType() throws DataIOException {
+    public rowType getCurrentRowType() {
 
         return rowType.CURRENT;
     }
@@ -492,9 +485,8 @@ public class UnloaderImpl extends DataReaderAbstract implements Unloader {
      * @param idx the idx
      * @return true if the current row type is UPDATE and the specified column
      * should be updated
-     * @throws DataIOException the data IO exception
      */
-    public boolean isUpdateColumn(int idx) throws DataIOException {
+    public boolean isUpdateColumn(int idx) {
 
         // row type is always CURRENT
         return false;
@@ -503,7 +495,7 @@ public class UnloaderImpl extends DataReaderAbstract implements Unloader {
     /**
      * Finalize.
      */
-    @Override
+    @SuppressWarnings("deprecation") @Override
     protected void finalize() {
 
         close();

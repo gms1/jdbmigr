@@ -22,7 +22,7 @@ public abstract class DataWriterAbstractStream
     /**
      * The os.
      */
-    private OutputStream os;
+    private final OutputStream os;
 
     /**
      * The meta data.

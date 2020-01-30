@@ -199,7 +199,7 @@ public class MetaDataImpl implements MetaData {
     /**
      * The column nullable.
      */
-    private int[] columnNullable;
+    @SuppressWarnings("MismatchedReadAndWriteOfArray") private int[] columnNullable;
 
     /**
      * The column searchable.

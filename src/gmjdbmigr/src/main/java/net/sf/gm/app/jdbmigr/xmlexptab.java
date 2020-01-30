@@ -150,7 +150,7 @@ public class xmlexptab extends JDbMigrApplicationBase {
             (optCatalog.isSelected() || optSchema.isSelected() ||
                 optTable.isSelected())) {
             AbstractApplication.errorln(
-                "option '" + optTableListFile.getLongNames() +
+                "option '" + optTableListFile.getLongNames()[0] +
                     "' not allowd in conjunction with catalog-, schema- or table-pattern");
             System.exit(1);
         }

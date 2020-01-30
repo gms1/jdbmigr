@@ -79,6 +79,6 @@ public class OptionalArgumentInteger extends OptionBase {
      */
     public int getValue(final int defValue) {
 
-        return getArgument() != null ? ((Integer) getArgument()).intValue() : defValue;
+        return getArgument() != null ? (Integer) getArgument() : defValue;
     }
 }

@@ -57,7 +57,7 @@ public class csvexpqry extends JDbMigrApplicationBase {
     /**
      * The format options.
      */
-    private CSVFormatOptions formatOptions;
+    private final CSVFormatOptions formatOptions;
 
     /**
      * The log file.

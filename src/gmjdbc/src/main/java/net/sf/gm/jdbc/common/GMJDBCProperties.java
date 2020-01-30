@@ -59,16 +59,14 @@ public class GMJDBCProperties {
      */
     public static final String default_WebRowSetSchemaFile =
         "${GMJDBCSHAREDIR}webrowset.xsd";
-
+    /**
+     * The types.
+     */
+    static final JdbcTypes types;
     /**
      * The props.
      */
     static ModuleProperties props = null;
-
-    /**
-     * The types.
-     */
-    static JdbcTypes types;
 
     static {
         GMCOREProperties.startup();

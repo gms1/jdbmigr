@@ -116,6 +116,7 @@ public class ConfigurationReader extends Reader {
     public int read(final char[] cbuf, final int off, final int len)
         throws IOException {
 
+        //noinspection SynchronizeOnNonFinalField
         synchronized (lock) {
             if (!isOpen)
                 throw new ConfigurationException("PropertyStream is closed");
@@ -142,7 +143,7 @@ public class ConfigurationReader extends Reader {
                 return -1;
             final int n = Math.min(length, len);
             buf.getChars(0, n, cbuf, off);
-            buf = buf.delete(0, n);
+            buf.delete(0, n);
             return n;
         }
     }
@@ -166,6 +167,7 @@ public class ConfigurationReader extends Reader {
     @Override
     public void reset() throws IOException {
 
+        //noinspection SynchronizeOnNonFinalField
         synchronized (lock) {
             if (!isOpen)
                 throw new ConfigurationException("PropertyStream is closed");
@@ -191,11 +193,11 @@ public class ConfigurationReader extends Reader {
     /**
      * Close.
      *
-     * @throws IOException the IO exception
      */
     @Override
-    public void close() throws IOException {
+    public void close() {
 
+        //noinspection SynchronizeOnNonFinalField
         synchronized (lock) {
             isOpen = false;
         }

@@ -8,7 +8,6 @@
 package net.sf.gm.io.xml;
 
 import com.sun.xml.fastinfoset.stax.StAXDocumentParser;
-import net.sf.gm.core.io.DataIOException;
 import net.sf.gm.core.io.DataReader;
 import net.sf.gm.core.ui.Progress;
 
@@ -29,10 +28,9 @@ public class FINFWebRowSetReader
      * @param validate the validate
      * @param progress the progress
      * @param is       the is
-     * @throws DataIOException the data IO exception
      */
     public FINFWebRowSetReader(Progress progress, InputStream is,
-        boolean validate) throws DataIOException {
+        boolean validate) {
 
         super(progress, is, new StAXDocumentParser(is), validate);
     }
@@ -42,10 +40,8 @@ public class FINFWebRowSetReader
      *
      * @param progress the progress
      * @param is       the is
-     * @throws DataIOException the data IO exception
      */
-    public FINFWebRowSetReader(Progress progress, InputStream is)
-        throws DataIOException {
+    public FINFWebRowSetReader(Progress progress, InputStream is) {
 
         super(progress, is, new StAXDocumentParser(is), false);
     }

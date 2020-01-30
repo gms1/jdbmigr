@@ -65,17 +65,12 @@ public class DataSourceConfiguration {
     /**
      * The cfg.
      */
-    private Configuration cfg;
+    private final Configuration cfg;
 
     /**
      * The class info map.
      */
     private Map<String, DriverClassInfo> classInfoMap;
-
-    /**
-     * The class names.
-     */
-    private SortedSet<String> classNames;
 
     /**
      * The data source info map.
@@ -120,7 +115,10 @@ public class DataSourceConfiguration {
     protected void load() {
 
         classInfoMap = new Hashtable<String, DriverClassInfo>();
-        classNames = new TreeSet<String>();
+        /**
+         * The class names.
+         */
+        SortedSet<String> classNames = new TreeSet<String>();
         dataSourceInfoMap = new Hashtable<String, DataSourceInfo>();
         dataSourceNames = new SortedSetModel<String>();
         loadClassInfo(classInfoMap, classNames);

@@ -18,34 +18,29 @@ import java.util.logging.Logger;
 public class DataSourceWrapperFromDriverClass implements DataSourceWrapper {
 
     /**
-     * The cl instance.
-     */
-    private Driver clInstance;
-
-    /**
-     * The login timeout.
-     */
-    private int loginTimeout;
-
-    /**
-     * The print writer.
-     */
-    private PrintWriter printWriter;
-
-    /**
      * The cl info.
      */
-    protected DriverClassInfo clInfo;
-
+    protected final DriverClassInfo clInfo;
     /**
      * The ds info.
      */
-    protected DataSourceInfo dsInfo;
-
+    protected final DataSourceInfo dsInfo;
     /**
      * The props.
      */
     Properties props = null;
+    /**
+     * The cl instance.
+     */
+    private Driver clInstance;
+    /**
+     * The login timeout.
+     */
+    private int loginTimeout;
+    /**
+     * The print writer.
+     */
+    private PrintWriter printWriter;
 
     /**
      * The Constructor.
@@ -135,9 +130,8 @@ public class DataSourceWrapperFromDriverClass implements DataSourceWrapper {
      * Gets the log writer.
      *
      * @return the log writer
-     * @throws SQLException the SQL exception
      */
-    public PrintWriter getLogWriter() throws SQLException {
+    public PrintWriter getLogWriter() {
         return printWriter;
     }
 
@@ -145,32 +139,29 @@ public class DataSourceWrapperFromDriverClass implements DataSourceWrapper {
      * Sets the log writer.
      *
      * @param out the out
-     * @throws SQLException the SQL exception
      */
-    public void setLogWriter(final PrintWriter out) throws SQLException {
+    public void setLogWriter(final PrintWriter out) {
 
         printWriter = out;
-    }
-
-    /**
-     * Sets the login timeout.
-     *
-     * @param seconds the seconds
-     * @throws SQLException the SQL exception
-     */
-    public void setLoginTimeout(final int seconds) throws SQLException {
-
-        loginTimeout = seconds;
     }
 
     /**
      * Gets the login timeout.
      *
      * @return the login timeout
-     * @throws SQLException the SQL exception
      */
-    public int getLoginTimeout() throws SQLException {
+    public int getLoginTimeout() {
         return loginTimeout;
+    }
+
+    /**
+     * Sets the login timeout.
+     *
+     * @param seconds the seconds
+     */
+    public void setLoginTimeout(final int seconds) {
+
+        loginTimeout = seconds;
     }
 
     /**
@@ -239,7 +230,7 @@ public class DataSourceWrapperFromDriverClass implements DataSourceWrapper {
     }
 
     @Override
-    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+    public boolean isWrapperFor(Class<?> iface) {
         return false;
     }
 

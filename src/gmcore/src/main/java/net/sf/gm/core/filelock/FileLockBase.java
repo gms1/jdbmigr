@@ -24,7 +24,7 @@ public abstract class FileLockBase {
     /**
      * The file.
      */
-    private File file;
+    private final File file;
 
     /**
      * The lock.
@@ -70,11 +70,11 @@ public abstract class FileLockBase {
             this.newStream();
             if (waitTime == 0) {
                 lock = this.getChannel().lock();
-                return lock == null ? false : true;
+                return lock != null;
             }
             if (waitTime < 0) {
                 lock = this.getChannel().tryLock();
-                return lock == null ? false : true;
+                return lock != null;
             }
             final int sleepTime = 50;
             for (int i = 0; i < waitTime; i++) {
@@ -120,7 +120,7 @@ public abstract class FileLockBase {
 
         if (lock == null)
             return false;
-        return lock.isValid() ? true : false;
+        return lock.isValid();
     }
 
     /**

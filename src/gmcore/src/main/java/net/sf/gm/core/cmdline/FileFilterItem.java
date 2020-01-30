@@ -20,12 +20,12 @@ public class FileFilterItem {
     /**
      * The src file.
      */
-    private File srcFile;
+    private final File srcFile;
 
     /**
      * The trg file.
      */
-    private File trgFile;
+    private final File trgFile;
 
     /**
      * The tmp file.
@@ -45,12 +45,12 @@ public class FileFilterItem {
     /**
      * The is std in.
      */
-    private boolean isStdIn;
+    private final boolean isStdIn;
 
     /**
      * The is std out.
      */
-    private boolean isStdOut;
+    private final boolean isStdOut;
 
     /**
      * The Constructor.
@@ -62,8 +62,8 @@ public class FileFilterItem {
 
         this.srcFile = srcFile;
         this.trgFile = trgFile;
-        this.isStdIn = srcFile == null ? true : false;
-        this.isStdOut = trgFile == null ? true : false;
+        this.isStdIn = srcFile == null;
+        this.isStdOut = trgFile == null;
         this.tmpFile = null;
         this.is = null;
         this.os = null;
@@ -101,6 +101,7 @@ public class FileFilterItem {
         if (outputDirectory == null)
             outputDirectory = new File(".");
         if (!outputDirectory.exists())
+            // noinspection ResultOfMethodCallIgnored
             outputDirectory.mkdir();
         tmpFile = File.createTempFile(".flt", ".tmp", outputDirectory);
         os = new BufferedOutputStream(new FileOutputStream(tmpFile));
@@ -183,10 +184,9 @@ public class FileFilterItem {
     /**
      * Finalize.
      *
-     * @throws Throwable the throwable
      */
-    @Override
-    protected void finalize() throws Throwable {
+    @SuppressWarnings("deprecation") @Override
+    protected void finalize() {
 
         if (tmpFile != null)
             FileUtil.delete(tmpFile);

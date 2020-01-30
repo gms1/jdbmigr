@@ -83,6 +83,6 @@ public class OptionalArgumentDouble extends OptionBase {
      */
     public double getValue(final double defValue) {
 
-        return getArgument() != null ? ((Double) getArgument()).doubleValue() : defValue;
+        return getArgument() != null ? (Double) getArgument() : defValue;
     }
 }

@@ -73,10 +73,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
      * @param is        the is
      * @param progress  the progress
      * @param xmlreader the xmlreader
-     * @throws DataIOException the data IO exception
      */
-    public XMLWebRowSetReaderBase(Progress progress, InputStream is, XMLStreamReader xmlreader, boolean validate)
-        throws DataIOException {
+    public XMLWebRowSetReaderBase(Progress progress, InputStream is, XMLStreamReader xmlreader, boolean validate) {
 
         super(progress, is);
         this.xmlreader = xmlreader;
@@ -152,7 +150,7 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
             // already consumed:
             // StAXUtil.upToParent( xmlreader, "key-columns", "/webRowSet/properties"
             // );
-            metaData.setKeyColumns(list.toArray(new String[list.size()]));
+            metaData.setKeyColumns(list.toArray(new String[0]));
 
             StAXUtil.downToChild(xmlreader, "map", "/webRowSet/properties");
             // todo read map ?
@@ -188,9 +186,7 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
                 .setSyncProviderGrade(readTextOnlyChildElement(xmlreader, "sync-provider-grade", "/webRowSet/properties"));
             metaData.setDataSourceLock(readTextOnlyChildElement(xmlreader, "data-source-lock", "/webRowSet/properties"));
             StAXUtil.upToParent(xmlreader, "sync-provider", "/webRowSet/properties");
-        } catch (NumberFormatException e) {
-            throw new DataIOException(e);
-        } catch (XMLStreamException e) {
+        } catch (NumberFormatException | XMLStreamException e) {
             throw new DataIOException(e);
         }
     }
@@ -256,9 +252,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
      *
      * @param idx the idx
      * @return the column value bytes
-     * @throws DataIOException the data IO exception
      */
-    public byte[] getColumnValueBytes(int idx) throws DataIOException {
+    public byte[] getColumnValueBytes(int idx) {
 
         if (isColumnValueNull(idx, false))
             return null;
@@ -271,9 +266,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
      *
      * @param idx the idx
      * @return the column value binary stream
-     * @throws DataIOException the data IO exception
      */
-    public InputStream getColumnValueBinaryStream(int idx) throws DataIOException {
+    public InputStream getColumnValueBinaryStream(int idx) {
 
         if (isColumnValueNull(idx, false))
             return null;
@@ -322,9 +316,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
      *
      * @param idx the idx
      * @return the column value character stream
-     * @throws DataIOException the data IO exception
      */
-    public Reader getColumnValueCharacterStream(int idx) throws DataIOException {
+    public Reader getColumnValueCharacterStream(int idx) {
 
         if (isColumnValueNull(idx, false))
             return null;
@@ -344,9 +337,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
             return null;
         String strValue = currColumnValues[idx - 1];
         try {
-            Long longValue = Long.parseLong(strValue);
-            return new Date(longValue.longValue());
-        } catch (NumberFormatException e) {
+            return new Date(Long.parseLong(strValue));
+        } catch (NumberFormatException ignored) {
         }
         try {
             return DateTimeUtil.isoDateToJavaDate(strValue);
@@ -367,8 +359,7 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
         if (isColumnValueNull(idx, true))
             return 0.0;
         try {
-            Double value = Double.parseDouble(currColumnValues[idx - 1]);
-            return value.doubleValue();
+            return Double.parseDouble(currColumnValues[idx - 1]);
         } catch (NumberFormatException e) {
             throw new DataIOException(e);
         }
@@ -386,8 +377,7 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
         if (isColumnValueNull(idx, true))
             return 0;
         try {
-            Integer value = Integer.parseInt(currColumnValues[idx - 1]);
-            return value.intValue();
+            return Integer.parseInt(currColumnValues[idx - 1]);
         } catch (NumberFormatException e) {
             throw new DataIOException(e);
         }
@@ -405,8 +395,7 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
         if (isColumnValueNull(idx, true))
             return 0L;
         try {
-            Long value = Long.parseLong(currColumnValues[idx - 1]);
-            return value.longValue();
+            return Long.parseLong(currColumnValues[idx - 1]);
         } catch (NumberFormatException e) {
             throw new DataIOException(e);
         }
@@ -424,8 +413,7 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
         if (isColumnValueNull(idx, true))
             return 0;
         try {
-            Short value = Short.parseShort(currColumnValues[idx - 1]);
-            return value.shortValue();
+            return Short.parseShort(currColumnValues[idx - 1]);
         } catch (NumberFormatException e) {
             throw new DataIOException(e);
         }
@@ -436,9 +424,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
      *
      * @param idx the idx
      * @return the column value string
-     * @throws DataIOException the data IO exception
      */
-    public String getColumnValueString(int idx) throws DataIOException {
+    public String getColumnValueString(int idx) {
 
         if (isColumnValueNull(idx, false))
             return null;
@@ -458,9 +445,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
             return null;
         String strValue = currColumnValues[idx - 1];
         try {
-            Long longValue = Long.parseLong(strValue);
-            return new Time(longValue.longValue());
-        } catch (NumberFormatException e) {
+            return new Time(Long.parseLong(strValue));
+        } catch (NumberFormatException ignored) {
         }
         try {
             return DateTimeUtil.isoTimeToJavaTime(strValue);
@@ -483,9 +469,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
         String strValue = currColumnValues[idx - 1];
         try {
             // default value is milliseconds since January 1, 1970 00:00:00 GMT.
-            Long longValue = Long.parseLong(strValue);
-            return new Timestamp(longValue.longValue());
-        } catch (NumberFormatException e) {
+            return new Timestamp(Long.parseLong(strValue));
+        } catch (NumberFormatException ignored) {
         }
         try {
             return new Timestamp(DateTimeUtil.isoDateToCalendar(strValue).getTimeInMillis());
@@ -506,16 +491,22 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
             String elementName = StAXUtil.moveDown(xmlreader);
             if (elementName == null)
                 return false;
-            if (elementName.equals("currentRow"))
-                currentRowType = rowType.CURRENT;
-            else if (elementName.equals("insertRow"))
-                currentRowType = rowType.INSERT;
-            else if (elementName.equals("modifyRow"))
-                currentRowType = rowType.UPDATE;
-            else if (elementName.equals("deleteRow"))
-                currentRowType = rowType.DELETE;
-            else
-                throw new DataIOException("undefined rowtype: '" + elementName + "'");
+            switch (elementName) {
+                case "currentRow":
+                    currentRowType = rowType.CURRENT;
+                    break;
+                case "insertRow":
+                    currentRowType = rowType.INSERT;
+                    break;
+                case "modifyRow":
+                    currentRowType = rowType.UPDATE;
+                    break;
+                case "deleteRow":
+                    currentRowType = rowType.DELETE;
+                    break;
+                default:
+                    throw new DataIOException("undefined rowtype: '" + elementName + "'");
+            }
 
             this.incRowReadCount();
             int colCount = metaData.getColumnCount();
@@ -529,7 +520,7 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
                 if (currentRowType != rowType.UPDATE)
                     currColumnUpdate[idx - 1] = false;
                 else
-                    currColumnUpdate[idx - 1] = colElementName.equals("updateValue") ? true : false;
+                    currColumnUpdate[idx - 1] = colElementName.equals("updateValue");
 
                 currColumnValues[idx - 1] = readWebRowSetColumnValue(colElementName);
             }
@@ -554,7 +545,7 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
 
         try {
             boolean isNull = false;
-            StringBuffer content = new StringBuffer("");
+            StringBuilder content = new StringBuilder();
             String loc = "" + xmlreader.getLocation();
             int stack = 0;
             while (xmlreader.hasNext()) {
@@ -630,9 +621,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
      * Was column value null.
      *
      * @return true, if was column value null
-     * @throws DataIOException the data IO exception
      */
-    public boolean wasColumnValueNull() throws DataIOException {
+    public boolean wasColumnValueNull() {
         return wasNull;
     }
 
@@ -647,7 +637,7 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
 
         final int i = idx - 1;
         wasNull = true;
-        if (i <= 0 && i > currColumnValues.length)
+        if (i < 0 || i >= currColumnValues.length)
             return true;
 
         if (currColumnValues[i] == null)
@@ -664,9 +654,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
      * Gets the current row type.
      *
      * @return the current row type
-     * @throws DataIOException the data IO exception
      */
-    public rowType getCurrentRowType() throws DataIOException {
+    public rowType getCurrentRowType() {
 
         return currentRowType;
     }
@@ -677,9 +666,8 @@ public class XMLWebRowSetReaderBase extends DataReaderAbstractStream implements 
      * @param idx the idx
      * @return true if the current row type is UPDATE and the specified column
      * should be updated
-     * @throws DataIOException the data IO exception
      */
-    public boolean isUpdateColumn(int idx) throws DataIOException {
+    public boolean isUpdateColumn(int idx) {
 
         return currColumnUpdate[idx - 1];
     }

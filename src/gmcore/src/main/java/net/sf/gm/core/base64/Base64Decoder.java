@@ -23,12 +23,12 @@ public class Base64Decoder extends Base64Base {
     /**
      * The br.
      */
-    private InputStreamReader br;
+    private final InputStreamReader br;
 
     /**
      * The os.
      */
-    private OutputStream os;
+    private final OutputStream os;
 
     /**
      * The Constructor.

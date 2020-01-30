@@ -24,6 +24,6 @@ public interface DataReaderFactory {
      * @return the instance
      * @throws DataIOException the data IO exception
      */
-    public DataReader getInstance(InputStream inputStream, Progress progress)
+    DataReader getInstance(InputStream inputStream, Progress progress)
         throws DataIOException;
 }

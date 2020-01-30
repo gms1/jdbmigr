@@ -35,11 +35,6 @@ import java.sql.Connection;
 public class xmlimptab extends JDbMigrApplicationBase {
 
     /**
-     * The default batch size.
-     */
-    private final int defaultBatchSize = 50;
-
-    /**
      * The user name.
      */
     private String userName;
@@ -211,7 +206,7 @@ public class xmlimptab extends JDbMigrApplicationBase {
             (optCatalog.isSelected() || optSchema.isSelected() ||
                 optTable.isSelected())) {
             AbstractApplication.errorln(
-                "option '" + optTableListFile.getLongNames() +
+                "option '" + optTableListFile.getLongNames()[0] +
                     "' not allowd in conjunction with catalog-, schema- or table-pattern");
             System.exit(1);
         }
@@ -235,6 +230,10 @@ public class xmlimptab extends JDbMigrApplicationBase {
         noSort = optNoSort.getValue(false);
 
         commitCount = optCommitCount.getValue(0);
+        /**
+         * The default batch size.
+         */
+        int defaultBatchSize = 50;
         batchSize = optBatchSize.getValue(defaultBatchSize);
         logFile = optLogFile.getValue();
         return argv;

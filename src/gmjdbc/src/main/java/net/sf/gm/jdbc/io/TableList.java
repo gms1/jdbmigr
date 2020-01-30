@@ -141,8 +141,6 @@ public class TableList extends ArrayList<TableDef> {
             }
             reader.close();
             return list;
-        } catch (final FileNotFoundException e) {
-            throw new DataIOException(e);
         } catch (final IOException e) {
             throw new DataIOException(e);
         }
@@ -217,8 +215,7 @@ public class TableList extends ArrayList<TableDef> {
 
         // add all tables from the map
         if (newSize > 0)
-            for (final TableDef table : values)
-                resultList.add(table);
+            resultList.addAll(values);
 
         return resultList;
     }

@@ -110,7 +110,7 @@ public interface Exporter {
      * @return true if succeeded, false if failed
      * @throws DataIOException the data IO exception
      */
-    public boolean process(final Progress progress, File output, String extension,
+    boolean process(final Progress progress, File output, String extension,
         final Unloader unloader, boolean overwrite,
         File tableList) throws DataIOException;
 
@@ -128,7 +128,7 @@ public interface Exporter {
      * @return true if succeeded, false if failed
      * @throws DataIOException the data IO exception
      */
-    public boolean process(final Progress progress, File output, String extension,
+    boolean process(final Progress progress, File output, String extension,
         final Unloader unloader, boolean overwrite,
         String catalogName, String schemaName,
         String tableName) throws DataIOException;

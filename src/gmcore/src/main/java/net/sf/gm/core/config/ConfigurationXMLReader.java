@@ -66,16 +66,12 @@ public class ConfigurationXMLReader extends ConfigurationXMLBase {
             final ConfigurationXMLContentHandler ch = new ConfigurationXMLContentHandler(data, newComment);
             xmlReader.setContentHandler(ch);
             xmlReader.setErrorHandler(ch);
-            xmlReader.setEntityResolver(new ConfigurationXMLBase.ConfigurationEntityResolver());
+            xmlReader.setEntityResolver(new ConfigurationEntityResolver());
             xmlReader.parse(is);
             in.close();
             return true;
-        } catch (final IOException ioe) {
+        } catch (final IOException | ParserConfigurationException | SAXException ioe) {
             throw new ConfigurationException(ioe);
-        } catch (final SAXException saxe) {
-            throw new ConfigurationException(saxe);
-        } catch (final ParserConfigurationException pce) {
-            throw new ConfigurationException(pce);
         }
     }
 }

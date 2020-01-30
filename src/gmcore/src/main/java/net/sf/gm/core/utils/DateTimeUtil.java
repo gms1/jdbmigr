@@ -28,27 +28,27 @@ public class DateTimeUtil {
     /**
      * The short date format.
      */
-    static SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+    static final SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * The long date format.
      */
-    static SimpleDateFormat formatDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    static final SimpleDateFormat formatDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * The longlong date format.
      */
-    static SimpleDateFormat formatTimestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    static final SimpleDateFormat formatTimestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     /**
      * The short time format.
      */
-    static SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm:ss");
+    static final SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm:ss");
 
     /**
      * The long time format.
      */
-    static SimpleDateFormat formatMilliseconds = new SimpleDateFormat("HH:mm:ss.SSS");
+    static final SimpleDateFormat formatMilliseconds = new SimpleDateFormat("HH:mm:ss.SSS");
 
     /**
      * Java date to iso date.
@@ -125,111 +125,110 @@ public class DateTimeUtil {
     /**
      * The date pattern.
      */
-    static Pattern datePattern;
+    static final Pattern datePattern;
 
     /**
      * The DAT e_ GR p_ YEAR.
      */
-    static int DATE_GRP_YEAR;
+    static final int DATE_GRP_YEAR;
 
     /**
      * The DAT e_ GR p_ MONTH.
      */
-    static int DATE_GRP_MONTH;
+    static final int DATE_GRP_MONTH;
 
     /**
      * The DAT e_ GR p_ MDAY.
      */
-    static int DATE_GRP_MDAY;
+    static final int DATE_GRP_MDAY;
 
     /**
      * The DAT e_ GR p_ WEEK.
      */
-    static int DATE_GRP_WEEK;
+    static final int DATE_GRP_WEEK;
 
     /**
      * The DAT e_ GR p_ WDAY.
      */
-    static int DATE_GRP_WDAY;
+    static final int DATE_GRP_WDAY;
 
     /**
      * The DAT e_ GR p_ HOUR.
      */
-    static int DATE_GRP_HOUR;
+    static final int DATE_GRP_HOUR;
 
     /**
      * The DAT e_ GR p_ MINUTE.
      */
-    static int DATE_GRP_MINUTE;
+    static final int DATE_GRP_MINUTE;
 
     /**
      * The DAT e_ GR p_ SECONDS.
      */
-    static int DATE_GRP_SECONDS;
+    static final int DATE_GRP_SECONDS;
 
     /**
      * The DAT e_ GR p_ FRAC.
      */
-    static int DATE_GRP_FRAC;
+    static final int DATE_GRP_FRAC;
 
     /**
      * The DAT e_ GR p_ TIMEZONE.
      */
-    static int DATE_GRP_TIMEZONE;
+    static final int DATE_GRP_TIMEZONE;
 
     /**
      * The time pattern.
      */
-    static Pattern timePattern;
+    static final Pattern timePattern;
 
     /**
      * The TIM e_ GR p_ HOUR.
      */
-    static int TIME_GRP_HOUR;
+    static final int TIME_GRP_HOUR;
 
     /**
      * The TIM e_ GR p_ MINUTE.
      */
-    static int TIME_GRP_MINUTE;
+    static final int TIME_GRP_MINUTE;
 
     /**
      * The TIM e_ GR p_ SECONDS.
      */
-    static int TIME_GRP_SECONDS;
+    static final int TIME_GRP_SECONDS;
 
     /**
      * The TIM e_ GR p_ FRAC.
      */
-    static int TIME_GRP_FRAC;
+    static final int TIME_GRP_FRAC;
 
     /**
      * The TIM e_ GR p_ TIMEZONE.
      */
-    static int TIME_GRP_TIMEZONE;
+    static final int TIME_GRP_TIMEZONE;
 
     static {
-        StringBuilder dateRegex = new StringBuilder();
-        dateRegex.append("^\\s*");
-        dateRegex.append("("); // date part: begin
-        dateRegex.append("(\\d{4})"); // date part: year
-        dateRegex.append("("); // date part: month- or week- part: begin
-        dateRegex.append("(-?(\\d{2})-?(\\d{2})?)"); // date part: month- or week- part: month
-        // and optional "day in month"
-        dateRegex.append("|"); // date part: month- or week- part: or
-        dateRegex.append("(-?W(\\d{2})-?(\\d)?)"); // date part: month- or week- part: week and
-        // optional "day in week"
-        dateRegex.append(")?"); // date part: month- or week- part: end
-        dateRegex.append(")"); // date part: end
-        dateRegex.append("("); // time part: begin
-        dateRegex.append("(\\s*[\\sT\\.]\\s*)"); // time part: delimiter
-        dateRegex.append("(\\d{2})(:?(\\d{2})(:?(\\d{2}))?)?([\\.,](\\d+))?"); // time part: info
-        dateRegex.append(")?"); // time part: end ( time part is optional )
-        dateRegex.append("("); // time zone: begin
-        dateRegex.append("\\s*"); // time zone: delimiter (optional)
-        dateRegex.append("(Z|[+-]\\d{2}:?(\\d{2})?)"); // time zone: info
-        dateRegex.append(")?"); // time zone: end ( time zone is optional )
-        dateRegex.append("\\s*$");
-        datePattern = Pattern.compile(dateRegex.toString());
+        String dateRegex = "^\\s*"
+            + "(" // date part: begin
+            + "(\\d{4})" // date part: year
+            + "(" // date part: month- or week- part: begin
+            + "(-?(\\d{2})-?(\\d{2})?)" // date part: month- or week- part: month
+            // and optional "day in month"
+            + "|" // date part: month- or week- part: or
+            + "(-?W(\\d{2})-?(\\d)?)" // date part: month- or week- part: week and
+            // optional "day in week"
+            + ")?" // date part: month- or week- part: end
+            + ")" // date part: end
+            + "(" // time part: begin
+            + "(\\s*[\\sT.]\\s*)" // time part: delimiter
+            + "(\\d{2})(:?(\\d{2})(:?(\\d{2}))?)?([.,](\\d+))?" // time part: info
+            + ")?" // time part: end ( time part is optional )
+            + "(" // time zone: begin
+            + "\\s*" // time zone: delimiter (optional)
+            + "(Z|[+-]\\d{2}:?(\\d{2})?)" // time zone: info
+            + ")?" // time zone: end ( time zone is optional )
+            + "\\s*$";
+        datePattern = Pattern.compile(dateRegex);
 
         DATE_GRP_YEAR = 2;
         DATE_GRP_MONTH = 5;
@@ -242,18 +241,17 @@ public class DateTimeUtil {
         DATE_GRP_FRAC = 18;
         DATE_GRP_TIMEZONE = 20;
 
-        StringBuilder timeRegex = new StringBuilder();
-        timeRegex.append("^\\s*");
-        timeRegex.append("("); // time part: begin
-        timeRegex.append("(\\s*[\\sT\\.]\\s*)?"); // time part: ? delimiter (optional)
-        timeRegex.append("(\\d{2})(:?(\\d{2})(:?(\\d{2}))?)?([\\.,](\\d+))?"); // time part: info
-        timeRegex.append(")"); // time part: end
-        timeRegex.append("("); // time zone: begin
-        timeRegex.append("\\s*"); // time zone: delimiter (optional)
-        timeRegex.append("(Z|[+-]\\d{2}:?(\\d{2})?)"); // time zone: info
-        timeRegex.append(")?"); // time zone: end ( time zone is optional )
-        timeRegex.append("\\s*$");
-        timePattern = Pattern.compile(timeRegex.toString());
+        String timeRegex = "^\\s*"
+            + "(" // time part: begin
+            + "(\\s*[\\sT.]\\s*)?" // time part: ? delimiter (optional)
+            + "(\\d{2})(:?(\\d{2})(:?(\\d{2}))?)?([.,](\\d+))?" // time part: info
+            + ")" // time part: end
+            + "(" // time zone: begin
+            + "\\s*" // time zone: delimiter (optional)
+            + "(Z|[+-]\\d{2}:?(\\d{2})?)" // time zone: info
+            + ")?" // time zone: end ( time zone is optional )
+            + "\\s*$";
+        timePattern = Pattern.compile(timeRegex);
 
         TIME_GRP_HOUR = 3;
         TIME_GRP_MINUTE = 5;

@@ -93,7 +93,7 @@ public interface Importer {
      * @return true if succeeded, false if failed
      * @throws DataIOException the data IO exception
      */
-    public boolean process(final Progress progress, File input, String extension,
+    boolean process(final Progress progress, File input, String extension,
         final Loader loader, boolean sort, boolean delete,
         File tableList) throws DataIOException;
 
@@ -112,7 +112,7 @@ public interface Importer {
      * @return true if succeeded, false if failed
      * @throws DataIOException the data IO exception
      */
-    public boolean process(final Progress progress, File input, String extension,
+    boolean process(final Progress progress, File input, String extension,
         final Loader loader, boolean sort, boolean delete,
         String catalogName, String schemaName,
         String tableName) throws DataIOException;

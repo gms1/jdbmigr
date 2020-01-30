@@ -16,35 +16,65 @@ package net.sf.gm.io.csv;
 public class CSVFormatOptions {
 
     /**
+     * The Constant DEF_ROWDELIMITER.
+     */
+    public static final char DEF_ROWDELIMITER = '\n';
+    /**
+     * The Constant DEF_COLDELIMITER.
+     */
+    public static final char DEF_COLDELIMITER = ',';
+    /**
+     * The Constant DEF_CHARDELIMITER.
+     */
+    public static final char DEF_CHARDELIMITER = '"';
+    /**
+     * The Constant DEF_QUOTING.
+     */
+    public static final boolean DEF_QUOTING = true;
+    /**
+     * The Constant DEF_DOUBLEQUOTES.
+     */
+    public static final boolean DEF_DOUBLEQUOTES = true;
+    /**
+     * The Constant DEF_COLUMNHEADER.
+     */
+    public static final boolean DEF_COLUMNHEADER = true;
+    /**
+     * The Constant DEF_FILTEREMPTYLINES.
+     */
+    public static final boolean DEF_FILTEREMPTYLINES = true;
+    /**
+     * The Constant DEF_READBUFFERSIZE.
+     */
+    public static final int DEF_READBUFFERSIZE = 1048576; // 1 MB
+    /**
+     * The Constant DEF_WRITEBUFFERSIZE.
+     */
+    public static final int DEF_WRITEBUFFERSIZE = 1048576; // 1 MB
+    /**
      * The row delimiter.
      */
     private char rowDelimiter;
-
     /**
      * The col delimiter.
      */
     private char colDelimiter;
-
     /**
      * The char delimiter.
      */
     private char charDelimiter;
-
     /**
      * The quoting.
      */
     private boolean quoting;
-
     /**
      * The double quotes.
      */
     private boolean doubleQuotes;
-
     /**
      * The column header.
      */
     private boolean columnHeader;
-
     /**
      * The filter empty lines.
      */
@@ -214,49 +244,4 @@ public class CSVFormatOptions {
 
         return CSVFormatOptions.DEF_WRITEBUFFERSIZE;
     }
-
-    /**
-     * The Constant DEF_ROWDELIMITER.
-     */
-    public static final char DEF_ROWDELIMITER = '\n';
-
-    /**
-     * The Constant DEF_COLDELIMITER.
-     */
-    public static final char DEF_COLDELIMITER = ',';
-
-    /**
-     * The Constant DEF_CHARDELIMITER.
-     */
-    public static final char DEF_CHARDELIMITER = '"';
-
-    /**
-     * The Constant DEF_QUOTING.
-     */
-    public static final boolean DEF_QUOTING = true;
-
-    /**
-     * The Constant DEF_DOUBLEQUOTES.
-     */
-    public static final boolean DEF_DOUBLEQUOTES = true;
-
-    /**
-     * The Constant DEF_COLUMNHEADER.
-     */
-    public static final boolean DEF_COLUMNHEADER = true;
-
-    /**
-     * The Constant DEF_FILTEREMPTYLINES.
-     */
-    public static final boolean DEF_FILTEREMPTYLINES = true;
-
-    /**
-     * The Constant DEF_READBUFFERSIZE.
-     */
-    public static final int DEF_READBUFFERSIZE = 1048576; // 1 MB
-
-    /**
-     * The Constant DEF_WRITEBUFFERSIZE.
-     */
-    public static final int DEF_WRITEBUFFERSIZE = 1048576; // 1 MB
 }

@@ -181,7 +181,7 @@ public class XMLWebRowSetWriterBase
                     if (reader.wasColumnValueNull())
                         emptyElement("null");
                     else
-                        text(Boolean.toString(value == 0 ? false : true));
+                        text(Boolean.toString(value != 0));
                 }
                 break;
                 case Types.TINYINT:
@@ -295,9 +295,7 @@ public class XMLWebRowSetWriterBase
                     // DISTINCT, NULL, REF, STRUCT, JAVA_OBJECT, OTHER
             }
             xmlwriter.writeEndElement();
-        } catch (final IOException e) {
-            throw new DataIOException(e);
-        } catch (XMLStreamException e) {
+        } catch (final IOException | XMLStreamException e) {
             throw new DataIOException(e);
         }
     }

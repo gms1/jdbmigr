@@ -7,7 +7,6 @@
  ******************************************************************/
 package net.sf.gm.io.sql;
 
-import net.sf.gm.core.io.DataIOException;
 import net.sf.gm.core.io.DataWriter;
 import net.sf.gm.core.io.DataWriterFactory;
 import net.sf.gm.core.ui.Progress;
@@ -22,22 +21,22 @@ public class DMLWriterFactory implements DataWriterFactory {
     /**
      * The doDelete.
      */
-    private boolean doDelete;
+    private final boolean doDelete;
 
     /**
      * The doImport.
      */
-    private boolean doImport;
+    private final boolean doImport;
 
     /**
      * The doSync.
      */
-    private boolean doSync;
+    private final boolean doSync;
 
     /**
      * The commitCount.
      */
-    private int commitCount;
+    private final int commitCount;
 
     /**
      * The Constructor.
@@ -62,10 +61,8 @@ public class DMLWriterFactory implements DataWriterFactory {
      * @param outputStream the output stream
      * @param progress     the progress
      * @return the instance
-     * @throws DataIOException the data IO exception
      */
-    public DataWriter getInstance(OutputStream outputStream, Progress progress)
-        throws DataIOException {
+    public DataWriter getInstance(OutputStream outputStream, Progress progress) {
 
         return new DMLWriter(progress, outputStream, doDelete, doImport, doSync,
             commitCount);

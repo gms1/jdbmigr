@@ -26,7 +26,7 @@ public class FileUtil {
             if (in == null)
                 return false;
             return in.delete();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return false;
     }

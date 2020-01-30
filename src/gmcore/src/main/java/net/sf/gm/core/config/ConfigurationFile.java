@@ -27,12 +27,12 @@ public class ConfigurationFile extends ConfigurationBase {
     /**
      * The log.
      */
-    static Logger log = Logger.getLogger(ConfigurationFile.class.getName());
+    static final Logger log = Logger.getLogger(ConfigurationFile.class.getName());
 
     /**
      * The file.
      */
-    private File file;
+    private final File file;
 
     /**
      * The Constructor.
@@ -108,11 +108,10 @@ public class ConfigurationFile extends ConfigurationBase {
             lockFile.lock(false, 0);
             final StringBuilder newComment = new StringBuilder();
             final ConfigurationXMLReader reader = new ConfigurationXMLReader();
-            final boolean res = reader.process(data, lockFile.getFileStream(), newComment);
-            return res;
-        } catch (final Exception ignore) {
+            return reader.process(data, lockFile.getFileStream(), newComment);
+        } catch (final Exception e) {
             ConfigurationFile.log
-                .warning("load cfgfile failed \"" + file + "\" failed:" + StringUtil.getShortExceptionMessage(ignore));
+                .warning("load cfgfile failed \"" + file + "\" failed:" + StringUtil.getShortExceptionMessage(e));
         } finally {
             if (lockFile != null)
                 lockFile.release();
@@ -134,11 +133,10 @@ public class ConfigurationFile extends ConfigurationBase {
             final StringBuilder newComment = new StringBuilder();
             final InputStream is = getURL().openStream();
             final ConfigurationXMLReader reader = new ConfigurationXMLReader();
-            final boolean res = reader.process(data, is, newComment);
-            return res;
-        } catch (final Exception ignore) {
+            return reader.process(data, is, newComment);
+        } catch (final Exception e) {
             ConfigurationFile.log
-                .warning("load cfgfile \"" + getURL() + "\" failed:" + StringUtil.getShortExceptionMessage(ignore));
+                .warning("load cfgfile \"" + getURL() + "\" failed:" + StringUtil.getShortExceptionMessage(e));
         }
         return false;
     }

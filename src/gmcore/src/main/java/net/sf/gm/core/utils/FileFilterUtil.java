@@ -12,6 +12,7 @@ import net.sf.gm.core.properties.SystemProperties;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 //
@@ -123,14 +124,20 @@ public class FileFilterUtil {
         if (recursive) {
             // get all subdirectories
             final File[] dirs = dir.listFiles(new SubDirectoryFilter());
-            for (File element : dirs)
-                FileFilterUtil.searchdir(resultList, element, fileFilterPattern,
-                    recursive);
+            if (dirs != null) {
+                for (File element : dirs)
+                {
+                    //noinspection ConstantConditions
+                    FileFilterUtil.searchdir(resultList, element, fileFilterPattern,
+                        recursive);
+                }
+            }
         }
         // search this directory for files
         final File[] files = dir.listFiles(new WildcardFilter(fileFilterPattern));
-        for (File element : files)
-            resultList.add(element);
+        if (files != null) {
+            resultList.addAll(Arrays.asList(files));
+        }
     }
 
     /**
@@ -141,7 +148,7 @@ public class FileFilterUtil {
         /**
          * The file filter pattern.
          */
-        Pattern fileFilterPattern;
+        final Pattern fileFilterPattern;
 
         /**
          * The Constant hasDotPattern.
@@ -180,9 +187,6 @@ public class FileFilterUtil {
     }
 
 
-    ;
-
-
     /**
      * The Class SubDirectoryFilter.
      */
@@ -207,9 +211,6 @@ public class FileFilterUtil {
         }
     }
 
-
-    ;
-
     /**
      * Wildcard to regex.
      *
@@ -218,7 +219,7 @@ public class FileFilterUtil {
      */
     public static String wildcardToRegex(final String wildcard) {
 
-        final StringBuffer s = new StringBuffer(wildcard.length());
+        final StringBuilder s = new StringBuilder(wildcard.length());
         s.append('^');
         final int len = wildcard.length();
         for (int i = 0; i < len; i++) {
