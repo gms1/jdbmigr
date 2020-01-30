@@ -4,11 +4,11 @@
     <groupId>net.sf.gm.jdbc</groupId>
     <artifactId>gmjdbc</artifactId>
     <packaging>jar</packaging>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.5-SNAPSHOT</version>
     <parent>
         <groupId>net.sf.gm</groupId>
         <artifactId>jdbmigr-root</artifactId>
-        <version>0.4-SNAPSHOT</version>
+        <version>0.5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <dependencies>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>net.sf.gm.io</groupId>
             <artifactId>gmio</artifactId>
-            <version>0.4-SNAPSHOT</version>
+            <version>0.5-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

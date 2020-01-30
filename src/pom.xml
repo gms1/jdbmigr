@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sf.gm</groupId>
     <artifactId>jdbmigr-root</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>gmcore</module>
@@ -26,7 +26,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <compliance>1.7</compliance>
                     <compilerArgs>
                         <arg>-Xlint:deprecation</arg>
                     </compilerArgs>
