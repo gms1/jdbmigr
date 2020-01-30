@@ -7,258 +7,274 @@
  ******************************************************************/
 package net.sf.gm.core.cmdline;
 
-import java.util.Locale;
-
 import net.sf.gm.core.utils.StringUtil;
 
+import java.util.Locale;
+
 //
+
+
 /**
  * abstract base class for all options.
  */
 public abstract class OptionBase {
 
-  /** The mandatory argument. */
-  private boolean mandatoryArgument;
+    /**
+     * The mandatory argument.
+     */
+    private boolean mandatoryArgument;
 
-  /** The short names. */
-  private String[] shortNames;
+    /**
+     * The short names.
+     */
+    private String[] shortNames;
 
-  /** The long names. */
-  private String[] longNames;
+    /**
+     * The long names.
+     */
+    private String[] longNames;
 
-  /** The description. */
-  private String description;
+    /**
+     * The description.
+     */
+    private String description;
 
-  /** The argument. */
-  private Object argument = null;
+    /**
+     * The argument.
+     */
+    private Object argument = null;
 
-  /** The display name. */
-  private String displayName = null;
+    /**
+     * The display name.
+     */
+    private String displayName = null;
 
-  /** The is help option. */
-  private boolean isHelpOption = false;
+    /**
+     * The is help option.
+     */
+    private boolean isHelpOption = false;
 
-  /** The unescape. */
-  private boolean unescape = false;
+    /**
+     * The unescape.
+     */
+    private boolean unescape = false;
 
-  /**
-   * constructor.
-   *
-   * @param shortNames        the short names
-   * @param description       the description
-   * @param longNames         the long names
-   * @param mandatoryArgument the mandatory argument
-   */
-  protected OptionBase(final String shortNames, final String longNames, final String description,
-      final boolean mandatoryArgument) {
+    /**
+     * constructor.
+     *
+     * @param shortNames        the short names
+     * @param description       the description
+     * @param longNames         the long names
+     * @param mandatoryArgument the mandatory argument
+     */
+    protected OptionBase(final String shortNames, final String longNames, final String description,
+        final boolean mandatoryArgument) {
 
-    init(shortNames, longNames, description, mandatoryArgument);
-  }
-
-  /**
-   * constructor.
-   *
-   * @param shortNames        the short names
-   * @param parser            the parser
-   * @param description       the description
-   * @param longNames         the long names
-   * @param mandatoryArgument the mandatory argument
-   */
-  protected OptionBase(final CmdLineParser parser, final String shortNames, final String longNames,
-      final String description, final boolean mandatoryArgument) {
-
-    init(shortNames, longNames, description, mandatoryArgument);
-    // add this option to the parser
-    parser.add(this);
-  }
-
-  /**
-   * initialize option.
-   *
-   * @param shortNames        the short names
-   * @param description       the description
-   * @param longNames         the long names
-   * @param mandatoryArgument the mandatory argument
-   */
-  protected void init(final String shortNames, final String longNames, final String description,
-      final boolean mandatoryArgument) {
-
-    this.description = description;
-    this.mandatoryArgument = mandatoryArgument;
-    this.shortNames = null;
-    if (shortNames != null && shortNames.length() > 0) {
-      final int shortNameCount = shortNames.length();
-      this.shortNames = new String[shortNameCount];
-      for (int i = 0; i < shortNameCount; i++)
-        this.shortNames[i] = shortNames.substring(i, i + 1);
+        init(shortNames, longNames, description, mandatoryArgument);
     }
-    this.longNames = null;
-    if (longNames != null && longNames.length() > 0)
-      this.longNames = longNames.split(",");
-  }
 
-  /**
-   * Gets the unescape.
-   *
-   * @return the unescape
-   */
-  public boolean getUnescape() {
-    return unescape;
-  }
+    /**
+     * constructor.
+     *
+     * @param shortNames        the short names
+     * @param parser            the parser
+     * @param description       the description
+     * @param longNames         the long names
+     * @param mandatoryArgument the mandatory argument
+     */
+    protected OptionBase(final CmdLineParser parser, final String shortNames, final String longNames,
+        final String description, final boolean mandatoryArgument) {
 
-  /**
-   * Sets the unescape.
-   *
-   * @param unescape the unescape
-   */
-  public void setUnescape(final boolean unescape) {
-    this.unescape = unescape;
-  }
+        init(shortNames, longNames, description, mandatoryArgument);
+        // add this option to the parser
+        parser.add(this);
+    }
 
-  /**
-   * if this option is selected, the usage description should be provided.
-   */
-  public void forHelpUsage() {
-    this.isHelpOption = true;
-  }
+    /**
+     * initialize option.
+     *
+     * @param shortNames        the short names
+     * @param description       the description
+     * @param longNames         the long names
+     * @param mandatoryArgument the mandatory argument
+     */
+    protected void init(final String shortNames, final String longNames, final String description,
+        final boolean mandatoryArgument) {
 
-  /**
-   * Checks if is for help usage.
-   *
-   * @return true, if is for help usage
-   */
-  public boolean isForHelpUsage() {
-    return this.isHelpOption;
-  }
+        this.description = description;
+        this.mandatoryArgument = mandatoryArgument;
+        this.shortNames = null;
+        if (shortNames != null && shortNames.length() > 0) {
+            final int shortNameCount = shortNames.length();
+            this.shortNames = new String[shortNameCount];
+            for (int i = 0; i < shortNameCount; i++)
+                this.shortNames[i] = shortNames.substring(i, i + 1);
+        }
+        this.longNames = null;
+        if (longNames != null && longNames.length() > 0)
+            this.longNames = longNames.split(",");
+    }
 
-  /**
-   * reset this option.
-   */
-  protected void reset() {
+    /**
+     * Gets the unescape.
+     *
+     * @return the unescape
+     */
+    public boolean getUnescape() {
+        return unescape;
+    }
 
-    displayName = null;
-    argument = null;
-  }
+    /**
+     * Sets the unescape.
+     *
+     * @param unescape the unescape
+     */
+    public void setUnescape(final boolean unescape) {
+        this.unescape = unescape;
+    }
 
-  /**
-   * get all long option names.
-   *
-   * @return the long names
-   */
-  public String[] getLongNames() {
-    return longNames;
-  }
+    /**
+     * if this option is selected, the usage description should be provided.
+     */
+    public void forHelpUsage() {
+        this.isHelpOption = true;
+    }
 
-  /**
-   * get all short option names.
-   *
-   * @return the short names
-   */
-  public String[] getShortNames() {
-    return shortNames;
-  }
+    /**
+     * Checks if is for help usage.
+     *
+     * @return true, if is for help usage
+     */
+    public boolean isForHelpUsage() {
+        return this.isHelpOption;
+    }
 
-  /**
-   * get the mandatoryArgument value.
-   *
-   * @return true, if is argument required
-   */
-  public boolean isArgumentRequired() {
-    return mandatoryArgument;
-  }
+    /**
+     * reset this option.
+     */
+    protected void reset() {
 
-  /**
-   * get the description.
-   *
-   * @return the description
-   */
-  public String getDescription() {
-    return description;
-  }
+        displayName = null;
+        argument = null;
+    }
 
-  /**
-   * get the argument.
-   *
-   * @return the argument
-   */
-  public Object getArgument() {
-    return argument;
-  }
+    /**
+     * get all long option names.
+     *
+     * @return the long names
+     */
+    public String[] getLongNames() {
+        return longNames;
+    }
 
-  /**
-   * set the argument.
-   *
-   * @param argument the argument
-   */
-  protected void setArgument(final Object argument) {
+    /**
+     * get all short option names.
+     *
+     * @return the short names
+     */
+    public String[] getShortNames() {
+        return shortNames;
+    }
 
-    this.argument = argument;
-  }
+    /**
+     * get the mandatoryArgument value.
+     *
+     * @return true, if is argument required
+     */
+    public boolean isArgumentRequired() {
+        return mandatoryArgument;
+    }
 
-  /**
-   * get the argument.
-   *
-   * @return true, if is selected
-   */
-  public boolean isSelected() {
-    return argument != null;
-  }
+    /**
+     * get the description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
 
-  /**
-   * set the argument for this option using the string value found by the parser.
-   *
-   * @param locale the locale
-   * @param arg    the arg
-   *
-   * @throws CmdLineException the cmd line exception
-   */
-  abstract protected void setArgument(String arg, Locale locale) throws CmdLineException;
+    /**
+     * get the argument.
+     *
+     * @return the argument
+     */
+    public Object getArgument() {
+        return argument;
+    }
 
-  /**
-   * get the display name.
-   *
-   * @return the display name
-   */
-  public String getDisplayName() {
+    /**
+     * set the argument.
+     *
+     * @param argument the argument
+     */
+    protected void setArgument(final Object argument) {
 
-    if (displayName != null)
-      return displayName;
-    if (longNames != null && longNames.length > 0)
-      return longNames[0];
-    if (shortNames != null && shortNames.length > 0)
-      return shortNames[0];
-    return "unknown option";
-  }
+        this.argument = argument;
+    }
 
-  /**
-   * set the display name.
-   *
-   * @param displayName the display name
-   */
-  protected void setDisplayName(final String displayName) {
+    /**
+     * get the argument.
+     *
+     * @return true, if is selected
+     */
+    public boolean isSelected() {
+        return argument != null;
+    }
 
-    this.displayName = displayName;
-  }
+    /**
+     * set the argument for this option using the string value found by the parser.
+     *
+     * @param locale the locale
+     * @param arg    the arg
+     * @throws CmdLineException the cmd line exception
+     */
+    abstract protected void setArgument(String arg, Locale locale) throws CmdLineException;
 
-  /**
-   * parse the argument string found by the parser.
-   *
-   * @param locale   the locale
-   * @param optName  the opt name
-   * @param argument the argument
-   *
-   * @throws CmdLineException the cmd line exception
-   */
-  protected void parseOption(final String argument, final Locale locale, final String optName) throws CmdLineException {
+    /**
+     * get the display name.
+     *
+     * @return the display name
+     */
+    public String getDisplayName() {
 
-    String arg = argument;
-    setDisplayName(optName);
-    if (!mandatoryArgument && arg != null)
-      throw new CmdLineException.IllegalOptionArgumentException(this, arg);
-    if (mandatoryArgument && arg == null)
-      throw new CmdLineException.MissingOptionArgumentException(this);
-    if (unescape && arg != null)
-      arg = StringUtil.unescapeCString(arg);
-    this.setArgument(arg, locale);
-  }
+        if (displayName != null)
+            return displayName;
+        if (longNames != null && longNames.length > 0)
+            return longNames[0];
+        if (shortNames != null && shortNames.length > 0)
+            return shortNames[0];
+        return "unknown option";
+    }
+
+    /**
+     * set the display name.
+     *
+     * @param displayName the display name
+     */
+    protected void setDisplayName(final String displayName) {
+
+        this.displayName = displayName;
+    }
+
+    /**
+     * parse the argument string found by the parser.
+     *
+     * @param locale   the locale
+     * @param optName  the opt name
+     * @param argument the argument
+     * @throws CmdLineException the cmd line exception
+     */
+    protected void parseOption(final String argument, final Locale locale, final String optName) throws CmdLineException {
+
+        String arg = argument;
+        setDisplayName(optName);
+        if (!mandatoryArgument && arg != null)
+            throw new CmdLineException.IllegalOptionArgumentException(this, arg);
+        if (mandatoryArgument && arg == null)
+            throw new CmdLineException.MissingOptionArgumentException(this);
+        if (unescape && arg != null)
+            arg = StringUtil.unescapeCString(arg);
+        this.setArgument(arg, locale);
+    }
 }

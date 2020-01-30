@@ -13,60 +13,62 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 //
+
+
 /**
  * The Class SqlUtil.
  */
 public class SqlUtil {
 
-  /**
-   * Close connection.
-   *
-   * @param con the con
-   */
-  public static void closeConnection(final Connection con) {
+    /**
+     * Close connection.
+     *
+     * @param con the con
+     */
+    public static void closeConnection(final Connection con) {
 
-    try {
-      con.close();
-    } catch (final Exception ignore) {
+        try {
+            con.close();
+        } catch (final Exception ignore) {
+        }
     }
-  }
 
-  /**
-   * Close result set.
-   *
-   * @param rs the rs
-   */
-  public static void closeResultSet(final ResultSet rs) {
+    /**
+     * Close result set.
+     *
+     * @param rs the rs
+     */
+    public static void closeResultSet(final ResultSet rs) {
 
-    try {
-      rs.close();
-    } catch (final Exception ignore) {
+        try {
+            rs.close();
+        } catch (final Exception ignore) {
+        }
     }
-  }
 
-  /**
-   * Close statement.
-   *
-   * @param stmt the stmt
-   */
-  public static void closeStatement(final Statement stmt) {
+    /**
+     * Close statement.
+     *
+     * @param stmt the stmt
+     */
+    public static void closeStatement(final Statement stmt) {
 
-    try {
-      stmt.close();
-    } catch (final Exception ignore) {
+        try {
+            stmt.close();
+        } catch (final Exception ignore) {
+        }
     }
-  }
 
-  /**
-   * Close prepared statement.
-   *
-   * @param stmt the stmt
-   */
-  public static void closePreparedStatement(final PreparedStatement stmt) {
+    /**
+     * Close prepared statement.
+     *
+     * @param stmt the stmt
+     */
+    public static void closePreparedStatement(final PreparedStatement stmt) {
 
-    try {
-      stmt.close();
-    } catch (final Exception ignore) {
+        try {
+            stmt.close();
+        } catch (final Exception ignore) {
+        }
     }
-  }
 }

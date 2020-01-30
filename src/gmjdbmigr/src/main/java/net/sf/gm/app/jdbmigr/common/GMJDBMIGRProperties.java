@@ -13,24 +13,29 @@ import net.sf.gm.io.common.GMIOProperties;
 import net.sf.gm.jdbc.common.GMJDBCProperties;
 
 //
+
+
 /**
  * The Class GMJDBMIGRProperties.
  */
 public class GMJDBMIGRProperties {
 
-  /** The props. */
-  static ModuleProperties props = null;
+    /**
+     * The props.
+     */
+    static ModuleProperties props = null;
 
-  static {
-    GMCOREProperties.startup();
-    GMIOProperties.startup();
-    GMJDBCProperties.startup();
-    GMJDBMIGRProperties.props = new ModuleProperties(
-        "GMJDBMIGR", "properties.version", GMJDBMIGRProperties.class);
-  }
+    static {
+        GMCOREProperties.startup();
+        GMIOProperties.startup();
+        GMJDBCProperties.startup();
+        GMJDBMIGRProperties.props = new ModuleProperties(
+            "GMJDBMIGR", "properties.version", GMJDBMIGRProperties.class);
+    }
 
-  /**
-   * Startup.
-   */
-  public static void startup() {}
+    /**
+     * Startup.
+     */
+    public static void startup() {
+    }
 }

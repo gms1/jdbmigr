@@ -5,11 +5,10 @@ SCRIPT_BASENAME=$(basename "$0")
 PROJECT_DIR=$(cd "${SCRIPT_DIRNAME}"; cd ..; pwd)
 . "${SCRIPT_DIRNAME}/env.sh"
 
-
-rm -rf "${INSTALL_DIR}"
-
 "${SCRIPT_DIRNAME}/package" || exit 1
 
+msg "installing into ${INSTALL_DIR}..."
+rm -rf "${INSTALL_DIR}"
 mkdir -p "${INSTALL_DIR}" || \
   die "failed to create '${INSTALL_DIR}'"
 
@@ -21,5 +20,6 @@ pushd "${INSTALL_DIR}"  &>/dev/null || \
   cp -a "${EXTERNAL_DIR}/." .
 
 popd &>/dev/null
+msg "installing succeeded"
 
 

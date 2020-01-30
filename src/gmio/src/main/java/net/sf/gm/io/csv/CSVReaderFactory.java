@@ -7,12 +7,12 @@
  ******************************************************************/
 package net.sf.gm.io.csv;
 
-import java.io.InputStream;
-
 import net.sf.gm.core.io.DataIOException;
 import net.sf.gm.core.io.DataReader;
 import net.sf.gm.core.io.DataReaderFactory;
 import net.sf.gm.core.ui.Progress;
+
+import java.io.InputStream;
 
 /**
  * The Class CSVReaderFactory.
@@ -21,34 +21,38 @@ import net.sf.gm.core.ui.Progress;
  */
 public class CSVReaderFactory implements DataReaderFactory {
 
-  /** The options. */
-  private CSVFormatOptions options;
+    /**
+     * The options.
+     */
+    private CSVFormatOptions options;
 
-  /**
-   * The Constructor.
-   *
-   * @param options the options
-   */
-  public CSVReaderFactory(CSVFormatOptions options) { this.options = options; }
+    /**
+     * The Constructor.
+     *
+     * @param options the options
+     */
+    public CSVReaderFactory(CSVFormatOptions options) {
+        this.options = options;
+    }
 
-  /**
-   * The Constructor.
-   */
-  public CSVReaderFactory() { this.options = new CSVFormatOptions(); }
+    /**
+     * The Constructor.
+     */
+    public CSVReaderFactory() {
+        this.options = new CSVFormatOptions();
+    }
 
-  /**
-   * Gets the instance.
-   *
-   * @param inputStream the input stream
-   * @param progress    the progress
-   *
-   * @return the instance
-   *
-   * @throws DataIOException the data IO exception
-   */
-  public DataReader getInstance(InputStream inputStream, Progress progress)
-      throws DataIOException {
+    /**
+     * Gets the instance.
+     *
+     * @param inputStream the input stream
+     * @param progress    the progress
+     * @return the instance
+     * @throws DataIOException the data IO exception
+     */
+    public DataReader getInstance(InputStream inputStream, Progress progress)
+        throws DataIOException {
 
-    return new CSVReader(progress, inputStream, options);
-  }
+        return new CSVReader(progress, inputStream, options);
+    }
 }

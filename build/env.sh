@@ -7,8 +7,22 @@ INSTALL_DIR="${PROJECT_DIR}/install"
 
 
 
+msg() {
+  echo "${SCRIPT_BASENAME}: INFO: $@"
+}
+
+
+warn() {
+  echo "${SCRIPT_BASENAME}: WARNING: $@" 2>&1
+}
+
+err() {
+  echo "${SCRIPT_BASENAME}: ERROR: $@" 2>&1
+}
+
+
 die() {
-  echo "${SCRIPT_BASENAME}: ERROR: $@" 2>&2
+  err "$@"
   exit 1
 }
 

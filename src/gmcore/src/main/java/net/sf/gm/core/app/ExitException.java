@@ -8,13 +8,15 @@
 package net.sf.gm.core.app;
 
 // 
+
+
 /**
  * The Class ExitException.
  */
 public class ExitException extends RuntimeException {
 
     /**
-     *  
+     *
      */
     private static final long serialVersionUID = 2071903169493529511L;
 

@@ -7,5 +7,7 @@ target
 .settings
 .project
 .classpath
-
+.idea
+*.iml
+stale_outputs_checked
 

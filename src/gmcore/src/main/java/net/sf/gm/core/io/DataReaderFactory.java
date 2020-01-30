@@ -7,25 +7,23 @@
  ******************************************************************/
 package net.sf.gm.core.io;
 
-import java.io.InputStream;
-
 import net.sf.gm.core.ui.Progress;
+
+import java.io.InputStream;
 
 /**
  * The Interface DataReaderFactory.
  */
 public interface DataReaderFactory {
 
-  /**
-   * Gets the instance.
-   *
-   * @param inputStream the input stream
-   * @param progress    the progress
-   *
-   * @return the instance
-   *
-   * @throws DataIOException the data IO exception
-   */
-  public DataReader getInstance(InputStream inputStream, Progress progress)
-      throws DataIOException;
+    /**
+     * Gets the instance.
+     *
+     * @param inputStream the input stream
+     * @param progress    the progress
+     * @return the instance
+     * @throws DataIOException the data IO exception
+     */
+    public DataReader getInstance(InputStream inputStream, Progress progress)
+        throws DataIOException;
 }

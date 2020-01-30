@@ -11,53 +11,57 @@ import net.sf.gm.core.ui.OutputConsole;
 import net.sf.gm.core.ui.OutputTarget;
 
 //
+
+
 /**
  * The Class ConsoleAppOutput.
  */
 public class ConsoleAppOutput extends OutputConsole implements AppOutputTarget {
 
-  /**
-   * The Constructor.
-   */
-  public ConsoleAppOutput() {
+    /**
+     * The Constructor.
+     */
+    public ConsoleAppOutput() {
 
-    super();
-    log = null;
-  }
+        super();
+        log = null;
+    }
 
-  /** The log. */
-  private OutputTarget log;
+    /**
+     * The log.
+     */
+    private OutputTarget log;
 
-  /**
-   * Gets the log target.
-   *
-   * @return the log target
-   */
-  public OutputTarget getLogTarget() {
-    return log;
-  }
+    /**
+     * Gets the log target.
+     *
+     * @return the log target
+     */
+    public OutputTarget getLogTarget() {
+        return log;
+    }
 
-  /**
-   * Sets the log target.
-   *
-   * @param log the log
-   */
-  public void setLogTarget(final OutputTarget log) {
-    this.log = log;
-  }
+    /**
+     * Sets the log target.
+     *
+     * @param log the log
+     */
+    public void setLogTarget(final OutputTarget log) {
+        this.log = log;
+    }
 
-  /**
-   * Outputln.
-   *
-   * @param inputlevel the inputlevel
-   * @param message    the message
-   * @param e          the e
-   */
-  @Override
-  public void outputln(final int inputlevel, final String message, final Throwable e) {
+    /**
+     * Outputln.
+     *
+     * @param inputlevel the inputlevel
+     * @param message    the message
+     * @param e          the e
+     */
+    @Override
+    public void outputln(final int inputlevel, final String message, final Throwable e) {
 
-    if (log != null)
-      log.outputln(inputlevel, message, e);
-    super.outputln(inputlevel, message, e);
-  }
+        if (log != null)
+            log.outputln(inputlevel, message, e);
+        super.outputln(inputlevel, message, e);
+    }
 }

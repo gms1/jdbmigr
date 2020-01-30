@@ -10,75 +10,75 @@ package net.sf.gm.core.cmdline;
 import java.util.Locale;
 
 //
+
+
 /**
  * The Class OptionalFlag.
  */
 public class OptionalFlag extends OptionBase {
 
-  /**
-   * constructor.
-   *
-   * @param shortNames  the short names
-   * @param description the description
-   * @param longNames   the long names
-   */
-  public OptionalFlag(final String shortNames, final String longNames,
-                      final String description) {
+    /**
+     * constructor.
+     *
+     * @param shortNames  the short names
+     * @param description the description
+     * @param longNames   the long names
+     */
+    public OptionalFlag(final String shortNames, final String longNames,
+        final String description) {
 
-    super(shortNames, longNames, description, false);
-  }
+        super(shortNames, longNames, description, false);
+    }
 
-  /**
-   * constructor.
-   *
-   * @param shortNames  the short names
-   * @param parser      the parser
-   * @param description the description
-   * @param longNames   the long names
-   */
-  public OptionalFlag(final CmdLineParser parser, final String shortNames,
-                      final String longNames, final String description) {
+    /**
+     * constructor.
+     *
+     * @param shortNames  the short names
+     * @param parser      the parser
+     * @param description the description
+     * @param longNames   the long names
+     */
+    public OptionalFlag(final CmdLineParser parser, final String shortNames,
+        final String longNames, final String description) {
 
-    super(parser, shortNames, longNames, description, false);
-  }
+        super(parser, shortNames, longNames, description, false);
+    }
 
-  /**
-   * set the argument for this type of option.
-   *
-   * @param locale the locale
-   * @param arg    the arg
-   *
-   * @throws CmdLineException the cmd line exception
-   */
-  @Override
-  protected void setArgument(final String arg, final Locale locale)
-      throws CmdLineException {
+    /**
+     * set the argument for this type of option.
+     *
+     * @param locale the locale
+     * @param arg    the arg
+     * @throws CmdLineException the cmd line exception
+     */
+    @Override
+    protected void setArgument(final String arg, final Locale locale)
+        throws CmdLineException {
 
-    if (arg != null)
-      throw new CmdLineException.IllegalOptionArgumentException(this, arg);
-    setArgument(true);
-  }
+        if (arg != null)
+            throw new CmdLineException.IllegalOptionArgumentException(this, arg);
+        setArgument(true);
+    }
 
-  /**
-   * get the option value.
-   *
-   * @return the value
-   */
-  public boolean getValue() {
+    /**
+     * get the option value.
+     *
+     * @return the value
+     */
+    public boolean getValue() {
 
-    return getArgument() != null ? ((Boolean)getArgument()).booleanValue()
-                                 : false;
-  }
+        return getArgument() != null ? ((Boolean) getArgument()).booleanValue()
+            : false;
+    }
 
-  /**
-   * get the option value.
-   *
-   * @param defValue the def value
-   *
-   * @return the value
-   */
-  public boolean getValue(final boolean defValue) {
+    /**
+     * get the option value.
+     *
+     * @param defValue the def value
+     * @return the value
+     */
+    public boolean getValue(final boolean defValue) {
 
-    return getArgument() != null ? getValue() : defValue;
-  }
+        return getArgument() != null ? getValue() : defValue;
+    }
 }

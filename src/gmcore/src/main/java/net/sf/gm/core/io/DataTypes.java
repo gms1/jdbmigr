@@ -12,31 +12,48 @@ package net.sf.gm.core.io;
  */
 public class DataTypes {
 
-  /** The Constant UnknownType. */
-  public final static int UnknownType = -9999;
+    /**
+     * The Constant UnknownType.
+     */
+    public final static int UnknownType = -9999;
 
-  /** The Constant UnknownTypeName. */
-  public final static String UnknownTypeName = "UNKNOWN";
+    /**
+     * The Constant UnknownTypeName.
+     */
+    public final static String UnknownTypeName = "UNKNOWN";
 
-  /**
-   * The Enum rowType.
-   */
-  public enum rowType {
 
-    /** The UNKNOWN. */
-    UNKNOWN,
+    /**
+     * The Enum rowType.
+     */
+    public enum rowType {
 
-    /** The CURRENT. */
-    CURRENT,
+        /**
+         * The UNKNOWN.
+         */
+        UNKNOWN,
 
-    /** The INSERT. */
-    INSERT,
+        /**
+         * The CURRENT.
+         */
+        CURRENT,
 
-    /** The UPDATE. */
-    UPDATE,
+        /**
+         * The INSERT.
+         */
+        INSERT,
 
-    /** The DELETE. */
-    DELETE,
-  }
-  ;
+        /**
+         * The UPDATE.
+         */
+        UPDATE,
+
+        /**
+         * The DELETE.
+         */
+        DELETE,
+    }
+
+
+    ;
 }

@@ -10,65 +10,66 @@ package net.sf.gm.core.utils;
 import java.util.Comparator;
 
 //
+
+
 /**
  * The Class Comparators.
  */
 public class Comparators {
 
-  /**
-   * The Class ObjectToStringComparator.
-   */
-  public static class ObjectToStringComparator implements Comparator<Object> {
+    /**
+     * The Class ObjectToStringComparator.
+     */
+    public static class ObjectToStringComparator implements Comparator<Object> {
+
+        /**
+         * Compare.
+         *
+         * @param arg1 the arg1
+         * @param arg0 the arg0
+         * @return the int
+         */
+        public int compare(final Object arg0, final Object arg1) {
+
+            return arg0.toString().compareTo(arg1.toString());
+        }
+    }
+
 
     /**
-     * Compare.
-     *
-     * @param arg1 the arg1
-     * @param arg0 the arg0
-     *
-     * @return the int
+     * The Class StringCSComparator.
      */
-    public int compare(final Object arg0, final Object arg1) {
+    public static class StringCSComparator implements Comparator<String> {
 
-      return arg0.toString().compareTo(arg1.toString());
+        /**
+         * Compare.
+         *
+         * @param arg1 the arg1
+         * @param arg0 the arg0
+         * @return the int
+         */
+        public int compare(final String arg0, final String arg1) {
+
+            return arg0.compareTo(arg1);
+        }
     }
-  }
 
-  /**
-   * The Class StringCSComparator.
-   */
-  public static class StringCSComparator implements Comparator<String> {
 
     /**
-     * Compare.
-     *
-     * @param arg1 the arg1
-     * @param arg0 the arg0
-     *
-     * @return the int
+     * The Class StringCIComparator.
      */
-    public int compare(final String arg0, final String arg1) {
+    public static class StringCIComparator implements Comparator<String> {
 
-      return arg0.compareTo(arg1);
+        /**
+         * Compare.
+         *
+         * @param arg1 the arg1
+         * @param arg0 the arg0
+         * @return the int
+         */
+        public int compare(final String arg0, final String arg1) {
+
+            return arg0.toUpperCase().compareTo(arg1.toUpperCase());
+        }
     }
-  }
-
-  /**
-   * The Class StringCIComparator.
-   */
-  public static class StringCIComparator implements Comparator<String> {
-
-    /**
-     * Compare.
-     *
-     * @param arg1 the arg1
-     * @param arg0 the arg0
-     *
-     * @return the int
-     */
-    public int compare(final String arg0, final String arg1) {
-
-      return arg0.toUpperCase().compareTo(arg1.toUpperCase());
-    }
-  }
 }

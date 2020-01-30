@@ -7,125 +7,125 @@
  ******************************************************************/
 package net.sf.gm.core.filelock;
 
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.channels.FileChannel;
 
 //
+
+
 /**
  * The Class FileLockRead.
  */
 public class FileLockRead extends FileLockBase {
 
-  /** The file stream. */
-  private FileInputStream fileStream;
+    /**
+     * The file stream.
+     */
+    private FileInputStream fileStream;
 
-  /**
-   * The Constructor.
-   *
-   * @param file the file
-   *
-   * @throws IOException the IO exception
-   */
-  public FileLockRead(final File file) throws IOException {
+    /**
+     * The Constructor.
+     *
+     * @param file the file
+     * @throws IOException the IO exception
+     */
+    public FileLockRead(final File file) throws IOException {
 
-    super(file);
-    fileStream = null;
-  }
-
-  /**
-   * The Constructor.
-   *
-   * @param filePath the file path
-   *
-   * @throws IOException the IO exception
-   */
-  public FileLockRead(final String filePath) throws IOException {
-
-    super(filePath);
-    fileStream = null;
-  }
-
-  /**
-   * Gets the FD.
-   *
-   * @return the FD
-   */
-  public FileDescriptor getFD() {
-
-    if (!this.hasStream())
-      return null;
-    FileDescriptor fd = null;
-    try {
-      fd = fileStream.getFD();
-    } catch (final Exception ignore) {
+        super(file);
+        fileStream = null;
     }
-    return fd;
-  }
 
-  /**
-   * Gets the channel.
-   *
-   * @return the channel
-   */
-  @Override
-  public FileChannel getChannel() {
+    /**
+     * The Constructor.
+     *
+     * @param filePath the file path
+     * @throws IOException the IO exception
+     */
+    public FileLockRead(final String filePath) throws IOException {
 
-    if (fileStream == null)
-      return null;
-    return fileStream.getChannel();
-  }
+        super(filePath);
+        fileStream = null;
+    }
 
-  /**
-   * Gets the file stream.
-   *
-   * @return the file stream
-   */
-  public FileInputStream getFileStream() { return fileStream; }
+    /**
+     * Gets the FD.
+     *
+     * @return the FD
+     */
+    public FileDescriptor getFD() {
 
-  /**
-   * Release stream.
-   */
-  @Override
-  protected void releaseStream() {
+        if (!this.hasStream())
+            return null;
+        FileDescriptor fd = null;
+        try {
+            fd = fileStream.getFD();
+        } catch (final Exception ignore) {
+        }
+        return fd;
+    }
 
-    fileStream = null;
-  }
+    /**
+     * Gets the channel.
+     *
+     * @return the channel
+     */
+    @Override
+    public FileChannel getChannel() {
 
-  /**
-   * New stream.
-   *
-   * @throws FileNotFoundException the file not found exception
-   * @throws IOException           the IO exception
-   */
-  @Override
-  protected void newStream() throws FileNotFoundException, IOException {
+        if (fileStream == null)
+            return null;
+        return fileStream.getChannel();
+    }
 
-    fileStream = new FileInputStream(getFile().getCanonicalPath());
-  }
+    /**
+     * Gets the file stream.
+     *
+     * @return the file stream
+     */
+    public FileInputStream getFileStream() {
+        return fileStream;
+    }
 
-  /**
-   * Close stream.
-   *
-   * @throws IOException the IO exception
-   */
-  @Override
-  protected void closeStream() throws IOException {
+    /**
+     * Release stream.
+     */
+    @Override
+    protected void releaseStream() {
 
-    fileStream.close();
-  }
+        fileStream = null;
+    }
 
-  /**
-   * Checks for stream.
-   *
-   * @return true, if has stream
-   */
-  @Override
-  protected boolean hasStream() {
+    /**
+     * New stream.
+     *
+     * @throws FileNotFoundException the file not found exception
+     * @throws IOException           the IO exception
+     */
+    @Override
+    protected void newStream() throws FileNotFoundException, IOException {
 
-    return fileStream == null ? false : true;
-  }
+        fileStream = new FileInputStream(getFile().getCanonicalPath());
+    }
+
+    /**
+     * Close stream.
+     *
+     * @throws IOException the IO exception
+     */
+    @Override
+    protected void closeStream() throws IOException {
+
+        fileStream.close();
+    }
+
+    /**
+     * Checks for stream.
+     *
+     * @return true, if has stream
+     */
+    @Override
+    protected boolean hasStream() {
+
+        return fileStream == null ? false : true;
+    }
 }

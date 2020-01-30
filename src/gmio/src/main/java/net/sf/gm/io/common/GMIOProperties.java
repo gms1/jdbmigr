@@ -12,23 +12,28 @@ import net.sf.gm.core.properties.ModuleProperties;
 
 //
 //
+
+
 /**
  * The Class GMJDBCProperties.
  */
 public class GMIOProperties {
 
-  /** The props. */
-  static ModuleProperties props = null;
+    /**
+     * The props.
+     */
+    static ModuleProperties props = null;
 
-  static {
-    GMCOREProperties.startup();
+    static {
+        GMCOREProperties.startup();
 
-    GMIOProperties.props =
-        new ModuleProperties("GMIO", "gmio.properties", GMIOProperties.class);
-  }
+        GMIOProperties.props =
+            new ModuleProperties("GMIO", "gmio.properties", GMIOProperties.class);
+    }
 
-  /**
-   * Startup.
-   */
-  public static void startup() {}
+    /**
+     * Startup.
+     */
+    public static void startup() {
+    }
 }

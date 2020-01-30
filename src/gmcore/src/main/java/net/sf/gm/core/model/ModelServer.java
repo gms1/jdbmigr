@@ -10,6 +10,8 @@ package net.sf.gm.core.model;
 import java.util.ArrayList;
 
 //
+
+
 /**
  * The Class ModelServer.
  *
@@ -17,60 +19,64 @@ import java.util.ArrayList;
  */
 public abstract class ModelServer<M> {
 
-  /** The clients. */
-  private ArrayList<ModelClient<M>> clients = null;
+    /**
+     * The clients.
+     */
+    private ArrayList<ModelClient<M>> clients = null;
 
-  /**
-   * The Constructor.
-   */
-  public ModelServer() { clients = new ArrayList<ModelClient<M>>(); }
-
-  /**
-   * Gets the model.
-   *
-   * @return the model
-   */
-  protected abstract M getModel();
-
-  /**
-   * Register client.
-   *
-   * @param client the client
-   */
-  public void RegisterClient(final ModelClient<M> client) {
-
-    if (!this.clients.contains(client)) {
-      this.clients.add(client);
-      notifyClient(client);
+    /**
+     * The Constructor.
+     */
+    public ModelServer() {
+        clients = new ArrayList<ModelClient<M>>();
     }
-  }
 
-  /**
-   * Un register client.
-   *
-   * @param client the client
-   */
-  public void UnRegisterClient(final ModelClient<M> client) {
+    /**
+     * Gets the model.
+     *
+     * @return the model
+     */
+    protected abstract M getModel();
 
-    this.clients.remove(client);
-  }
+    /**
+     * Register client.
+     *
+     * @param client the client
+     */
+    public void RegisterClient(final ModelClient<M> client) {
 
-  /**
-   * Notify clients.
-   */
-  public void notifyClients() {
+        if (!this.clients.contains(client)) {
+            this.clients.add(client);
+            notifyClient(client);
+        }
+    }
 
-    for (final ModelClient<M> client : this.clients)
-      notifyClient(client);
-  }
+    /**
+     * Un register client.
+     *
+     * @param client the client
+     */
+    public void UnRegisterClient(final ModelClient<M> client) {
 
-  /**
-   * Notify client.
-   *
-   * @param client the client
-   */
-  protected void notifyClient(final ModelClient<M> client) {
+        this.clients.remove(client);
+    }
 
-    client.serverChanged(this.getModel());
-  }
+    /**
+     * Notify clients.
+     */
+    public void notifyClients() {
+
+        for (final ModelClient<M> client : this.clients)
+            notifyClient(client);
+    }
+
+    /**
+     * Notify client.
+     *
+     * @param client the client
+     */
+    protected void notifyClient(final ModelClient<M> client) {
+
+        client.serverChanged(this.getModel());
+    }
 }

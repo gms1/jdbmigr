@@ -7,6 +7,9 @@
  ******************************************************************/
 package net.sf.gm.core.config;
 
+import net.sf.gm.core.properties.AppProperties;
+import net.sf.gm.core.utils.ReaderInputStream;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -14,449 +17,446 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
-import net.sf.gm.core.properties.AppProperties;
-import net.sf.gm.core.utils.ReaderInputStream;
-
 //
+
+
 /**
  * The Class ConfigurationImpl.
  */
 public abstract class ConfigurationBase implements Configuration {
 
-  /** The data. */
-  private ConfigurationData data;
+    /**
+     * The data.
+     */
+    private ConfigurationData data;
 
-  /** The modified. */
-  private boolean modified;
+    /**
+     * The modified.
+     */
+    private boolean modified;
 
-  /** The url. */
-  private URL url;
+    /**
+     * The url.
+     */
+    private URL url;
 
-  /** The default configuration. */
-  private Configuration defaultConfiguration;
+    /**
+     * The default configuration.
+     */
+    private Configuration defaultConfiguration;
 
-  /**
-   * The Constructor.
-   */
-  public ConfigurationBase() {
+    /**
+     * The Constructor.
+     */
+    public ConfigurationBase() {
 
-    data = null;
-    modified = false;
-    this.url = null;
-    this.defaultConfiguration = null;
-  }
-
-  /**
-   * The Constructor.
-   *
-   * @param url the url
-   */
-  public ConfigurationBase(final URL url) {
-
-    data = null;
-    modified = false;
-    this.url = url;
-    this.defaultConfiguration = null;
-  }
-
-  /**
-   * The Constructor.
-   *
-   * @param url                  the url
-   * @param defaultConfiguration the default configuration
-   */
-  public ConfigurationBase(final URL url, final Configuration defaultConfiguration) {
-
-    data = null;
-    modified = false;
-    this.url = url;
-    this.defaultConfiguration = defaultConfiguration;
-  }
-
-  /**
-   * Load.
-   *
-   * @param data the data
-   *
-   * @return true, if load
-   */
-  abstract protected boolean load(ConfigurationData data);
-
-  /**
-   * Load.
-   *
-   * @return true, if load
-   */
-  public synchronized boolean load() {
-
-    data = new ConfigurationData("ROOT");
-    boolean res = this.load(data);
-    if (!res && defaultConfiguration != null)
-      if (defaultConfiguration.load()) {
-        data = defaultConfiguration.getStoredData("/");
-        res = true;
-      }
-    modified = false;
-    return res;
-  }
-
-  /**
-   * Gets the stored data.
-   *
-   * @param node the node
-   *
-   * @return the stored data
-   */
-  public ConfigurationData getStoredData(final String node) {
-
-    return data.findNode(node);
-  }
-
-  /**
-   * Gets the properties.
-   *
-   * @param node the node
-   *
-   * @return the properties
-   */
-  public Properties getProperties(final String node) {
-
-    final Properties props = data.findNodeProperties(node);
-    if (props == null)
-      return null;
-    final Properties resProps = new Properties();
-    final Set<Object> keys = resProps.keySet();
-    final Iterator<Object> i = keys.iterator();
-    while (i.hasNext()) {
-      final String key = (String) i.next();
-      resProps.put(key, props.getProperty(key));
+        data = null;
+        modified = false;
+        this.url = null;
+        this.defaultConfiguration = null;
     }
-    return resProps;
-  }
 
-  /**
-   * Gets the properties stream.
-   *
-   * @param node the node
-   *
-   * @return the properties stream
-   */
-  public InputStream getPropertiesStream(final String node) {
+    /**
+     * The Constructor.
+     *
+     * @param url the url
+     */
+    public ConfigurationBase(final URL url) {
 
-    Properties props = data.findNodeProperties(node);
-    if (props == null)
-      props = new Properties();
-    return new ReaderInputStream(new ConfigurationReader((Properties) props.clone()));
-  }
+        data = null;
+        modified = false;
+        this.url = url;
+        this.defaultConfiguration = null;
+    }
 
-  /**
-   * Removes the property.
-   *
-   * @param node the node
-   * @param name the name
-   */
-  public synchronized void removeProperty(final String node, final String name) {
+    /**
+     * The Constructor.
+     *
+     * @param url                  the url
+     * @param defaultConfiguration the default configuration
+     */
+    public ConfigurationBase(final URL url, final Configuration defaultConfiguration) {
 
-    final Properties props = data.findNodeProperties(node);
-    if (props == null)
-      return;
-    final Object value = props.getProperty(name);
-    if (value == null)
-      return;
-    props.remove(name);
-    modified = true;
-  }
+        data = null;
+        modified = false;
+        this.url = url;
+        this.defaultConfiguration = defaultConfiguration;
+    }
 
-  /**
-   * Gets the stored property.
-   *
-   * @param node the node
-   * @param name the name
-   *
-   * @return the stored property
-   */
-  public String getStoredProperty(final String node, final String name) {
+    /**
+     * Load.
+     *
+     * @param data the data
+     * @return true, if load
+     */
+    abstract protected boolean load(ConfigurationData data);
 
-    final Properties props = data.findNodeProperties(node);
-    if (props == null)
-      return null;
-    return props.getProperty(name);
-  }
+    /**
+     * Load.
+     *
+     * @return true, if load
+     */
+    public synchronized boolean load() {
 
-  /**
-   * Gets the property.
-   *
-   * @param node the node
-   * @param name the name
-   *
-   * @return the property
-   */
-  public String getProperty(final String node, final String name) {
+        data = new ConfigurationData("ROOT");
+        boolean res = this.load(data);
+        if (!res && defaultConfiguration != null)
+            if (defaultConfiguration.load()) {
+                data = defaultConfiguration.getStoredData("/");
+                res = true;
+            }
+        modified = false;
+        return res;
+    }
 
-    return getProperty(node, name, null);
-  }
+    /**
+     * Gets the stored data.
+     *
+     * @param node the node
+     * @return the stored data
+     */
+    public ConfigurationData getStoredData(final String node) {
 
-  /**
-   * Gets the property.
-   *
-   * @param node     the node
-   * @param defValue the def value
-   * @param name     the name
-   *
-   * @return the property
-   */
-  public String getProperty(final String node, final String name, final String defValue) {
+        return data.findNode(node);
+    }
 
-    final Properties props = data.findNodeProperties(node);
-    if (props == null)
-      return defValue;
-    return AppProperties.expandApplicationProperties(props.getProperty(name, defValue));
-  }
+    /**
+     * Gets the properties.
+     *
+     * @param node the node
+     * @return the properties
+     */
+    public Properties getProperties(final String node) {
 
-  /**
-   * Sets the property.
-   *
-   * @param value the value
-   * @param node  the node
-   * @param name  the name
-   *
-   * @return true, if set property
-   */
-  public synchronized boolean setProperty(final String node, final String name, final String value) {
+        final Properties props = data.findNodeProperties(node);
+        if (props == null)
+            return null;
+        final Properties resProps = new Properties();
+        final Set<Object> keys = resProps.keySet();
+        final Iterator<Object> i = keys.iterator();
+        while (i.hasNext()) {
+            final String key = (String) i.next();
+            resProps.put(key, props.getProperty(key));
+        }
+        return resProps;
+    }
 
-    final Properties props = data.addNodeProprties(node);
-    final String oldValue = props.getProperty(name);
-    if (value == null) {
-      if (oldValue != null)
+    /**
+     * Gets the properties stream.
+     *
+     * @param node the node
+     * @return the properties stream
+     */
+    public InputStream getPropertiesStream(final String node) {
+
+        Properties props = data.findNodeProperties(node);
+        if (props == null)
+            props = new Properties();
+        return new ReaderInputStream(new ConfigurationReader((Properties) props.clone()));
+    }
+
+    /**
+     * Removes the property.
+     *
+     * @param node the node
+     * @param name the name
+     */
+    public synchronized void removeProperty(final String node, final String name) {
+
+        final Properties props = data.findNodeProperties(node);
+        if (props == null)
+            return;
+        final Object value = props.getProperty(name);
+        if (value == null)
+            return;
         props.remove(name);
-      return true;
+        modified = true;
     }
-    if (value.equals(oldValue))
-      return false;
-    modified = true;
-    props.setProperty(name, value);
-    return true;
-  }
 
-  /**
-   * Gets the property bool.
-   *
-   * @param node     the node
-   * @param defValue the def value
-   * @param name     the name
-   *
-   * @return the property bool
-   */
-  public boolean getPropertyBool(final String node, final String name, final boolean defValue) {
+    /**
+     * Gets the stored property.
+     *
+     * @param node the node
+     * @param name the name
+     * @return the stored property
+     */
+    public String getStoredProperty(final String node, final String name) {
 
-    final String v = getProperty(node, name);
-    if (v == null)
-      return defValue;
-    if (v.equalsIgnoreCase("true") || v.equals("1"))
-      return true;
-    if (v.equalsIgnoreCase("false") || v.equals("0"))
-      return false;
-    return defValue;
-  }
-
-  /**
-   * Sets the property bool.
-   *
-   * @param value the value
-   * @param node  the node
-   * @param name  the name
-   *
-   * @return true, if set property bool
-   */
-  public boolean setPropertyBool(final String node, final String name, final boolean value) {
-
-    final String strValue = value ? "true" : "false";
-    return setProperty(node, name, strValue);
-  }
-
-  /**
-   * Gets the property integer.
-   *
-   * @param node     the node
-   * @param defValue the def value
-   * @param name     the name
-   *
-   * @return the property integer
-   */
-  public int getPropertyInteger(final String node, final String name, final int defValue) {
-
-    final String v = getProperty(node, name);
-    if (v == null)
-      return defValue;
-    try {
-      return Integer.parseInt(v);
-    } catch (final Exception e) {
+        final Properties props = data.findNodeProperties(node);
+        if (props == null)
+            return null;
+        return props.getProperty(name);
     }
-    return defValue;
-  }
 
-  /**
-   * Sets the property integer.
-   *
-   * @param value the value
-   * @param node  the node
-   * @param name  the name
-   *
-   * @return true, if set property integer
-   */
-  public boolean setPropertyInteger(final String node, final String name, final int value) {
+    /**
+     * Gets the property.
+     *
+     * @param node the node
+     * @param name the name
+     * @return the property
+     */
+    public String getProperty(final String node, final String name) {
 
-    final String strValue = Integer.toString(value);
-    return setProperty(node, name, strValue);
-  }
-
-  /**
-   * Gets the property double.
-   *
-   * @param node     the node
-   * @param defValue the def value
-   * @param name     the name
-   *
-   * @return the property double
-   */
-  public double getPropertyDouble(final String node, final String name, final double defValue) {
-
-    final String v = getProperty(node, name);
-    if (v == null)
-      return defValue;
-    try {
-      return Double.parseDouble(v);
-    } catch (final Exception e) {
+        return getProperty(node, name, null);
     }
-    return defValue;
-  }
 
-  /**
-   * Sets the property double.
-   *
-   * @param value the value
-   * @param node  the node
-   * @param name  the name
-   *
-   * @return true, if set property double
-   */
-  public boolean setPropertyDouble(final String node, final String name, final double value) {
+    /**
+     * Gets the property.
+     *
+     * @param node     the node
+     * @param defValue the def value
+     * @param name     the name
+     * @return the property
+     */
+    public String getProperty(final String node, final String name, final String defValue) {
 
-    final String strValue = Double.toString(value);
-    return setProperty(node, name, strValue);
-  }
+        final Properties props = data.findNodeProperties(node);
+        if (props == null)
+            return defValue;
+        return AppProperties.expandApplicationProperties(props.getProperty(name, defValue));
+    }
 
-  /**
-   * Gets the keys.
-   *
-   * @param node the node
-   *
-   * @return the keys
-   */
-  public String[] getKeys(final String node) {
+    /**
+     * Sets the property.
+     *
+     * @param value the value
+     * @param node  the node
+     * @param name  the name
+     * @return true, if set property
+     */
+    public synchronized boolean setProperty(final String node, final String name, final String value) {
 
-    final Properties props = data.findNodeProperties(node);
-    if (props == null)
-      return null;
-    return props.keySet().toArray(new String[0]);
-  }
+        final Properties props = data.addNodeProprties(node);
+        final String oldValue = props.getProperty(name);
+        if (value == null) {
+            if (oldValue != null)
+                props.remove(name);
+            return true;
+        }
+        if (value.equals(oldValue))
+            return false;
+        modified = true;
+        props.setProperty(name, value);
+        return true;
+    }
 
-  /**
-   * Gets the child nodes.
-   *
-   * @param node the node
-   *
-   * @return the child nodes
-   */
-  public String[] getChildNodes(final String node) {
+    /**
+     * Gets the property bool.
+     *
+     * @param node     the node
+     * @param defValue the def value
+     * @param name     the name
+     * @return the property bool
+     */
+    public boolean getPropertyBool(final String node, final String name, final boolean defValue) {
 
-    return data.findNodeChildNodes(node);
-  }
+        final String v = getProperty(node, name);
+        if (v == null)
+            return defValue;
+        if (v.equalsIgnoreCase("true") || v.equals("1"))
+            return true;
+        if (v.equalsIgnoreCase("false") || v.equals("0"))
+            return false;
+        return defValue;
+    }
 
-  /**
-   * Removes the node.
-   *
-   * @param node the node
-   */
-  public void removeNode(final String node) {
+    /**
+     * Sets the property bool.
+     *
+     * @param value the value
+     * @param node  the node
+     * @param name  the name
+     * @return true, if set property bool
+     */
+    public boolean setPropertyBool(final String node, final String name, final boolean value) {
 
-    final ConfigurationData remData = data.findNode(node);
-    remData.props = new Properties();
-    remData.childNodes = new HashMap<String, ConfigurationData>();
-  }
+        final String strValue = value ? "true" : "false";
+        return setProperty(node, name, strValue);
+    }
 
-  /*
-   * @return true if the properties have been modified
-   */
-  /**
-   * Gets the modified.
-   *
-   * @return the modified
-   */
-  protected boolean getModified() {
-    return modified;
-  }
+    /**
+     * Gets the property integer.
+     *
+     * @param node     the node
+     * @param defValue the def value
+     * @param name     the name
+     * @return the property integer
+     */
+    public int getPropertyInteger(final String node, final String name, final int defValue) {
 
-  /*
-   * @param modified
-   */
-  /**
-   * Sets the modified.
-   *
-   * @param modified the modified
-   */
-  protected void setModified(final boolean modified) {
+        final String v = getProperty(node, name);
+        if (v == null)
+            return defValue;
+        try {
+            return Integer.parseInt(v);
+        } catch (final Exception e) {
+        }
+        return defValue;
+    }
 
-    this.modified = modified;
-  }
+    /**
+     * Sets the property integer.
+     *
+     * @param value the value
+     * @param node  the node
+     * @param name  the name
+     * @return true, if set property integer
+     */
+    public boolean setPropertyInteger(final String node, final String name, final int value) {
 
-  /*
-   * @return url
-   */
-  /**
-   * Gets the URL.
-   *
-   * @return the URL
-   */
-  protected URL getURL() {
-    return url;
-  }
+        final String strValue = Integer.toString(value);
+        return setProperty(node, name, strValue);
+    }
 
-  /*
-   * @param url
-   */
-  /**
-   * Sets the URL.
-   *
-   * @param url the url
-   */
-  protected void setURL(final URL url) {
-    this.url = url;
-  }
+    /**
+     * Gets the property double.
+     *
+     * @param node     the node
+     * @param defValue the def value
+     * @param name     the name
+     * @return the property double
+     */
+    public double getPropertyDouble(final String node, final String name, final double defValue) {
 
-  /*
-   * @return defaultConfiguration
-   */
-  /**
-   * Gets the default configuration.
-   *
-   * @return the default configuration
-   */
-  protected Configuration getDefaultConfiguration() {
+        final String v = getProperty(node, name);
+        if (v == null)
+            return defValue;
+        try {
+            return Double.parseDouble(v);
+        } catch (final Exception e) {
+        }
+        return defValue;
+    }
 
-    return defaultConfiguration;
-  }
+    /**
+     * Sets the property double.
+     *
+     * @param value the value
+     * @param node  the node
+     * @param name  the name
+     * @return true, if set property double
+     */
+    public boolean setPropertyDouble(final String node, final String name, final double value) {
 
-  /*
-   * @param defaultConfiguration
-   */
-  /**
-   * Sets the default configuration.
-   *
-   * @param defaultConfiguration the default configuration
-   */
-  protected void setDefaultConfiguration(final Configuration defaultConfiguration) {
+        final String strValue = Double.toString(value);
+        return setProperty(node, name, strValue);
+    }
 
-    this.defaultConfiguration = defaultConfiguration;
-  }
+    /**
+     * Gets the keys.
+     *
+     * @param node the node
+     * @return the keys
+     */
+    public String[] getKeys(final String node) {
+
+        final Properties props = data.findNodeProperties(node);
+        if (props == null)
+            return null;
+        return props.keySet().toArray(new String[0]);
+    }
+
+    /**
+     * Gets the child nodes.
+     *
+     * @param node the node
+     * @return the child nodes
+     */
+    public String[] getChildNodes(final String node) {
+
+        return data.findNodeChildNodes(node);
+    }
+
+    /**
+     * Removes the node.
+     *
+     * @param node the node
+     */
+    public void removeNode(final String node) {
+
+        final ConfigurationData remData = data.findNode(node);
+        remData.props = new Properties();
+        remData.childNodes = new HashMap<String, ConfigurationData>();
+    }
+
+    /*
+     * @return true if the properties have been modified
+     */
+
+    /**
+     * Gets the modified.
+     *
+     * @return the modified
+     */
+    protected boolean getModified() {
+        return modified;
+    }
+
+    /*
+     * @param modified
+     */
+
+    /**
+     * Sets the modified.
+     *
+     * @param modified the modified
+     */
+    protected void setModified(final boolean modified) {
+
+        this.modified = modified;
+    }
+
+    /*
+     * @return url
+     */
+
+    /**
+     * Gets the URL.
+     *
+     * @return the URL
+     */
+    protected URL getURL() {
+        return url;
+    }
+
+    /*
+     * @param url
+     */
+
+    /**
+     * Sets the URL.
+     *
+     * @param url the url
+     */
+    protected void setURL(final URL url) {
+        this.url = url;
+    }
+
+    /*
+     * @return defaultConfiguration
+     */
+
+    /**
+     * Gets the default configuration.
+     *
+     * @return the default configuration
+     */
+    protected Configuration getDefaultConfiguration() {
+
+        return defaultConfiguration;
+    }
+
+    /*
+     * @param defaultConfiguration
+     */
+
+    /**
+     * Sets the default configuration.
+     *
+     * @param defaultConfiguration the default configuration
+     */
+    protected void setDefaultConfiguration(final Configuration defaultConfiguration) {
+
+        this.defaultConfiguration = defaultConfiguration;
+    }
 }

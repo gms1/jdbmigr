@@ -7,10 +7,10 @@
  ******************************************************************/
 package net.sf.gm.core.io;
 
+import net.sf.gm.core.ui.Progress;
+
 import java.io.IOException;
 import java.io.InputStream;
-
-import net.sf.gm.core.ui.Progress;
 
 /**
  * The Class DataStreamReader.
@@ -18,70 +18,79 @@ import net.sf.gm.core.ui.Progress;
 public abstract class DataReaderAbstractStream
     extends DataReaderAbstract implements DataReader {
 
-  /** The is. */
-  final InputStream is;
+    /**
+     * The is.
+     */
+    final InputStream is;
 
-  /** The row read count. */
-  int allRowCount;
+    /**
+     * The row read count.
+     */
+    int allRowCount;
 
-  /**
-   * The Constructor.
-   *
-   * @param progress the progress
-   * @param is       the is
-   */
-  public DataReaderAbstractStream(final Progress progress,
-                                  final InputStream is) {
+    /**
+     * The Constructor.
+     *
+     * @param progress the progress
+     * @param is       the is
+     */
+    public DataReaderAbstractStream(final Progress progress,
+        final InputStream is) {
 
-    super(progress);
-    this.is = is;
-    allRowCount = 0;
-  }
-
-  /**
-   * Open data reading.
-   *
-   * @return the meta data
-   *
-   * @throws DataIOException the data IO exception
-   */
-  public MetaData openDataReading() throws DataIOException {
-
-    allRowCount = 0;
-    return null;
-  }
-
-  /**
-   * Close data reading.
-   *
-   * @throws DataIOException the data IO exception
-   */
-  public void closeDataReading() throws DataIOException {
-
-    try {
-      if (is != null)
-        is.close();
-    } catch (IOException e) {
-      throw new DataIOException(e);
+        super(progress);
+        this.is = is;
+        allRowCount = 0;
     }
-  }
 
-  /**
-   * Gets the row read count.
-   *
-   * @return the row read count
-   */
-  public long getAllRowCount() { return allRowCount; }
+    /**
+     * Open data reading.
+     *
+     * @return the meta data
+     * @throws DataIOException the data IO exception
+     */
+    public MetaData openDataReading() throws DataIOException {
 
-  /**
-   * Inc row read count.
-   */
-  public void incRowReadCount() { allRowCount++; }
+        allRowCount = 0;
+        return null;
+    }
 
-  /**
-   * Gets the input stream.
-   *
-   * @return the input stream
-   */
-  protected InputStream getInputStream() { return is; }
+    /**
+     * Close data reading.
+     *
+     * @throws DataIOException the data IO exception
+     */
+    public void closeDataReading() throws DataIOException {
+
+        try {
+            if (is != null)
+                is.close();
+        } catch (IOException e) {
+            throw new DataIOException(e);
+        }
+    }
+
+    /**
+     * Gets the row read count.
+     *
+     * @return the row read count
+     */
+    public long getAllRowCount() {
+        return allRowCount;
+    }
+
+    /**
+     * Inc row read count.
+     */
+    public void incRowReadCount() {
+        allRowCount++;
+    }
+
+    /**
+     * Gets the input stream.
+     *
+     * @return the input stream
+     */
+    protected InputStream getInputStream() {
+        return is;
+    }
 }

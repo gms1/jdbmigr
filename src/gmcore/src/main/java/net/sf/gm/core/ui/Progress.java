@@ -8,43 +8,45 @@
 package net.sf.gm.core.ui;
 
 //
+
+
 /**
  * The Interface Progress.
  */
 public interface Progress extends OutputTarget {
 
-  /**
-   * Gets the progress.
-   *
-   * @return the progress
-   */
-  int getProgress();
+    /**
+     * Gets the progress.
+     *
+     * @return the progress
+     */
+    int getProgress();
 
-  /**
-   * Increment progress.
-   *
-   * @param amount the amount
-   */
-  void incrementProgress(int amount);
+    /**
+     * Increment progress.
+     *
+     * @param amount the amount
+     */
+    void incrementProgress(int amount);
 
-  /**
-   * Sets the progress.
-   *
-   * @param progress the progress
-   */
-  void setProgress(int progress);
+    /**
+     * Sets the progress.
+     *
+     * @param progress the progress
+     */
+    void setProgress(int progress);
 
-  /**
-   * Gets the cancel.
-   *
-   * @return the cancel
-   */
-  boolean getCancel();
+    /**
+     * Gets the cancel.
+     *
+     * @return the cancel
+     */
+    boolean getCancel();
 
-  /**
-   * Sets the cancel.
-   *
-   * @param cancel the cancel
-   */
-  void setCancel(boolean cancel);
+    /**
+     * Sets the cancel.
+     *
+     * @param cancel the cancel
+     */
+    void setCancel(boolean cancel);
 }

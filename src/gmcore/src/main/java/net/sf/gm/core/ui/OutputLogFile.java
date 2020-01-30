@@ -10,20 +10,26 @@ package net.sf.gm.core.ui;
 import java.io.Writer;
 
 //
+
+
 /**
  * The Class OutputLogFile.
  */
 public class OutputLogFile extends OutputWriter {
 
-  /**
-   * The Constructor.
-   */
-  public OutputLogFile() { super(); }
+    /**
+     * The Constructor.
+     */
+    public OutputLogFile() {
+        super();
+    }
 
-  /**
-   * The Constructor.
-   *
-   * @param writer the writer
-   */
-  public OutputLogFile(final Writer writer) { super(writer); }
+    /**
+     * The Constructor.
+     *
+     * @param writer the writer
+     */
+    public OutputLogFile(final Writer writer) {
+        super(writer);
+    }
 }

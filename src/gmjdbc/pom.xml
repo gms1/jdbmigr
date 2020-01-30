@@ -1,27 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>net.sf.gm.jdbc</groupId>
-  <artifactId>gmjdbc</artifactId>
-  <packaging>jar</packaging>
-  <version>0.4-SNAPSHOT</version>
-  <parent>
-    <groupId>net.sf.gm</groupId>
-    <artifactId>jdbmigr-root</artifactId>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.sf.gm.jdbc</groupId>
+    <artifactId>gmjdbc</artifactId>
+    <packaging>jar</packaging>
     <version>0.4-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junitVersion}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sf.gm.io</groupId>
-      <artifactId>gmio</artifactId>
-      <version>0.4-SNAPSHOT</version>
-    </dependency>
-  </dependencies>
+    <parent>
+        <groupId>net.sf.gm</groupId>
+        <artifactId>jdbmigr-root</artifactId>
+        <version>0.4-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junitVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.gm.io</groupId>
+            <artifactId>gmio</artifactId>
+            <version>0.4-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

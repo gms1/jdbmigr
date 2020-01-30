@@ -14,21 +14,20 @@ import java.io.File;
  */
 public class FileUtil {
 
-  /**
-   * Delete.
-   *
-   * @param in file to delete
-   *
-   * @return true if file/directory is successfully deleted
-   */
-  public static boolean delete(File in) {
+    /**
+     * Delete.
+     *
+     * @param in file to delete
+     * @return true if file/directory is successfully deleted
+     */
+    public static boolean delete(File in) {
 
-    try {
-      if (in == null)
+        try {
+            if (in == null)
+                return false;
+            return in.delete();
+        } catch (Exception e) {
+        }
         return false;
-      return in.delete();
-    } catch (Exception e) {
     }
-    return false;
-  }
 }

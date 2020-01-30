@@ -10,17 +10,19 @@ package net.sf.gm.app.jdbmigr.common;
 import net.sf.gm.core.app.AbstractApplication;
 
 //
+
+
 /**
  * The Class JDbMigrApplication.
  */
 public abstract class JDbMigrApplicationBase extends AbstractApplication {
 
-  /**
-   * The Constructor.
-   */
-  public JDbMigrApplicationBase() {
+    /**
+     * The Constructor.
+     */
+    public JDbMigrApplicationBase() {
 
-    super();
-    GMJDBMIGRProperties.startup();
-  }
+        super();
+        GMJDBMIGRProperties.startup();
+    }
 }

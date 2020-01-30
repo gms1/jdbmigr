@@ -8,6 +8,8 @@
 package net.sf.gm.core.utils;
 
 //
+
+
 /**
  * The Class ObjectRef.
  *
@@ -15,32 +17,42 @@ package net.sf.gm.core.utils;
  */
 public class ObjectRef<T> {
 
-  /** The value. */
-  private T value;
+    /**
+     * The value.
+     */
+    private T value;
 
-  /**
-   * The Constructor.
-   */
-  public ObjectRef() { value = null; }
+    /**
+     * The Constructor.
+     */
+    public ObjectRef() {
+        value = null;
+    }
 
-  /**
-   * The Constructor.
-   *
-   * @param value the value
-   */
-  public ObjectRef(final T value) { this.value = value; }
+    /**
+     * The Constructor.
+     *
+     * @param value the value
+     */
+    public ObjectRef(final T value) {
+        this.value = value;
+    }
 
-  /**
-   * Gets the value.
-   *
-   * @return the value
-   */
-  public T getValue() { return value; }
+    /**
+     * Gets the value.
+     *
+     * @return the value
+     */
+    public T getValue() {
+        return value;
+    }
 
-  /**
-   * Sets the value.
-   *
-   * @param value the value
-   */
-  public void setValue(final T value) { this.value = value; }
+    /**
+     * Sets the value.
+     *
+     * @param value the value
+     */
+    public void setValue(final T value) {
+        this.value = value;
+    }
 }

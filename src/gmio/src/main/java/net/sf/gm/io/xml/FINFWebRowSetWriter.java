@@ -7,25 +7,24 @@
  ******************************************************************/
 package net.sf.gm.io.xml;
 
-import java.io.OutputStream;
-
+import com.sun.xml.fastinfoset.stax.StAXDocumentSerializer;
 import net.sf.gm.core.ui.Progress;
 
-import com.sun.xml.fastinfoset.stax.StAXDocumentSerializer;
+import java.io.OutputStream;
 
 /**
  * The Class FINFWebRowSetWriter.
  */
 public class FINFWebRowSetWriter extends XMLWebRowSetWriterBase {
 
-  /**
-   * The Constructor.
-   *
-   * @param os       the os
-   * @param progress the progress
-   */
-  public FINFWebRowSetWriter(Progress progress, OutputStream os) {
+    /**
+     * The Constructor.
+     *
+     * @param os       the os
+     * @param progress the progress
+     */
+    public FINFWebRowSetWriter(Progress progress, OutputStream os) {
 
-    super(progress, os, new StAXDocumentSerializer(os));
-  }
+        super(progress, os, new StAXDocumentSerializer(os));
+    }
 }

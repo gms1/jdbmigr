@@ -7,31 +7,29 @@
  ******************************************************************/
 package net.sf.gm.io.xml;
 
-import java.io.OutputStream;
-
 import net.sf.gm.core.io.DataIOException;
 import net.sf.gm.core.io.DataWriter;
 import net.sf.gm.core.io.DataWriterFactory;
 import net.sf.gm.core.ui.Progress;
+
+import java.io.OutputStream;
 
 /**
  * The Class CSVWriterFactory.
  */
 public class FINFWebRowSetWriterFactory implements DataWriterFactory {
 
-  /**
-   * Gets the instance.
-   *
-   * @param outputStream the output stream
-   * @param progress     the progress
-   *
-   * @return the instance
-   *
-   * @throws DataIOException the data IO exception
-   */
-  public DataWriter getInstance(OutputStream outputStream, Progress progress)
-      throws DataIOException {
+    /**
+     * Gets the instance.
+     *
+     * @param outputStream the output stream
+     * @param progress     the progress
+     * @return the instance
+     * @throws DataIOException the data IO exception
+     */
+    public DataWriter getInstance(OutputStream outputStream, Progress progress)
+        throws DataIOException {
 
-    return new FINFWebRowSetWriter(progress, outputStream);
-  }
+        return new FINFWebRowSetWriter(progress, outputStream);
+    }
 }

@@ -7,29 +7,27 @@
  ******************************************************************/
 package net.sf.gm.io.xml;
 
-import java.io.OutputStream;
-
-import javax.xml.stream.XMLStreamException;
-
 import net.sf.gm.core.ui.Progress;
 import net.sf.gm.core.utils.StAXUtil;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.OutputStream;
 
 /**
  * The Class XMLWebRowSetWriter.
  */
 public class XMLWebRowSetWriter extends XMLWebRowSetWriterBase {
 
-  /**
-   * The Constructor.
-   *
-   * @param os       the os
-   * @param progress the progress
-   *
-   * @throws XMLStreamException the XML stream exception
-   */
-  public XMLWebRowSetWriter(Progress progress, OutputStream os)
-      throws XMLStreamException {
+    /**
+     * The Constructor.
+     *
+     * @param os       the os
+     * @param progress the progress
+     * @throws XMLStreamException the XML stream exception
+     */
+    public XMLWebRowSetWriter(Progress progress, OutputStream os)
+        throws XMLStreamException {
 
-    super(progress, os, StAXUtil.createXMLStreamWriter(os, "UTF-8"));
-  }
+        super(progress, os, StAXUtil.createXMLStreamWriter(os, "UTF-8"));
+    }
 }
