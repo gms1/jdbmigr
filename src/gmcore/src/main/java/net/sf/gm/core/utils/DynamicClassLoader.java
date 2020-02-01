@@ -69,7 +69,7 @@ public class DynamicClassLoader {
      * @param addPath the add path
      * @return true, if add single path
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted") public boolean addSinglePath(final String addPath) {
+    public boolean addSinglePath(final String addPath) {
 
         URL newUrl = null;
         final File f = new File(addPath);

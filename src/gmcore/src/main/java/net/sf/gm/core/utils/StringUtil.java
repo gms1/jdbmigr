@@ -177,7 +177,7 @@ public class StringUtil {
      * @param c the c
      * @return true, if is hex digit
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted") public static boolean isHexDigit(final char c) {
+    public static boolean isHexDigit(final char c) {
 
         return (c >= '0' && c <= '9') ||
             (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
@@ -189,7 +189,7 @@ public class StringUtil {
      * @param c the c
      * @return true, if is octal digit
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted") public static boolean isOctalDigit(final char c) {
+    public static boolean isOctalDigit(final char c) {
 
         return (c >= '0' && c <= '7');
     }

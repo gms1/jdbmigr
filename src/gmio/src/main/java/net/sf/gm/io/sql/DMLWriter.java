@@ -582,7 +582,7 @@ public class DMLWriter extends DataWriterAbstractStream implements DataWriter {
      * @param idx    the idx
      * @param offset the offset
      */
-    protected void addValue(final int idx, char[] chars, @SuppressWarnings("SameParameterValue") int offset, int len) {
+    protected void addValue(final int idx, char[] chars, int offset, int len) {
 
         columnValues[idx - 1].append(chars, offset, len);
     }

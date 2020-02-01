@@ -25,16 +25,12 @@ public interface Importer {
     /**
      * Process.
      *
-     * @param commitCount       the commit count
-     * @param inputStream       the input stream
-     * @param mapColumnsByNames the map columns by names
-     * @param loader            the loader
-     * @param con               the con
-     * @param batchSize         the batch size
-     * @param tableName         the table name
-     * @param progress          the progress
-     * @param schemaName        the schema name
-     * @param catalogName       the catalog name
+     * @param inputStream the input stream
+     * @param loader      the loader
+     * @param tableName   the table name
+     * @param progress    the progress
+     * @param schemaName  the schema name
+     * @param catalogName the catalog name
      * @return true if succeeded, false if failed
      * @throws DataIOException the sql IO exception
      */
@@ -45,16 +41,12 @@ public interface Importer {
     /**
      * Process.
      *
-     * @param commitCount       the commit count
-     * @param inputPath         the input path
-     * @param mapColumnsByNames the map columns by names
-     * @param loader            the loader
-     * @param con               the con
-     * @param batchSize         the batch size
-     * @param tableName         the table name
-     * @param progress          the progress
-     * @param schemaName        the schema name
-     * @param catalogName       the catalog name
+     * @param inputPath   the input path
+     * @param loader      the loader
+     * @param tableName   the table name
+     * @param progress    the progress
+     * @param schemaName  the schema name
+     * @param catalogName the catalog name
      * @return true if succeeded, false if failed
      * @throws DataIOException the sql IO exception
      */
@@ -65,15 +57,11 @@ public interface Importer {
     /**
      * Process.
      *
-     * @param list              the list
-     * @param commitCount       the commit count
-     * @param sort              the sort
-     * @param mapColumnsByNames the map columns by names
-     * @param loader            the loader
-     * @param delete            the delete
-     * @param con               the con
-     * @param batchSize         the batch size
-     * @param progress          the progress
+     * @param list     the list
+     * @param sort     the sort
+     * @param loader   the loader
+     * @param delete   the delete
+     * @param progress the progress
      * @return true if succeeded, false if failed
      * @throws DataIOException the sql IO exception
      */

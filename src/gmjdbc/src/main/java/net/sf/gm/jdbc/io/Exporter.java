@@ -90,7 +90,6 @@ public interface Exporter {
      * @param list      the list
      * @param unloader  the unloader
      * @param overwrite the overwrite
-     * @param con       the con
      * @param progress  the progress
      * @return true if succeeded, false if failed
      * @throws DataIOException the sql IO exception

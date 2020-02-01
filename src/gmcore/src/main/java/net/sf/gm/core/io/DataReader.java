@@ -204,7 +204,6 @@ public interface DataReader {
      * Read all data.
      *
      * @param writer the writer
-     * @param is     * @param progress *
      * @return row count
      * @throws DataIOException the data IO exception
      */

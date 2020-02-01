@@ -89,7 +89,6 @@ public class TableDef {
      * @param tabCatalog    the tab catalog
      * @param tabSchema     the tab schema
      * @param tabName       the tab name
-     * @param tabType       the table type
      * @param comment       the comment
      */
     public TableDef(final File location, final String fileExtension,
@@ -166,7 +165,6 @@ public class TableDef {
      * @param tabName    the tab name
      * @param tabCatalog the tab catalog
      * @param tabSchema  the tab schema
-     * @param tabType    the table type
      * @param comment    the comment
      */
     public TableDef(final String tabCatalog, final String tabSchema,
