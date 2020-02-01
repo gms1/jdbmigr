@@ -1,0 +1,25 @@
+#!/bin/bash
+SCRIPT_DIRNAME=$(dirname "$0")
+SCRIPT_BASENAME=$(basename "$0")
+
+PROJECT_DIR=$(cd "${SCRIPT_DIRNAME}"; cd ..; pwd)
+. "${SCRIPT_DIRNAME}/env.sh"
+[ ! -f "${PROJECT_DIR}/.defaults" ] || . "${PROJECT_DIR}/.defaults"
+[ -z "${DEBUG}" ] || . "${SCRIPT_DIRNAME}/debugenv"
+
+rm -rf "tmp/all.lst"
+count=0
+for file in tmp/*.${FILETYPE}; do
+  count=$((count + 1))
+  bn=$(basename "$file")
+  name=${bn%.*}
+  echo "${name}" | tee -a "tmp/all.lst"
+done
+if [ "${count}" -eq 0  ]; then
+  warn "directory 'tmp' does not contain any ${FILETYPE} file"
+  exit 0
+fi
+info "created 'tmp/all.lst' having ${count} tablename(s)"
+info "  probably you may want to call: cp 'tmp/all.lst' 'tmp/table.lst'"
+
+

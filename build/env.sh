@@ -8,9 +8,12 @@ INSTALL_DIR="${PROJECT_DIR}/install"
 
 
 msg() {
-  echo "${SCRIPT_BASENAME}: INFO: $@"
+  echo "$@"
 }
 
+info() {
+  echo "${SCRIPT_BASENAME}: INFO: $@"
+}
 
 warn() {
   echo "${SCRIPT_BASENAME}: WARNING: $@" 2>&1

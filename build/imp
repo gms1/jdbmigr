@@ -1,0 +1,44 @@
+#!/bin/bash
+SCRIPT_DIRNAME=$(dirname "$0")
+SCRIPT_BASENAME=$(basename "$0")
+
+PROJECT_DIR=$(cd "${SCRIPT_DIRNAME}"; cd ..; pwd)
+. "${SCRIPT_DIRNAME}/env.sh"
+[ ! -f "${PROJECT_DIR}/.defaults" ] || . "${PROJECT_DIR}/.defaults"
+[ -z "${DEBUG}" ] || . "${SCRIPT_DIRNAME}/debugenv"
+
+[ -n "${JDBCURL}" ] || die "JDBCURL is not defined"
+[ -n "${DBTYPE}" ] || die "DBTYPE is not defined"
+[ -n "${DBUSER}" ] || die "DBUSER is not defined"
+[ -n "${DBPWD}" ] || die "DBPWD is not defined"
+[ -n "${DBCATALOG}" ] || DBCATALOG="%"
+[ -n "${FILETYPE}" ] || FILETYPE=csv
+[ -z "${ENCODING}" ] || JAVA_OPTS="${JAVA_OPTS} -Dfile.encoding=${ENCODING}"
+
+cd "${PROJECT_DIR}"
+PATH="${PROJECT_DIR}/install/bin:${PATH}"
+
+if [ -f "tmp/table.lst" ]; then
+  rm -f "tmp/import.lst"
+  if [ "${DBTYPE}" = "mss" ]; then
+    # using case-sensitive table names
+    while read table; do
+      echo "${table},tmp/${table}.csv"
+    done >"tmp/import.lst" <<EOT
+$(cat "tmp/table.lst")
+EOT
+  else
+    # the oracle import wants to have uppercase table names
+    while read table; do
+      echo "${table^^},tmp/${table}.csv"
+    done >"tmp/import.lst" <<EOT
+$(cat "tmp/table.lst")
+EOT
+  fi
+  "${FILETYPE}imptab" --delete --coldel=';' -u "${JDBCURL}" -U "${DBUSER}" -P "${DBPWD}" -i tmp --filelist="tmp/import.lst" "${DBTYPE}"
+else
+  "${FILETYPE}imptab" --delete --coldel=';' -u "${JDBCURL}" -U "${DBUSER}" -P "${DBPWD}" -c "${DBCATALOG}" -i tmp "${DBTYPE}"
+fi
+
+
+

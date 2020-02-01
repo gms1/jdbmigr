@@ -3,11 +3,13 @@
 /install
 /external
 /.vscode
+/tmp
 target
 .settings
 .project
 .classpath
 .idea
+.defaults
 *.iml
 stale_outputs_checked
 

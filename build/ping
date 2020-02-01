@@ -1,0 +1,19 @@
+#!/bin/bash
+SCRIPT_DIRNAME=$(dirname "$0")
+SCRIPT_BASENAME=$(basename "$0")
+
+PROJECT_DIR=$(cd "${SCRIPT_DIRNAME}"; cd ..; pwd)
+. "${SCRIPT_DIRNAME}/env.sh"
+[ ! -f "${PROJECT_DIR}/.defaults" ] || . "${PROJECT_DIR}/.defaults"
+[ -z "${DEBUG}" ] || . "${SCRIPT_DIRNAME}/debugenv"
+
+[ -n "${JDBCURL}" ] || die "JDBCURL is not defined"
+[ -n "${DBTYPE}" ] || die "DBTYPE is not defined"
+[ -n "${DBUSER}" ] || die "DBUSER is not defined"
+[ -n "${DBPWD}" ] || die "DBPWD is not defined"
+
+
+cd "${PROJECT_DIR}"
+PATH="${PROJECT_DIR}/install/bin:${PATH}"
+"dbping" -u "${JDBCURL}" -U "${DBUSER}" -P "${DBPWD}" "${DBTYPE}"
+

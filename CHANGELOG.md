@@ -1,6 +1,8 @@
 # CHANGELOG
 
-## TODO 0.4 (2019): bug fix and refactoring release
+## 0.5 (2020): bug fix and refactoring release
+
+## 0.4 (2019): bug fix and refactoring release
 
 - **Fix**
   - refactor to use maven
