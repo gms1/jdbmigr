@@ -417,10 +417,11 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
                             "column name not found for input column " + idx);
                     dbColIdx = mapDbColumns.get(colName.toUpperCase());
                     if (dbColIdx != null) {
+                        metaData.setColumnName(idx, dbColumnNames[dbColIdx - 1]);
                         insertColumnMap[idx - 1] = ++insertColumnCount;
                         if (metaData.getColumnType(idx) == DataTypes.UnknownType) {
                             metaData.setColumnType(idx, dbColumnTypes[dbColIdx - 1]);
-                            metaData.setColumnTypeName(idx, dbColumnNames[dbColIdx - 1]);
+                            metaData.setColumnTypeName(idx, "type of " + dbColumnNames[dbColIdx - 1]);
                         }
                         if (dbColumnIsPrimaryKey[dbColIdx - 1]) {
                             foundPrimaryKeyColumnCount++;
@@ -446,7 +447,7 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
                     inputColumnIsPrimaryKey[idx - 1] = false;
                     if (metaData.getColumnType(idx) == DataTypes.UnknownType) {
                         metaData.setColumnType(idx, dbColumnTypes[idx - 1]);
-                        metaData.setColumnTypeName(idx, dbColumnNames[idx - 1]);
+                        metaData.setColumnTypeName(idx, "type of " + dbColumnNames[idx - 1]);
                     }
                     if (dbColumnIsPrimaryKey[idx - 1]) {
                         foundPrimaryKeyColumnCount++;
@@ -1091,9 +1092,6 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
                             " row " + currentRow + ": failed to " + currentOperation + ": " +
                                 SQLState.getMessage(e.getSQLState(), e.getErrorCode(),
                                     e.getMessage()));
-                    } else {
-                        getProgress().errorln(
-                            " row " + currentRow + ": failed to " + currentOperation);
                     }
                 } else if (updateCounts[i] > 1) {
                     throw new DataIOException(
