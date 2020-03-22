@@ -39,9 +39,7 @@
                                 <properties>
                                     <entry key="classtype">Driver</entry>
                                     <entry key="classname">com.ibm.db2.jcc.DB2Driver</entry>
-                                    <entry key="classpath">
-                                        ${GMJDBCLIBDIR}db2/jcc-2.10/db2jcc.jar;${GMJDBCLIBDIR}db2/jcc-2.10/db2jcc_license_cu.jar;${GMJDBCLIBDIR}db2/jcc-2.10/db2jcc_license_cisuz.jar
-                                    </entry>
+                                    <entry key="classpath">${GMJDBCLIBDIR}db2/4.26.14/db2jcc4.jar</entry>
                                     <entry key="description">
                                         IBM DB2 Univeral JDBC Driver
                                         default port is 50000 or 446
