@@ -389,7 +389,7 @@ public class LoaderImpl extends DataWriterAbstract implements Loader {
 
             // map the column name to the db column index
             if (dbColumnNames.length == 0)
-                throw new DataIOException("table '" + fullTableName + "' not found");
+                throw new DataIOException("table '" + fullTableName + "' not found or failed to get column metadata");
 
             Integer dbColIdx;
             for (int idx = 1; idx <= dbColumnNames.length; idx++) {
